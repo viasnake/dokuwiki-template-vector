@@ -4,14 +4,14 @@
  * Default options for the "vector" DokuWiki template
  *
  * Notes:
- * - In general, use the admin webinterface of DokuWiki to change the config.
+ * - In general, use the admin web interface of DokuWiki to change the config.
  * - To change the type of a config value, have a look at "metadata.php" in
  *   the same directory as this file.
  * - To change/translate the descriptions showed in the admin/configuration
  *   menu of DokuWiki, have a look at the file
- *   /lib/tpl/vector/lang/<your lang>/settings.php. If it does not exists,
- *   copy and translate the English one. Don't forget to mail your translation
- *   to ARSAVA <dokuwiki@dev.arsava.com>. Thanks! :-D
+ *   /lib/tpl/modernizedvector/lang/<your lang>/settings.php. If it does not exist,
+ *   copy and translate the English one. Please submit translation updates through
+ *   GitHub issues or pull requests.
  * - To change the [tabs|boxes|buttons] configuration, have a look at
  *   "/user/[tabs|boxes|buttons].php".
  *
@@ -20,9 +20,10 @@
  *          certain conditions. See COPYING file for details or try to contact
  *          the author(s) of this file in doubt.
  *
- * @license GPLv2 (http://www.gnu.org/licenses/gpl2.html)
+ * @license GPLv2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author ARSAVA <dokuwiki@dev.arsava.com>
- * @link https://www.dokuwiki.org/template:vector
+ * @author viasnake <https://github.com/viasnake/>
+ * @link https://github.com/viasnake/dokuwiki-template-vector
  * @link https://www.dokuwiki.org/devel:configuration
  */
 
@@ -61,7 +62,7 @@ $conf["vector_toolbox_default"]  = 1; //1: use default toolbox (if toolbox is en
 $conf["vector_toolbox_location"] = ":wiki:toolbox"; //page/article used to store a custom toolbox
 
 //qr code box
-$conf["vector_qrcodebox"] = 1; //1: use/show box with QR Code of current page's URL
+$conf["vector_qrcodebox"] = 0; //1: use/show box with QR Code of current page URL using an external service
 
 //custom copyright notice
 $conf["vector_copyright"]           = 1; //1: use/show copyright notice
@@ -71,7 +72,7 @@ $conf["vector_copyright_translate"] = 1; //1: load translated copyright notice i
 
 //donation link/button
 $conf["vector_donate"]     = 0; //1: use/show donation link/button
-$conf["vector_donate_url"] = "https://donate.arsava.com/dokuwiki-template-vector/"; //custom donation URL
+$conf["vector_donate_url"] = ""; //custom HTTPS donation URL
 
 //TOC
 $conf["vector_toc_position"] = "article"; //article: show TOC embedded within the article; "sidebar": show TOC near the navigation, left column
@@ -80,6 +81,6 @@ $conf["vector_toc_position"] = "article"; //article: show TOC embedded within th
 $conf["vector_breadcrumbs_position"]  = "bottom"; //position of breadcrumbs navigation ("top" or "bottom")
 $conf["vector_youarehere_position"]   = "top"; //position of "you are here" navigation ("top" or "bottom")
 $conf["vector_cite_author"]           = "Anonymous Contributors"; //name to use for the author on the citation page
-$conf["vector_loaduserjs"]            = 0; //1: vector/user/user.js will be loaded
+$conf["vector_loaduserjs"]            = 0; //1: modernizedvector/user/user.js will be loaded
 $conf["vector_closedwiki"]            = 0; //1: hides most tabs/functions until user is logged in
 

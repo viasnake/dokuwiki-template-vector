@@ -5,22 +5,22 @@
  *
  * If your language is not/only partially translated or you found an error/typo,
  * have a look at the following files:
- * - /lib/tpl/vector/lang/<your lang>/lang.php
- * - /lib/tpl/vector/lang/<your lang>/settings.php
- * If they are not existing, copy and translate the English ones (hint: looking
- * at <http://[your lang].wikipedia.org> might be helpful).
+ * - /lib/tpl/modernizedvector/lang/<your lang>/lang.php
+ * - /lib/tpl/modernizedvector/lang/<your lang>/settings.php
+ * If they do not exist, copy and translate the English ones (hint: looking
+ * at the Wikipedia for your language might be helpful).
  *
- * Don't forget to mail your translation to ARSAVA <dokuwiki@dev.arsava.com>.
- * Thanks! :-D
+ * Please submit translation updates through GitHub issues or pull requests.
  *
  *
  * LICENSE: This file is open source software (OSS) and may be copied under
  *          certain conditions. See COPYING file for details or try to contact
  *          the author(s) of this file in doubt.
  *
- * @license GPLv2 (http://www.gnu.org/licenses/gpl2.html)
+ * @license GPLv2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author Luigi Micco <l.micco@tiscali.it>
- * @link https://www.dokuwiki.org/template:vector
+ * @author viasnake <https://github.com/viasnake/>
+ * @link https://github.com/viasnake/dokuwiki-template-vector
  * @link https://www.dokuwiki.org/config:lang
  * @link https://www.dokuwiki.org/devel:configuration
  */
@@ -31,10 +31,6 @@ if (!defined("DOKU_INC")){
     die();
 }
 
-//check if we are running within the DokuWiki environment
-if (!defined("DOKU_INC")){
-    die();
-}
 
 //discussion pages
 $lang["vector_discuss"]    = "Usare linguetta discussioni?";
@@ -57,19 +53,18 @@ $lang["vector_exportbox_location"] = "Se non usi il predefinito, usa la seguente
 $lang["vector_toolbox"]               = "Mostra pannello strumenti?";
 $lang["vector_toolbox_default"]       = "Se si, usa il pannello predefinito?";
 $lang["vector_toolbox_location"]      = "Se non usi il predefinito, usa la seguente pagina wiki come pannello degli strumenti:";
-$lang["vector_toolbox_default_print"] = "Se utilizzi il pannello predefinito, mostra link per versione stampabile?";
 
+//qr code box
+$lang["vector_qrcodebox"] = "Show a box with a QR code for the current wiki page URL? This uses an external QR code service.";
 //custom copyright notice
 $lang["vector_copyright"]          = "Mostra avviso di copyright?";
 $lang["vector_copyright_default"]  = "Se si, usa l'avviso di copyright predefinito?";
 $lang["vector_copyright_location"] = "Se non usi il predefinito, usa la seguente pagina wiki come avviso di copyright:";
 
-//search form
-$lang["vector_search"] = "Mostra casella di ricerca?";
 
 //donation link/button
 $lang["vector_donate"]          = "Mostra link/pulsante per le donazioni?";
-$lang["vector_donate_url"]      = "Se non predefinito, usa il seguente indirizzo URL per le donazioni:";
+$lang["vector_donate_url"]      = "HTTPS donation URL:";
 
 //TOC
 $lang["vector_toc_position"] = "Posizione indice dei contenuti";
@@ -78,4 +73,19 @@ $lang["vector_toc_position"] = "Posizione indice dei contenuti";
 $lang["vector_breadcrumbs_position"]  = "Posizione del pannello breadcrumb (se abilitato):";
 $lang["vector_youarehere_position"]   = "Posizione del pannello 'Tu sei qui' (se abilitato):";
 $lang["vector_cite_author"]           = "Nome autore in 'Cita questo articolo':";
-$lang["vector_loaduserjs"]            = "Carica 'vector/user/user.js'?";
+$lang["vector_loaduserjs"]            = "Carica 'modernizedvector/user/user.js'?";
+// English fallback labels for settings added after the original translation
+$lang["vector_userpage"] = "Use user pages?";
+$lang["vector_userpage_ns"] = "If enabled, use this absolute ':namespace:' as root for user pages:";
+$lang["vector_closedwiki"] = "Closed wiki (most links/tabs/boxes are hidden until user is logged in)?";
+$lang["vector_sitenotice_translate"] = "If yes and the Translation plugin is available, load a language-specific site-wide notice. The translated page id is the configured site notice page id followed by an underscore and ISO language code.";
+$lang["vector_navigation_translate"] = "If yes and the Translation plugin is available, load language-specific navigation. The translated page id is the configured navigation page id followed by an underscore and ISO language code.";
+$lang["vector_copyright_translate"] = "If not using the default and the Translation plugin is available, load a language-specific copyright notice. The translated page id is the configured copyright page id followed by an underscore and ISO language code.";
+
+// English fallback labels for multichoice settings added after the original translation
+$lang["vector_toc_position_o_article"] = "Article";
+$lang["vector_toc_position_o_sidebar"] = "Sidebar";
+$lang["vector_breadcrumbs_position_o_top"] = "Top";
+$lang["vector_breadcrumbs_position_o_bottom"] = "Bottom";
+$lang["vector_youarehere_position_o_top"] = "Top";
+$lang["vector_youarehere_position_o_bottom"] = "Bottom";

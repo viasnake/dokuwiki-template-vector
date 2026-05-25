@@ -5,22 +5,22 @@
  *
  * If your language is not/only partially translated or you found an error/typo,
  * have a look at the following files:
- * - /lib/tpl/vector/lang/<your lang>/lang.php
- * - /lib/tpl/vector/lang/<your lang>/settings.php
- * If they are not existing, copy and translate the English ones (hint: looking
- * at <http://[your lang].wikipedia.org> might be helpful).
+ * - /lib/tpl/modernizedvector/lang/<your lang>/lang.php
+ * - /lib/tpl/modernizedvector/lang/<your lang>/settings.php
+ * If they do not exist, copy and translate the English ones (hint: looking
+ * at the Wikipedia for your language might be helpful).
  *
- * Don't forget to mail your translation to ARSAVA <dokuwiki@dev.arsava.com>.
- * Thanks! :-D
+ * Please submit translation updates through GitHub issues or pull requests.
  *
  *
  * LICENSE: This file is open source software (OSS) and may be copied under
  *          certain conditions. See COPYING file for details or try to contact
  *          the author(s) of this file in doubt.
  *
- * @license GPLv2 (http://www.gnu.org/licenses/gpl2.html)
+ * @license GPLv2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author Albert Gasset Romo <albert.gasset@gmail.com>
- * @link https://www.dokuwiki.org/template:vector
+ * @author viasnake <https://github.com/viasnake/>
+ * @link https://github.com/viasnake/dokuwiki-template-vector
  * @link https://www.dokuwiki.org/config:lang
  * @link https://www.dokuwiki.org/devel:configuration
  */
@@ -38,12 +38,9 @@ $lang["vector_read"] = "Llegeix";
 $lang["vector_edit"] = "Edita";
 $lang["vector_create"] = "Crea";
 $lang["vector_userpage"] = "Pàgina d'usuari";
-$lang["vector_specialpage"] = "Pàgines especials";
 $lang["vector_mytalk"] = "Discussió";
 $lang["vector_exportodt"] = "Exporta a ODT";
 $lang["vector_exportpdf"] = "Exporta a PDF";
-$lang["vector_subscribens"] = "Subscriu als canvis de l'espai"; //original DW lang $lang["btn_subscribens"] is simply too long for common tab configs
-$lang["vector_unsubscribens"] = "Cancel·la subscripció a l'espai";  //original DW lang $lang["btn_unsubscribens"] is simply too long for common tab configs
 $lang["vector_translations"] = "Llengües";
 
 //headlines for the different bars and boxes
@@ -51,13 +48,8 @@ $lang["vector_navigation"] = "Navegació";
 $lang["vector_toolbox"] = "Eines";
 $lang["vector_exportbox"] = "Exportació";
 $lang["vector_qrcodebox"] = "Codi QR";
-$lang["vector_inotherlanguages"] = "Llengües";
-$lang["vector_printexport"] = "Exportació";
-$lang["vector_personnaltools"] = "Eines personals";
 
 //buttons
-$lang["vector_btn_go"] = "Vés";
-$lang["vector_btn_search"] = "Cerca";
 $lang["vector_btn_search_title"] = "Cerca aquest text";
 
 //exportbox ("print/export")
@@ -67,7 +59,6 @@ $lang["vector_exportbxdef_downloadpdf"] = "Baixa en format PDF";
 
 //default toolbox
 $lang["vector_toolbxdef_whatlinkshere"] = "Què hi enllaça";
-$lang["vector_toolbxdef_upload"] = "Gestor de fitxers";
 $lang["vector_toolbxdef_siteindex"] = "Mapa del lloc";
 $lang["vector_toolboxdef_permanent"] = "Enllaç permanent";
 $lang["vector_toolboxdef_cite"] = "Cita aquesta pàgina";
@@ -103,8 +94,12 @@ $lang["vector_cite_thisversion"] = "aquesta versió";
 
 //other
 $lang["vector_search"] = "Cerca";
-$lang["vector_accessdenied"] = "Accés denegat";
 $lang["vector_fillplaceholder"] = "Si us plau, ompliu aquest text variable";
 $lang["vector_donate"] = "Fes una donació";
 $lang["vector_mdtemplatefordw"] = "Plantilla vector per a DokuWiki";
 $lang["vector_recentchanges"] = "Canvis recents";
+
+// English fallback labels for strings added after the original translation
+$lang["vector_sidebar"] = "Sidebar";
+$lang["vector_skip_to_content"] = "Skip to content";
+$lang["vector_menu"] = "Menu";

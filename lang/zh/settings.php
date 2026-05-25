@@ -5,22 +5,22 @@
  *
  * If your language is not/only partially translated or you found an error/typo,
  * have a look at the following files:
- * - /lib/tpl/vector/lang/<your lang>/lang.php
- * - /lib/tpl/vector/lang/<your lang>/settings.php
- * If they are not existing, copy and translate the English ones (hint: looking
- * at <http://[your lang].wikipedia.org> might be helpful).
+ * - /lib/tpl/modernizedvector/lang/<your lang>/lang.php
+ * - /lib/tpl/modernizedvector/lang/<your lang>/settings.php
+ * If they do not exist, copy and translate the English ones (hint: looking
+ * at the Wikipedia for your language might be helpful).
  *
- * Don't forget to mail your translation to ARSAVA <dokuwiki@dev.arsava.com>.
- * Thanks! :-D
+ * Please submit translation updates through GitHub issues or pull requests.
  *
  *
  * LICENSE: This file is open source software (OSS) and may be copied under
  *          certain conditions. See COPYING file for details or try to contact
  *          the author(s) of this file in doubt.
  *
- * @license GPLv2 (http://www.gnu.org/licenses/gpl2.html)
+ * @license GPLv2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author LAINME <lainme993 [ät] gmail.com>
- * @link https://www.dokuwiki.org/template:vector
+ * @author viasnake <https://github.com/viasnake/>
+ * @link https://github.com/viasnake/dokuwiki-template-vector
  * @link https://www.dokuwiki.org/config:lang
  * @link https://www.dokuwiki.org/devel:configuration
  */
@@ -57,6 +57,8 @@ $lang["vector_toolbox"]          = "显示工具？";
 $lang["vector_toolbox_default"]  = "如果是，使用默认工具？";
 $lang["vector_toolbox_location"] = "如果不是默认，使用下列wiki页面作为工具位置：";
 
+//qr code box
+$lang["vector_qrcodebox"] = "Show a box with a QR code for the current wiki page URL? This uses an external QR code service.";
 //custom copyright notice
 $lang["vector_copyright"]          = "显示版权信息？";
 $lang["vector_copyright_default"]  = "如果是，使用默认的版权信息？";
@@ -64,7 +66,7 @@ $lang["vector_copyright_location"] = "如果不是默认，使用下列wiki页�
 
 //donation link/button
 $lang["vector_donate"]          = "显示捐赠链接/按钮？";
-$lang["vector_donate_url"]      = "如果不是默认，使用下列URL作为捐赠地址：";
+$lang["vector_donate_url"]      = "HTTPS donation URL:";
 
 //TOC
 $lang["vector_toc_position"] = "目录位置";
@@ -73,6 +75,17 @@ $lang["vector_toc_position"] = "目录位置";
 $lang["vector_breadcrumbs_position"]  = "足迹导航的位置（如果激活的话）：";
 $lang["vector_youarehere_position"]   = "“您在这里“导航的位置（如果激活的话）：";
 $lang["vector_cite_author"]           = "“引用此文“中的作者姓名：";
-$lang["vector_loaduserjs"]            = "载入“vector/user/user.js“？";
+$lang["vector_loaduserjs"]            = "载入“modernizedvector/user/user.js“？";
 $lang["vector_closedwiki"]            = "封闭wiki(许多链接/标签/栏是隐藏的，直到用户登录)？";
 
+$lang["vector_sitenotice_translate"] = "If yes and the Translation plugin is available, load a language-specific site-wide notice. The translated page id is the configured site notice page id followed by an underscore and ISO language code.";
+$lang["vector_navigation_translate"] = "If yes and the Translation plugin is available, load language-specific navigation. The translated page id is the configured navigation page id followed by an underscore and ISO language code.";
+$lang["vector_copyright_translate"] = "If not using the default and the Translation plugin is available, load a language-specific copyright notice. The translated page id is the configured copyright page id followed by an underscore and ISO language code.";
+
+// English fallback labels for multichoice settings added after the original translation
+$lang["vector_toc_position_o_article"] = "Article";
+$lang["vector_toc_position_o_sidebar"] = "Sidebar";
+$lang["vector_breadcrumbs_position_o_top"] = "Top";
+$lang["vector_breadcrumbs_position_o_bottom"] = "Bottom";
+$lang["vector_youarehere_position_o_top"] = "Top";
+$lang["vector_youarehere_position_o_bottom"] = "Bottom";

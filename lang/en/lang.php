@@ -5,22 +5,22 @@
  *
  * If your language is not/only partially translated or you found an error/typo,
  * have a look at the following files:
- * - /lib/tpl/vector/lang/<your lang>/lang.php
- * - /lib/tpl/vector/lang/<your lang>/settings.php
- * If they are not existing, copy and translate the English ones (hint: looking
- * at <http://[your lang].wikipedia.org> might be helpful).
+ * - /lib/tpl/modernizedvector/lang/<your lang>/lang.php
+ * - /lib/tpl/modernizedvector/lang/<your lang>/settings.php
+ * If they do not exist, copy and translate the English ones (hint: looking
+ * at the Wikipedia for your language might be helpful).
  *
- * Don't forget to mail your translation to ARSAVA <dokuwiki@dev.arsava.com>.
- * Thanks! :-D
+ * Please submit translation updates through GitHub issues or pull requests.
  *
  *
  * LICENSE: This file is open source software (OSS) and may be copied under
  *          certain conditions. See COPYING file for details or try to contact
  *          the author(s) of this file in doubt.
  *
- * @license GPLv2 (http://www.gnu.org/licenses/gpl2.html)
+ * @license GPLv2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author ARSAVA <dokuwiki@dev.arsava.com>
- * @link https://www.dokuwiki.org/template:vector
+ * @author viasnake <https://github.com/viasnake/>
+ * @link https://github.com/viasnake/dokuwiki-template-vector
  * @link https://www.dokuwiki.org/config:lang
  * @link https://www.dokuwiki.org/devel:configuration
  */
@@ -38,12 +38,9 @@ $lang["vector_read"] = "Read";
 $lang["vector_edit"] = "Edit";
 $lang["vector_create"] = "Create";
 $lang["vector_userpage"] = "User Page";
-$lang["vector_specialpage"] = "Special Pages";
 $lang["vector_mytalk"] = "My Talk";
 $lang["vector_exportodt"] = "Export: ODT";
 $lang["vector_exportpdf"] = "Export: PDF";
-$lang["vector_subscribens"] = "Subscribe NS Changes"; //original DW lang $lang["btn_subscribens"] is simply too long for common tab configs
-$lang["vector_unsubscribens"] = "Unsubscribe NS Changes";  //original DW lang $lang["btn_unsubscribens"] is simply too long for common tab configs
 $lang["vector_translations"] = "Languages";
 
 //headlines for the different bars and boxes
@@ -51,13 +48,9 @@ $lang["vector_navigation"] = "Navigation";
 $lang["vector_toolbox"] = "Tools";
 $lang["vector_exportbox"] = "Print/export";
 $lang["vector_qrcodebox"] = "QR Code";
-$lang["vector_inotherlanguages"] = "Languages";
-$lang["vector_printexport"] = "Print/export";
-$lang["vector_personnaltools"] = "Personal Tools";
+$lang["vector_sidebar"] = "Sidebar";
 
 //buttons
-$lang["vector_btn_go"] = "Go";
-$lang["vector_btn_search"] = "Search";
 $lang["vector_btn_search_title"] = "Search for this text";
 
 //exportbox ("print/export")
@@ -67,7 +60,6 @@ $lang["vector_exportbxdef_downloadpdf"] = "Download as PDF";
 
 //default toolbox
 $lang["vector_toolbxdef_whatlinkshere"] = "What links here";
-$lang["vector_toolbxdef_upload"] = "Upload file";
 $lang["vector_toolbxdef_siteindex"] = "Sitemap";
 $lang["vector_toolboxdef_permanent"] = "Permanent link";
 $lang["vector_toolboxdef_cite"] = "Cite this page";
@@ -102,10 +94,11 @@ $lang["vector_cite_result"] = "Result";
 $lang["vector_cite_thisversion"] = "this version";
 
 //other
+$lang["vector_skip_to_content"] = "Skip to content";
+$lang["vector_menu"] = "Menu";
 $lang["vector_search"] = "Search";
-$lang["vector_accessdenied"] = "Access denied";
 $lang["vector_fillplaceholder"] = "Please fill or disable this placeholder";
 $lang["vector_donate"] = "Donate";
-$lang["vector_mdtemplatefordw"] = "vector template for DokuWiki";
+$lang["vector_mdtemplatefordw"] = "Vector template for DokuWiki";
 $lang["vector_recentchanges"] = "Recent changes";
 

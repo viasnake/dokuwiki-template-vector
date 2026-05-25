@@ -1,20 +1,15 @@
 /* ATTENTION: This file was edited for the "vector template for DokuWiki".
-              - All url() rules where changed.
+              - url() rules are relative to this file because it is loaded directly for RTL languages.
                See README for details. */
 
 
 /*
- * main-rtl.css is automatically generated using CSSJanus, a python script for
- * creating RTL versions of otherwise LTR stylesheets.
+ * main-rtl.css can be regenerated from main-ltr.css with CSSJanus.
+ * See https://www.mediawiki.org/wiki/CSSJanus and the live demo at
+ * https://doc.wikimedia.org/cssjanus/master/.
  *
- * You may download the tool to rebuild this stylesheet
- * http://code.google.com/p/cssjanus/
- *
- * An online version of this tool can be used at:
- * http://cssjanus.commoner.com/
- *
- * The following command is used to generate the RTL version of this file
- * ./cssjanus.py --swap_ltr_rtl_in_url < main-ltr.css > main-rtl.css
+ * Regenerate it with URL direction swapping enabled so ltr/rtl image URLs are
+ * updated consistently.
  *
  * Any rules which should not be flipped should be prepended with @noflip in
  * a comment block.
@@ -30,13 +25,13 @@ body {
 }
 body {
 	background-color: #f3f3f3;
-	background-image: url(static/3rd/vector/page-base.png);
+	background-image: url(page-base.png);
 }
 /* Content */
-div#content {
+#content {
 	margin-right: 10em;
 	padding: 1em;
-	background-image: url(static/3rd/vector/border.png);
+	background-image: url(border.png);
 	background-position: top right;
 	background-repeat: repeat-y;
 	background-color: white;
@@ -46,7 +41,7 @@ div#content {
 #page-base {
 	height: 5em;
 	background-color: white;
-	background-image: url(static/3rd/vector/page-fade.png);
+	background-image: url(page-fade.png);
 	background-position: bottom right;
 	background-repeat: repeat-x;
 }
@@ -54,7 +49,7 @@ div#content {
 	margin-top: -5em;
 	margin-right: 10em;
 	height: 5em;
-	background-image: url(static/3rd/vector/border.png);
+	background-image: url(border.png);
 	background-position: bottom right;
 	background-repeat: repeat-x;
 }
@@ -118,7 +113,7 @@ div#head h5 {
 		float: left;
 	}
 	div.vectorTabs {
-		background-image: url(static/3rd/vector/tab-break.png);
+		background-image: url(tab-break.png);
 		background-position: bottom right;
 		background-repeat: no-repeat;
 		padding-right: 1px;
@@ -137,7 +132,6 @@ div#head h5 {
 	div.vectorTabs ul li {
 		float: left;
 	}
-	/* OVERRIDDEN BY COMPLIANT BROWSERS */
 	div.vectorTabs ul li {
 		line-height: 1.125em;
 		display: inline-block;
@@ -145,25 +139,23 @@ div#head h5 {
 		margin: 0;
 		padding: 0;
 		background-color: #f3f3f3;
-		background-image: url(static/3rd/vector/tab-normal-fade.png);
+		background-image: url(tab-normal-fade.png);
 		background-position: bottom right;
 		background-repeat: repeat-x;
 		white-space:nowrap;
 	}
-	/* IGNORED BY IE6 */
 	div.vectorTabs ul > li {
 		display: block;
 	}
 	div.vectorTabs li.selected {
-		background-image: url(static/3rd/vector/tab-current-fade.png);
+		background-image: url(tab-current-fade.png);
 	}
-	/* OVERRIDDEN BY COMPLIANT BROWSERS */
 	div.vectorTabs li a {
 		display: inline-block;
 		height: 2.5em;
 		padding-right: 0.4em;
 		padding-left: 0.4em;
-		background-image: url(static/3rd/vector/tab-break.png);
+		background-image: url(tab-break.png);
 		background-position: bottom left;
 		background-repeat: no-repeat;
 	}
@@ -175,16 +167,13 @@ div#head h5 {
 	div.vectorTabs li a span {
 		font-size: 0.8em;
 	}
-	/* IGNORED BY IE6 */
 	div.vectorTabs li > a {
 		display: block;
 	}
-	/* OVERRIDDEN BY COMPLIANT BROWSERS */
 	div.vectorTabs a span {
 		display: inline-block;
 		padding-top: 1.25em;
 	}
-	/* IGNORED BY IE6 */
 	/* @noflip */
 	div.vectorTabs a > span {
 		float: left;
@@ -208,7 +197,7 @@ div#head h5 {
 	div.vectorMenu {
 		direction: ltr;
 		float: left;
-		background-image: url(static/3rd/vector/arrow-down-icon.png);
+		background-image: url(arrow-down-icon.png);
 		background-position: 100% 60%;
 		background-repeat: no-repeat;
 		cursor: pointer;
@@ -217,14 +206,12 @@ div#head h5 {
 	body.rtl div.vectorMenu {
 		direction: rtl;
 	}
-	/* OVERRIDDEN BY COMPLIANT BROWSERS */
 	/* @noflip */
 	div#head div.vectorMenu h5 {
 		float: left;
-		background-image: url(static/3rd/vector/tab-break.png);
+		background-image: url(tab-break.png);
 		background-repeat: no-repeat;
 	}
-	/* IGNORED BY IE6 */
 	div#head div.vectorMenu > h5 {
 		background-image: none;
 	}
@@ -241,20 +228,18 @@ div#head h5 {
 		font-weight: normal;
 		border: none;
 	}
-	/* OVERRIDDEN BY COMPLIANT BROWSERS */
 	/* @noflip */
 	div.vectorMenu h5 a {
 		display: inline-block;
 		width: 24px;
 		height: 2.5em;
 		text-decoration: none;
-		background-image: url(static/3rd/vector/tab-break.png);
+		background-image: url(tab-break.png);
 		background-repeat: no-repeat;
 	}
 	div.vectorMenu h5 a{
 		background-position: bottom left;
 	}
-	/* IGNORED BY IE6 */
 	div.vectorMenu h5 > a {
 		display: block;
 	}
@@ -264,17 +249,15 @@ div#head h5 {
 		clear: both;
 		text-align: right;
 	}
-	/* OVERRIDDEN BY COMPLIANT BROWSERS */
 	/* @noflip */
 	body.rtl div.vectorMenu div.menu {
 		margin-left: 24px;
 	}
-	/* IGNORED BY IE6 */
 	/* @noflip */
 	body.rtl div.vectorMenu > div.menu {
 		margin-left: auto;
 	}
-	/* Fixes old versions of FireFox */
+	/* Fixes old Firefox layout behavior */
 	/* @noflip */
 	body.rtl div.vectorMenu > div.menu,
 	x:-moz-any-link {
@@ -296,7 +279,7 @@ div#head h5 {
 		margin-right: -1px;
 		text-align: right;
 	}
-	/* Fixes old versions of FireFox */
+	/* Fixes old Firefox layout behavior */
 	div.vectorMenu ul,
 	x:-moz-any-link {
 		min-width: 5em;
@@ -313,13 +296,11 @@ div#head h5 {
 		text-align: right;
 		line-height: 1em;
 	}
-	/* OVERRIDDEN BY COMPLIANT BROWSERS */
 	div.vectorMenu li a {
 		display: inline-block;
 		padding: 0.5em;
 		white-space: nowrap;
 	}
-	/* IGNORED BY IE6 */
 	div.vectorMenu li > a {
 		display: block;
 	}
@@ -355,7 +336,7 @@ div#head h5 {
 		position: relative;
 		border: solid 1px #AAAAAA;
 		background-color: white;
-		background-image: url(static/3rd/vector/search-fade.png);
+		background-image: url(search-fade.png);
 		background-position: top right;
 		background-repeat: repeat-x;
 	}
@@ -363,7 +344,7 @@ div#head h5 {
 		font-size: 0.8em;
 		top: 0.25em;
 	}
-	div#simpleSearch input#searchInput {
+	div#simpleSearch input#qsearch__in {
 		margin: 0;
 		border-width: 0;
 		padding: 0.25em;
@@ -372,7 +353,6 @@ div#head h5 {
 		width: 14em;
 		background-color: transparent;
 	}
-	/* OVERRIDDEN BY COMPLIANT BROWSERS */
 	div#simpleSearch button#searchButton {
 		margin: 0;
 		padding: 0;
@@ -381,11 +361,10 @@ div#head h5 {
 		border: none;
 		cursor: pointer;
 		background-color: transparent;
-		background-image: url(static/3rd/vector/search-rtl.png);
+		background-image: url(search-rtl.png);
 		background-position: center center;
 		background-repeat: no-repeat;
 	}
-	/* IGNORED BY IE6 */
 	div#simpleSearch > button#searchButton {
 		height: 100%;
 	}
@@ -414,7 +393,7 @@ div#panel {
 		margin: 0;
 		padding-top: 0.5em;
 		margin-right: 1.25em;
-		background-image: url(static/3rd/vector/portal-break.png);
+		background-image: url(portal-break.png);
 		background-repeat: no-repeat;
 		background-position: top right;
 	}
@@ -444,7 +423,7 @@ div#footer {
 	margin-right: 10em;
 	margin-top: 0;
 	padding: 0.75em;
-	background-image: url(static/3rd/vector/border.png);
+	background-image: url(border.png);
 	background-position: top right;
 	background-repeat: repeat-x;
 }
@@ -515,7 +494,7 @@ div#footer #footer-places li {
 	clear: both;
 	margin: 0 !important;
 	padding: 0 !important;
-	background-image: url(static/3rd/vector/preferences-break.png);
+	background-image: url(preferences-break.png);
 	background-position: bottom right;
 	background-repeat: no-repeat;
 }
@@ -529,11 +508,10 @@ div#footer #footer-places li {
 		white-space: nowrap;
 		list-style-type: none;
 		list-style-image: none;
-		background-image: url(static/3rd/vector/preferences-break.png);
+		background-image: url(preferences-break.png);
 		background-position: bottom left;
 		background-repeat: no-repeat;
 	}
-	/* IGNORED BY IE6 */
 	#preftoc li:first-child {
 		margin-right: 1px;
 	}
@@ -551,7 +529,7 @@ div#footer #footer-places li {
 		text-decoration: underline;
 	}
 	#preftoc li.selected a {
-		background-image: url(static/3rd/vector/preferences-fade.png);
+		background-image: url(preferences-fade.png);
 		background-position: bottom;
 		background-repeat: repeat-x;
 		color: #333333;
@@ -565,7 +543,7 @@ div#footer #footer-places li {
 	clear: both;
 	border: solid 1px #cccccc;
 	background-color: #f9f9f9;
-	background-image: url(static/3rd/vector/preferences-base.png);
+	background-image: url(preferences-base.png);
 }
 #preferences fieldset.prefsection {
 	border: none;
@@ -619,7 +597,7 @@ div#footer #footer-places li {
  * The following code is slightly modified from monobook
  *
  */
-div#content {
+#content {
 	line-height: 1.5em;
 }
 #bodyContent {
@@ -740,7 +718,7 @@ ul {
 	list-style-type: square;
 	margin: .3em 1.5em 0 0;
 	padding: 0;
-	list-style-image: url(static/3rd/vector/bullet-icon.png);
+	list-style-image: url(bullet-icon.png);
 }
 ol {
 	line-height: 1.5em;
@@ -996,79 +974,79 @@ h3, h4, h5 {
 	font-size: 1.6em;
 	padding-bottom: 0;
 }
-div#content a.external,
-div#content a[href ^="gopher://"] {
-	background: url(static/3rd/vector/external-link-rtl-icon.png) center left no-repeat;
+#content a.external,
+#content a[href ^="gopher://"] {
+	background: url(external-link-rtl-icon.png) center left no-repeat;
 	padding: 0 0 0 13px;
 }
-div#content a[href ^="https://"],
+#content a[href ^="https://"],
 .link-https {
-	background: url(static/3rd/vector/lock-icon.png) center left no-repeat;
+	background: url(lock-icon.png) center left no-repeat;
 	padding: 0 0 0 13px;
 }
-div#content a[href ^="mailto:"],
+#content a[href ^="mailto:"],
 .link-mailto {
-	background: url(static/3rd/vector/mail-icon.png) center left no-repeat;
+	background: url(mail-icon.png) center left no-repeat;
 	padding: 0 0 0 13px;
 }
-div#content a[href ^="news://"] {
-	background: url(static/3rd/vector/news-icon.png) center left no-repeat;
+#content a[href ^="news://"] {
+	background: url(news-icon.png) center left no-repeat;
 	padding: 0 0 0 13px;
 }
-div#content a[href ^="ftp://"],
+#content a[href ^="ftp://"],
 .link-ftp {
-	background: url(static/3rd/vector/file-icon.png) center left no-repeat;
+	background: url(file-icon.png) center left no-repeat;
 	padding: 0 0 0 13px;
 }
-div#content a[href ^="irc://"],
-div#content a.extiw[href ^="irc://"],
+#content a[href ^="irc://"],
+#content a.extiw[href ^="irc://"],
 .link-irc {
-	background: url(static/3rd/vector/talk-icon.png) center left no-repeat;
+	background: url(talk-icon.png) center left no-repeat;
 	padding: 0 0 0 13px;
 }
-div#content a.external[href $=".ogg"], div#content a.external[href $=".OGG"],
-div#content a.external[href $=".mid"], div#content a.external[href $=".MID"],
-div#content a.external[href $=".midi"], div#content a.external[href $=".MIDI"],
-div#content a.external[href $=".mp3"], div#content a.external[href $=".MP3"],
-div#content a.external[href $=".wav"], div#content a.external[href $=".WAV"],
-div#content a.external[href $=".wma"], div#content a.external[href $=".WMA"],
+#content a.external[href $=".ogg"], #content a.external[href $=".OGG"],
+#content a.external[href $=".mid"], #content a.external[href $=".MID"],
+#content a.external[href $=".midi"], #content a.external[href $=".MIDI"],
+#content a.external[href $=".mp3"], #content a.external[href $=".MP3"],
+#content a.external[href $=".wav"], #content a.external[href $=".WAV"],
+#content a.external[href $=".wma"], #content a.external[href $=".WMA"],
 .link-audio {
-	background: url("images/audio-icon.png") center left no-repeat;
+	background: url(audio-icon.png) center left no-repeat;
 	padding: 0 0 0 13px;
 }
-div#content a.external[href $=".ogm"], div#content a.external[href $=".OGM"],
-div#content a.external[href $=".avi"], div#content a.external[href $=".AVI"],
-div#content a.external[href $=".mpeg"], div#content a.external[href $=".MPEG"],
-div#content a.external[href $=".mpg"], div#content a.external[href $=".MPG"],
+#content a.external[href $=".ogm"], #content a.external[href $=".OGM"],
+#content a.external[href $=".avi"], #content a.external[href $=".AVI"],
+#content a.external[href $=".mpeg"], #content a.external[href $=".MPEG"],
+#content a.external[href $=".mpg"], #content a.external[href $=".MPG"],
 .link-video {
-	background: url("images/video-icon.png") center left no-repeat;
+	background: url(video-icon.png) center left no-repeat;
 	padding: 0 0 0 13px;
 }
-div#content a.external[href $=".pdf"], div#content a.external[href $=".PDF"],
-div#content a.external[href *=".pdf#"], div#content a.external[href *=".PDF#"],
-div#content a.external[href *=".pdf?"], div#content a.external[href *=".PDF?"],
+#content a.external[href $=".pdf"], #content a.external[href $=".PDF"],
+#content a.external[href *=".pdf#"], #content a.external[href *=".PDF#"],
+#content a.external[href *=".pdf?"], #content a.external[href *=".PDF?"],
 .link-document {
-	background: url("images/document-icon.png") center left no-repeat;
+	background: url(document-icon.png) center left no-repeat;
 	padding: 0 0 0 13px;
 }
 /* Interwiki Styling  (Disabled) */
-div#content a.extiw,
-div#content a.extiw:active {
+#content a.extiw,
+#content a.extiw:active {
 	color: #36b;
 	background: none;
 	padding: 0;
 }
-div#content a.external {
+#content a.external {
 	color: #36b;
 }
-div#content .printfooter {
+#content .printfooter {
 	display: none;
 }
 /* Icon for Usernames */
 #pt-userpage,
 #pt-anonuserpage,
 #pt-login {
-	background: url(static/3rd/vector/user-icon.png) right top no-repeat;
+	background: url(user-icon.png) right top no-repeat;
 	padding-right: 15px !important;
 	text-transform: none;
 }
@@ -1105,24 +1083,24 @@ div#bodyContent {
 	height: 2.5em;
 }
 #ca-unwatch.icon a {
-	background-image: url(static/3rd/vector/watch-icons.png);
+	background-image: url(watch-icons.png);
 	background-position: -43px 60%;
 }
 #ca-watch.icon a {
-	background-image: url(static/3rd/vector/watch-icons.png);
+	background-image: url(watch-icons.png);
 	background-position: 5px 60%;
 }
 #ca-unwatch.icon a:hover {
-	background-image: url(static/3rd/vector/watch-icons.png);
+	background-image: url(watch-icons.png);
 	background-position: -67px 60%;
 }
 #ca-watch.icon a:hover {
-	background-image: url(static/3rd/vector/watch-icons.png);
+	background-image: url(watch-icons.png);
 	background-position: -19px 60%;
 }
 #ca-unwatch.icon a.loading,
 #ca-watch.icon a.loading {
-	background-image: url(static/3rd/vector/watch-icon-loading.gif);
+	background-image: url(watch-icon-loading.gif);
 	background-position: center 60%;
 }
 #ca-unwatch.icon a span,
@@ -1130,7 +1108,7 @@ div#bodyContent {
 	display: none;
 }
 div.vectorTabs ul {
-	background-image:url(static/3rd/vector/tab-break.png);
+	background-image:url(tab-break.png);
 	background-position:left bottom;
 	background-repeat:no-repeat;
 }

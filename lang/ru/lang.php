@@ -5,23 +5,23 @@
  *
  * If your language is not/only partially translated or you found an error/typo,
  * have a look at the following files:
- * - /lib/tpl/vector/lang/<your lang>/lang.php
- * - /lib/tpl/vector/lang/<your lang>/settings.php
- * If they are not existing, copy and translate the English ones (hint: looking
- * at <http://[your lang].wikipedia.org> might be helpful).
+ * - /lib/tpl/modernizedvector/lang/<your lang>/lang.php
+ * - /lib/tpl/modernizedvector/lang/<your lang>/settings.php
+ * If they do not exist, copy and translate the English ones (hint: looking
+ * at the Wikipedia for your language might be helpful).
  *
- * Don't forget to mail your translation to ARSAVA <dokuwiki@dev.arsava.com>.
- * Thanks! :-D
+ * Please submit translation updates through GitHub issues or pull requests.
  *
  *
  * LICENSE: This file is open source software (OSS) and may be copied under
  *          certain conditions. See COPYING file for details or try to contact
  *          the author(s) of this file in doubt.
  *
- * @license GPLv2 (http://www.gnu.org/licenses/gpl2.html)
+ * @license GPLv2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author anarchist IVANOV <ivanov@anarhist.org>
  * @author Aleksandr Selivanov <alexgearbox@gmail.com>
- * @link https://www.dokuwiki.org/template:vector
+ * @author viasnake <https://github.com/viasnake/>
+ * @link https://github.com/viasnake/dokuwiki-template-vector
  * @link https://www.dokuwiki.org/config:lang
  * @link https://www.dokuwiki.org/devel:configuration
  */
@@ -39,25 +39,17 @@ $lang['vector_read']                      = 'Чтение';
 $lang['vector_edit']                      = 'Правка';
 $lang['vector_create']                    = 'Cоздать';
 $lang['vector_userpage']                  = 'Моя страница';
-$lang['vector_specialpage']               = 'Спецстраницы';
 $lang['vector_mytalk']                    = 'Моя страница обсуждения';
 $lang['vector_exportodt']                 = 'Экспорт в ODT';
 $lang['vector_exportpdf']                 = 'Экспорт в PDF';
-$lang['vector_subscribens']               = 'Подписка на&nbsp;правки раздела'; //оригинальный перевод DW $lang['btn_subscribens'] слишком длинный для вкладок
-$lang['vector_unsubscribens']             = 'Отписка от&nbsp;правок раздела'; //оригинальный перевод DW $lang['btn_unsubscribens'] слишком длинный для вкладок
 $lang['vector_translations']              = 'Языки';
 
 //заголовки для различных блоков
 $lang['vector_navigation']                = 'Навигация';
 $lang['vector_toolbox']                   = 'Инструменты';
 $lang['vector_exportbox']                 = 'Печать/экспорт';
-$lang['vector_inotherlanguages']          = 'На других языках';
-$lang['vector_printexport']               = 'Печать/экспорт';
-$lang['vector_personnaltools']            = 'Личные инструменты';
 
 //кнопки
-$lang['vector_btn_go']                    = '»';
-$lang['vector_btn_search']                = 'Искать';
 $lang['vector_btn_search_title']          = 'Найти страницы, содержащие указанный текст';
 
 //блок экспорта (печать/экспорт)
@@ -67,7 +59,6 @@ $lang['vector_exportbxdef_downloadpdf']   = 'Скачать как PDF';
 
 //инструменты по умолчанию
 $lang['vector_toolbxdef_whatlinkshere']   = 'Ссылки сюда';
-$lang['vector_toolbxdef_upload']          = 'Загрузить файл';
 $lang['vector_toolbxdef_siteindex']       = 'Все страницы';
 $lang['vector_toolboxdef_permanent']      = 'Постоянная ссылка';
 $lang['vector_toolboxdef_cite']           = 'Цитировать страницу';
@@ -98,9 +89,17 @@ $lang['vector_cite_thisversion']          = 'текущая версия';
 
 //прочее
 $lang['vector_search']                    = 'Поиск';
-$lang['vector_accessdenied']              = 'Доступ запрещён';
 $lang['vector_fillplaceholder']           = 'Пожалуйста, укажите значение';
 $lang['vector_donate']                    = 'Помощь';
 $lang['vector_mdtemplatefordw']           = 'Шаблон &laquo;Вектор&raquo; для &laquo;ДокуВики&raquo;';
 $lang['vector_recentchanges']             = 'Последние изменения';
 
+
+// English fallback labels for strings added after the original translation
+$lang["vector_qrcodebox"] = "QR Code";
+$lang["vector_sidebar"] = "Sidebar";
+$lang["vector_qrcodebox_qrcode"] = "QR Code";
+$lang["vector_qrcodebox_genforcurrentpage"] = "generated for current page";
+$lang["vector_qrcodebox_urlofcurrentpage"] = "Current page as QR Code (scan for easy mobile access)";
+$lang["vector_skip_to_content"] = "Skip to content";
+$lang["vector_menu"] = "Menu";
