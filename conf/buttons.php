@@ -21,7 +21,7 @@
  ********************************  ATTENTION  *********************************
          DO NOT MODIFY THIS FILE, IT WILL NOT BE PRESERVED ON UPDATES!
  ******************************************************************************
-  If you want to add some own buttons, have a look at the README of this
+  If you want to add some own buttons, have a look at the README.md file for this
   template and "/user/buttons.php". You have been warned!
  *****************************************************************************/
 
@@ -89,7 +89,6 @@ $_vector_btns["dw"]["nofollow"] = !$vector_is_startpage;
  ********************************  ATTENTION  *********************************
          DO NOT MODIFY THIS FILE, IT WILL NOT BE PRESERVED ON UPDATES!
  ******************************************************************************
-  If you want to add some own buttons, have a look at the README of this
+  If you want to add some own buttons, have a look at the README.md file for this
   template and "/user/buttons.php". You have been warned!
  *****************************************************************************/
-

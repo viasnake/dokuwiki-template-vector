@@ -19,7 +19,7 @@
  ********************************  ATTENTION  *********************************
          DO NOT MODIFY THIS FILE, IT WILL NOT BE PRESERVED ON UPDATES!
  ******************************************************************************
-  If you want to add some own boxes, have a look at the README of this
+  If you want to add some own boxes, have a look at the README.md file for this
   template and "/user/boxes.php". You have been warned!
  *****************************************************************************/
 
@@ -242,6 +242,6 @@ if ((empty($conf["useacl"]) ||
  ********************************  ATTENTION  *********************************
          DO NOT MODIFY THIS FILE, IT WILL NOT BE PRESERVED ON UPDATES!
  ******************************************************************************
-  If you want to add some own boxes, have a look at the README of this
+  If you want to add some own boxes, have a look at the README.md file for this
   template and "/user/boxes.php". You have been warned!
  *****************************************************************************/

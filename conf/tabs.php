@@ -21,7 +21,7 @@
  ********************************  ATTENTION  *********************************
          DO NOT MODIFY THIS FILE, IT WILL NOT BE PRESERVED ON UPDATES!
  ******************************************************************************
-  If you want to add some own tabs, have a look at the README of this template
+  If you want to add some own tabs, have a look at the README.md file for this template
   and "/user/tabs.php". You have been warned!
  *****************************************************************************/
 
@@ -158,7 +158,6 @@ if (empty($conf["useacl"]) || //are there any users?
  ********************************  ATTENTION  *********************************
          DO NOT MODIFY THIS FILE, IT WILL NOT BE PRESERVED ON UPDATES!
  ******************************************************************************
-  If you want to add some own tabs, have a look at the README of this template
+  If you want to add some own tabs, have a look at the README.md file for this template
   and "/user/tabs.php". You have been warned!
  *****************************************************************************/
-
