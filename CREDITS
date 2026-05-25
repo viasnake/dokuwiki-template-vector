@@ -1,107 +1,96 @@
-
-  I. ARSAVA <dokuwiki@dev.arsava.com>
-
-    ARSAVA created and maintained the original DokuWiki Vector template.
-
-    [1] <https://dev.arsava.com/>
-
-
-
-  II. Theo Klein
-
-    Theo Klein contributed the Dutch language files and some ideas.
-
-
-
-  III. Fabio Reis
-
-    Fabio Reis contributed the Brazilian Portuguese language files and reported
-    a bug.
-
-
-
-  IV. Luigi Micco <l.micco [ät] tiscali.it>
-
-    Luigi Micco [1] contributed the Italian language files and reported a few
-    bugs.
-
-    [1] <http://www.luigimicco.altervista.org>
-
-
-
-  V. LAINME <lainme993 [ät] gmail.com>
-
-    LAINME contributed the Chinese translation (simplified) language files.
-
-
-
-  VI. Julien Revault d'Allonnes <jrevault [ät] gmail.com>
-
-    Julien Revault d'Allonne contributed the French language files.
-
-
-
-  VII. ander
-
-    ander contributed the Basque language files.
-
-
-
-  VIII. Albert Gasset
-
-    Albert Gasset contributed the Catalan language files.
-
-
-
-  IX. Jesús Muñoz Martínez <kisumum [ät] gmail.com>, Felipe Ruiz
-
-    Jesús Muñoz Martínez and Felipe Ruiz contributed the Spanish language files.
-
-
-
-  X. Aleksandr Selivanov, anarchist IVANOV
-
-    Aleksandr Selivanov and anarchist IVANOV contributed the Russian language
-    files.
-
-
-
-  XI. David Roesel <http://david.roesel.cz/>
-
-    David Roesel contributed the Czech language files.
-
-
-
-  XII. Peter Bezemek
-
-    Peter Bezemek contributed the Slovak language files.
-
-
-
-  XIII. Salman Mohammadi <salman [ät] shimool.org>
-
-    Salman Mohammadi [1] contributed the Persian language files.
-
-    [1] <http://www.shimool.org/salman>
-
-
-
-  XIV. Myeongjin <aranet100 [ät] gmail.com>
-
-    Myeongjin contributed the Korean language files.
-
-
-
-  XV. Dave
-
-    Dave contributed the Hebrew language files.
-
-
-  XVI. viasnake <https://github.com/viasnake/>
-
-    viasnake maintains this fork and modernizes the template for current
-    DokuWiki releases while preserving the legacy Vector 2010 look.
-    Contributions in this fork keep the original GPLv2 license and preserve
-    the original authors' notices.
-
-    [1] <https://github.com/viasnake/dokuwiki-template-vector>
+# Credits and History
+
+This project is a maintained fork of the original DokuWiki Vector template.
+The maintained fork keeps the original GPLv2 license and preserves the original
+authors' notices.
+
+## Acknowledgements
+
+ARSAVA <dokuwiki@dev.arsava.com> created and maintained the original DokuWiki
+Vector template.
+
+- Website: <https://dev.arsava.com/>
+
+viasnake <https://github.com/viasnake/> maintains this fork and modernizes the
+template for current DokuWiki releases while preserving the legacy Vector 2010
+look.
+
+- Project: <https://github.com/viasnake/dokuwiki-template-vector>
+
+## Language and Community Contributors
+
+- Theo Klein contributed the Dutch language files and some ideas.
+- Fabio Reis contributed the Brazilian Portuguese language files and reported a
+  bug.
+- Luigi Micco <l.micco [ät] tiscali.it> contributed the Italian language files
+  and reported a few bugs. Website:
+  <http://www.luigimicco.altervista.org>
+- LAINME <lainme993 [ät] gmail.com> contributed the Chinese translation
+  (simplified) language files.
+- Julien Revault d'Allonnes <jrevault [ät] gmail.com> contributed the French
+  language files.
+- ander contributed the Basque language files.
+- Albert Gasset contributed the Catalan language files.
+- Jesús Muñoz Martínez <kisumum [ät] gmail.com> and Felipe Ruiz contributed the
+  Spanish language files.
+- Aleksandr Selivanov and anarchist IVANOV contributed the Russian language
+  files.
+- David Roesel <http://david.roesel.cz/> contributed the Czech language files.
+- Peter Bezemek contributed the Slovak language files.
+- Salman Mohammadi <salman [ät] shimool.org> contributed the Persian language
+  files. Website: <http://www.shimool.org/salman>
+- Myeongjin <aranet100 [ät] gmail.com> contributed the Korean language files.
+- Dave contributed the Hebrew language files.
+
+## Third-Party Sources
+
+The original template import used files and ideas from these upstream projects:
+
+- MediaWiki Vector skin: <https://www.mediawiki.org/wiki/Skin:Vector>
+- DokuWiki default template.
+- DokuWiki starter template.
+- Monobook for DokuWiki, used as the original base for non-layout template
+  behavior and configuration patterns.
+
+Third-party static files are kept under `static/3rd/`. See inline notes in that
+directory for source-specific details.
+
+## Original Creation Notes
+
+These notes document the original template import and are kept for historical
+context.
+
+- Downloaded the MediaWiki Vector skin source from
+  <https://www.mediawiki.org/wiki/Skin:Vector>.
+- Installed DokuWiki locally for testing.
+- Copied all Monobook for DokuWiki sources because it already fit some needs
+  regarding configuration options and non-layout features. The Monobook for
+  DokuWiki template was used as the base for Vector for DokuWiki.
+- Replaced `monobook` with `vector` in `conf/`, `lang/`, `detail.php`,
+  `inc_cite.php`, `inc_detail.php`, `main.php`, and `mediamanager.php`.
+- Copied selected third-party files into `static/3rd/`:
+  - From MediaWiki Vector: `skins/vector/main-ltr.css`,
+    `skins/vector/main-rtl.css`, and `skins/vector/images/*`.
+  - From Andreas Gohr's DokuWiki default template: `default/*.css`,
+    `default/images/closed.gif`, `default/images/favicon.ico`,
+    `default/images/open.gif`, and `default/images/tocdot2.gif`.
+  - From Anika Henke's DokuWiki starter template:
+    `starter/images/external-link.png`, `starter/images/unc.png`, and
+    `starter/images/email.png`.
+- Adjusted image URLs in `static/3rd/vector/main-ltr.css` and
+  `static/3rd/vector/main-rtl.css` for the DokuWiki template layout. The LTR
+  file is loaded through DokuWiki's CSS dispatcher; the RTL file is loaded
+  directly only for right-to-left languages, so its URLs remain relative to its
+  own directory.
+- Adjusted image URLs in `static/3rd/dokuwiki/*.css` for this template and
+  documented the change in file comments.
+- Visited <https://en.wikipedia.org/w/index.php?title=ASCII>, copied the HTML
+  source, and used Tidy to get valid, clean, correctly indented base markup
+  after core removal. That markup was compared with `main.php` and the needed
+  changes were made.
+- Created `vector/static/css/print.css`, `vector/static/css/rtl.css`, and
+  `vector/static/css/screen.css`.
+- Completed the initial port.
+- After about one year, switched the CSS base from DokuWiki's default template
+  to <https://www.dokuwiki.org/template:starter>. See
+  `static/3rd/dokuwiki/00_starter-tmpl-notes.txt` for details.

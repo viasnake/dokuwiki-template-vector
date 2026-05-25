@@ -16,7 +16,8 @@ FORBIDDEN_TEXT = {
 REQUIRED_FILES = [
     ".htaccess",
     "COPYING",
-    "README",
+    "CREDITS",
+    "README.md",
     "VERSION",
     ".github/workflows/ci.yml",
     "deleted.files",
@@ -97,7 +98,7 @@ def check_htaccess_files(errors):
 
 def check_forbidden_text(errors):
     text_suffixes = {".css", ".dist", ".ini", ".js", ".less", ".php", ".py", ".sh", ".txt", ".yml"}
-    text_names = {"README", "VERSION", "deleted.files"}
+    text_names = {"CREDITS", "README.md", "VERSION", "deleted.files"}
     for path in iter_paths():
         if not path.is_file():
             continue

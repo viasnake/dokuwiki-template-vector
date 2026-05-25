@@ -15,5 +15,4 @@ III) Notes
   more information:
   - <https://blog.andreas-haerter.com/2011/03/16/how-to-create-a-maintainable-dokuwiki-template>
   - <https://www.dokuwiki.org/template:starter>
-  - ../../../README
-
+  - ../../../README.md
