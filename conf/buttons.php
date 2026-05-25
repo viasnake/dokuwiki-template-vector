@@ -8,9 +8,10 @@
  *          certain conditions. See COPYING file for details or try to contact
  *          the author(s) of this file in doubt.
  *
- * @license GPLv2 (http://www.gnu.org/licenses/gpl2.html)
+ * @license GPLv2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author ARSAVA <dokuwiki@dev.arsava.com>
- * @link https://www.dokuwiki.org/template:vector
+ * @author viasnake <https://github.com/viasnake/>
+ * @link https://github.com/viasnake/dokuwiki-template-vector
  * @link https://www.dokuwiki.org/devel:configuration
  */
 
@@ -37,50 +38,50 @@ if (!defined("DOKU_INC")){
 
 
 //RSS recent changes button
-$_vector_btns["rss"]["img"]      = DOKU_TPL."static/img/button-rss.png";
-$_vector_btns["rss"]["href"]     = DOKU_BASE."feed.php";
-$_vector_btns["rss"]["width"]    = 80;
-$_vector_btns["rss"]["height"]   = 15;
-$_vector_btns["rss"]["title"]    = $lang["vector_recentchanges"];
-$_vector_btns["rss"]["nofollow"] = true;
+if (actionOK("rss")){
+    $_vector_btns["rss"]["img"]      = tpl_basedir()."static/img/button-rss.png";
+    $_vector_btns["rss"]["href"]     = DOKU_BASE."feed.php";
+    $_vector_btns["rss"]["width"]    = 80;
+    $_vector_btns["rss"]["height"]   = 15;
+    $_vector_btns["rss"]["title"]    = _vector_getLang("vector_recentchanges");
+    $_vector_btns["rss"]["nofollow"] = true;
+}
 
 
 //"vector for DokuWiki" button
-$_vector_btns["vecfdw"]["img"]      = DOKU_TPL."static/img/button-vector.png";
-$_vector_btns["vecfdw"]["href"]     = "https://www.dokuwiki.org/template:vector";
+$_vector_btns["vecfdw"]["img"]      = tpl_basedir()."static/img/button-vector.png";
+$_vector_btns["vecfdw"]["href"]     = "https://github.com/viasnake/dokuwiki-template-vector";
 $_vector_btns["vecfdw"]["width"]    = 80;
 $_vector_btns["vecfdw"]["height"]   = 15;
-$_vector_btns["vecfdw"]["title"]    = $lang["vector_mdtemplatefordw"];
-$_vector_btns["vecfdw"]["nofollow"] = !(cleanID(getID()) === "start");
+$_vector_btns["vecfdw"]["title"]    = _vector_getLang("vector_mdtemplatefordw");
+$_vector_btns["vecfdw"]["nofollow"] = !$vector_is_startpage;
 
 
 //donation button
-if (tpl_getConf("vector_donate")){
-    $_vector_btns["donate"]["img"]      = DOKU_TPL."static/img/button-donate.gif";
-    $_vector_btns["donate"]["href"]     = tpl_getConf("vector_donate_url");
+$vector_donate_url = trim(_vector_string(tpl_getConf("vector_donate_url")));
+if (tpl_getConf("vector_donate") &&
+    filter_var($vector_donate_url, FILTER_VALIDATE_URL) !== false &&
+    parse_url($vector_donate_url, PHP_URL_SCHEME) === "https"){
+    $_vector_btns["donate"]["img"]      = tpl_basedir()."static/img/button-donate.gif";
+    $_vector_btns["donate"]["href"]     = $vector_donate_url;
     $_vector_btns["donate"]["width"]    = 80;
     $_vector_btns["donate"]["height"]   = 15;
-    $_vector_btns["donate"]["title"]    = $lang["vector_donate"];
+    $_vector_btns["donate"]["title"]    = _vector_getLang("vector_donate");
     $_vector_btns["donate"]["nofollow"] = true;
 }
 
 
+unset($vector_donate_url);
+
 //DokuWiki button
-$_vector_btns["dw"]["img"]      = DOKU_TPL."static/img/button-dw.png";
+$_vector_btns["dw"]["img"]      = tpl_basedir()."static/img/button-dw.png";
 $_vector_btns["dw"]["href"]     = "https://www.dokuwiki.org/";
 $_vector_btns["dw"]["width"]    = 80;
 $_vector_btns["dw"]["height"]   = 15;
 $_vector_btns["dw"]["title"]    = "DokuWiki";
-$_vector_btns["dw"]["nofollow"] = !(cleanID(getID()) === "start");
+$_vector_btns["dw"]["nofollow"] = !$vector_is_startpage;
 
 
-//W3C (X)HTML validator button
-$_vector_btns["valid_xhtml"]["img"]      = DOKU_TPL."static/img/button-xhtml.png";
-$_vector_btns["valid_xhtml"]["href"]     = "http://validator.w3.org/check/referer";
-$_vector_btns["valid_xhtml"]["width"]    = 80;
-$_vector_btns["valid_xhtml"]["height"]   = 15;
-$_vector_btns["valid_xhtml"]["title"]    = "Valid XHTML";
-$_vector_btns["valid_xhtml"]["nofollow"] = true;
 
 
 

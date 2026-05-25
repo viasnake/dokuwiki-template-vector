@@ -1,13 +1,9 @@
 
   I. ARSAVA <dokuwiki@dev.arsava.com>
 
-    This DokuWiki template is maintained by ARSAVA [1]. If you like our
-    projects, you might buy us a coffee [2], or get some cool QR Code
-    merchandise [3]. Thank you! :-)
+    ARSAVA created and maintained the original DokuWiki Vector template.
 
     [1] <https://dev.arsava.com/>
-    [2] <https://donate.arsava.com/dokuwiki-template-vector/>
-    [3] <http://goqr.me/>
 
 
 
@@ -26,7 +22,7 @@
 
   IV. Luigi Micco <l.micco [ät] tiscali.it>
 
-    Luigi Micco [1] contributed the Italian language files an reported a few
+    Luigi Micco [1] contributed the Italian language files and reported a few
     bugs.
 
     [1] <http://www.luigimicco.altervista.org>
@@ -65,7 +61,7 @@
 
   X. Aleksandr Selivanov, anarchist IVANOV
 
-    Aleksandr Selivanov and anarchist IVANOV contributed the Russion language
+    Aleksandr Selivanov and anarchist IVANOV contributed the Russian language
     files.
 
 
@@ -90,12 +86,22 @@
 
 
 
-  IX. Myeongjin <aranet100 [ät] gmail.com>
+  XIV. Myeongjin <aranet100 [ät] gmail.com>
 
     Myeongjin contributed the Korean language files.
 
 
 
-  X. Dave
+  XV. Dave
 
     Dave contributed the Hebrew language files.
+
+
+  XVI. viasnake <https://github.com/viasnake/>
+
+    viasnake maintains this fork and modernizes the template for current
+    DokuWiki releases while preserving the legacy Vector 2010 look.
+    Contributions in this fork keep the original GPLv2 license and preserve
+    the original authors' notices.
+
+    [1] <https://github.com/viasnake/dokuwiki-template-vector>

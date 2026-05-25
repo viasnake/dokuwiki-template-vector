@@ -8,13 +8,12 @@
  *          certain conditions. See COPYING file for details or try to contact
  *          the author(s) of this file in doubt.
  *
- * @license GPLv2 (http://www.gnu.org/licenses/gpl2.html)
+ * @license GPLv2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author ARSAVA <dokuwiki@dev.arsava.com>
- * @link https://www.dokuwiki.org/template:vector
+ * @author viasnake <https://github.com/viasnake/>
+ * @link https://github.com/viasnake/dokuwiki-template-vector
  * @link https://www.dokuwiki.org/devel:configuration
  */
-
-
 
 /******************************************************************************
  ********************************  ATTENTION  *********************************
@@ -24,68 +23,50 @@
   template and "/user/boxes.php". You have been warned!
  *****************************************************************************/
 
-
 //check if we are running within the DokuWiki environment
 if (!defined("DOKU_INC")){
     die();
 }
 
-
 //note: The boxes will be rendered in the order they were defined. Means:
 //      first box will be rendered first, last box will be rendered at last.
-
 
 //hide boxes for anonymous clients (closed wiki)?
 if (empty($conf["useacl"]) || //are there any users?
     $loginname !== "" || //user is logged in?
     !tpl_getConf("vector_closedwiki")){
 
-    //Languages/translations provided by Andreas Gohr's translation plugin,
-    //see <https://www.dokuwiki.org/plugin:translation>. Create plugin object if
-    //needed.
-    if (file_exists(DOKU_PLUGIN."translation/syntax.php") &&
-        !plugin_isdisabled("translation")){
-        $transplugin = &plugin_load("syntax", "translation");
-    } else {
-        $transplugin = false;
-    }
 
     //navigation
     if (tpl_getConf("vector_navigation")){
         //headline
-        $_vector_boxes["p-navigation"]["headline"] = $lang["vector_navigation"];
+        $_vector_boxes["p-navigation"]["headline"] = _vector_getLang("vector_navigation");
 
         //detect wiki page to load as content
+        $transplugin_langcur = "";
         if (!empty($transplugin) &&
-            is_object($transplugin) &&
             tpl_getConf("vector_navigation_translate")){
-            //translated navigation?
-            $transplugin_langcur = $transplugin->hlp->getLangPart(cleanID(getId())); //current language part
-            $transplugin_langs   = explode(" ", trim($transplugin->getConf("translations"))); //available languages
-            if (empty($transplugin_langs) ||
-                empty($transplugin_langcur) ||
-                !is_array($transplugin_langs) ||
-                !in_array($transplugin_langcur, $transplugin_langs)) {
-                //current page is no translation or something is wrong, load default navigation
-                $nav_location = tpl_getConf("vector_navigation_location");
-            } else {
-                //load language specific navigation
-                $nav_location = tpl_getConf("vector_navigation_location")."_".$transplugin_langcur;
-            }
-        }else{
-            //default navigation, no translation
-            $nav_location = tpl_getConf("vector_navigation_location");
+            $transplugin_langcur = _vector_getTranslationPart($transplugin);
+        }
+        if ($transplugin_langcur === ""){
+            //current page is no translation or something is wrong, load default navigation
+            $nav_location = _vector_cleanPageId(tpl_getConf("vector_navigation_location"));
+        } else {
+            //load language specific navigation
+            $nav_location = _vector_cleanTranslatedPageId(tpl_getConf("vector_navigation_location"), $transplugin_langcur);
         }
 
+        $nav_location = _vector_cleanPageId($nav_location);
+
         //content
-        if (empty($conf["useacl"]) ||
-            auth_quickaclcheck(cleanID($nav_location)) >= AUTH_READ){ //current user got access?
+        if ($nav_location !== "" && (empty($conf["useacl"]) ||
+            auth_quickaclcheck($nav_location) >= AUTH_READ)){ //current user got access?
             //get the rendered content of the defined wiki article to use as custom navigation
             $interim = tpl_include_page($nav_location, false);
             if ($interim === "" ||
                 $interim === false){
                 //creation/edit link if the defined page got no content
-                $_vector_boxes["p-navigation"]["xhtml"] = "[&#160;".html_wikilink($nav_location, hsc($lang["vector_fillplaceholder"]." (".$nav_location.")"))."&#160;]<br />";
+                $_vector_boxes["p-navigation"]["xhtml"] = "[&#160;".html_wikilink($nav_location, _vector_getLang("vector_fillplaceholder")." (".$nav_location.")")."&#160;]<br>";
             }else{
                 //the rendered page content
                 $_vector_boxes["p-navigation"]["xhtml"] = $interim;
@@ -100,22 +81,14 @@ if (empty($conf["useacl"]) || //are there any users?
         $toc = tpl_toc(true);
         if (!empty($toc)) {
             //headline
-            $_vector_boxes["p-toc"]["headline"] = $lang["toc"]; //language comes from DokuWiki core
+            $_vector_boxes["p-toc"]["headline"] = _vector_getLang("toc", "Table of Contents"); //language comes from DokuWiki core
 
             //content
-            $_vector_boxes["p-toc"]["xhtml"] = //get rid of some styles and the embedded headline
-                                               str_replace(//search
-                                                           array(//old TOC, until 2012-01-25
-                                                                 "<div class=\"tocheader toctoggle\" id=\"toc__header\">".$lang["toc"]."</div>", //language comes from DokuWiki core
-                                                                 " class=\"toc\"",
-                                                                 " id=\"toc__inside\"",
-                                                                 //new TOC, since 2012-09-10
-                                                                 " id=\"dw__toc\"",
-                                                                 "<h3 class=\"toggle\">".$lang["toc"]."</h3>"), //language comes from DokuWiki core
-                                                           //replace
-                                                           "",
-                                                           //haystack
-                                                           $toc);
+            $_vector_boxes["p-toc"]["xhtml"] = str_replace(
+                array(" id=\"dw__toc\"", "<h3 class=\"toggle\">"._vector_getLang("toc", "Table of Contents")."</h3>"),
+                "",
+                $toc
+            );
         }
         unset($toc);
     }
@@ -123,50 +96,55 @@ if (empty($conf["useacl"]) || //are there any users?
     //exportbox ("print/export")
     if (tpl_getConf("vector_exportbox")){
         //headline
-        $_vector_boxes["p-coll-print_export"]["headline"] = $lang["vector_exportbox"];
+        $_vector_boxes["p-coll-print_export"]["headline"] = _vector_getLang("vector_exportbox");
 
         //content
         if (tpl_getConf("vector_exportbox_default")){
             //define default, predefined exportbox
             $_vector_boxes["p-coll-print_export"]["xhtml"] =  "      <ul>\n";
-            //ODT plugin
-            //see <https://www.dokuwiki.org/plugin:odt> for info
-            if (file_exists(DOKU_PLUGIN."odt/syntax.php") &&
-                !plugin_isdisabled("odt")){
-                $_vector_boxes["p-coll-print_export"]["xhtml"]  .= "        <li id=\"coll-download-as-odt\"><a href=\"".wl(cleanID(getId()), array("do" => "export_odt"))."\" rel=\"nofollow\">".hsc($lang["vector_exportbxdef_downloadodt"])."</a></li>\n";
+            if (!empty($INFO["exists"])){
+                //ODT plugin
+                //see <https://www.dokuwiki.org/plugin:odt> for info
+                if (actionOK("export_odt") &&
+                    file_exists(DOKU_PLUGIN."odt/syntax.php") &&
+                    !plugin_isdisabled("odt")){
+                    $_vector_boxes["p-coll-print_export"]["xhtml"] .= sprintf("        <li id=\"coll-download-as-odt\"><a href=\"%s\" rel=\"nofollow\">%s</a></li>\n", hsc(_vector_wl(cleanID(getID()), array("do" => "export_odt"))), hsc(_vector_getLang("vector_exportbxdef_downloadodt")));
+                }
+                //dw2pdf plugin
+                //see <https://www.dokuwiki.org/plugin:dw2pdf> for info
+                if (actionOK("export_pdf") &&
+                    file_exists(DOKU_PLUGIN."dw2pdf/action.php") &&
+                    !plugin_isdisabled("dw2pdf")){
+                    $_vector_boxes["p-coll-print_export"]["xhtml"] .= sprintf("        <li id=\"coll-download-as-pdf\"><a href=\"%s\" rel=\"nofollow\">%s</a></li>\n", hsc(_vector_wl(cleanID(getID()), array("do" => "export_pdf"))), hsc(_vector_getLang("vector_exportbxdef_downloadpdf")));
+                //html2pdf plugin
+                //see <https://www.dokuwiki.org/plugin:html2pdf> for info
+                } elseif (actionOK("export_pdf") &&
+                          file_exists(DOKU_PLUGIN."html2pdf/action.php") &&
+                          !plugin_isdisabled("html2pdf")){
+                    $_vector_boxes["p-coll-print_export"]["xhtml"] .= sprintf("        <li id=\"coll-download-as-pdf\"><a href=\"%s\" rel=\"nofollow\">%s</a></li>\n", hsc(_vector_wl(cleanID(getID()), array("do" => "export_pdf"))), hsc(_vector_getLang("vector_exportbxdef_downloadpdf")));
+                }
+                $_vector_boxes["p-coll-print_export"]["xhtml"] .= sprintf("        <li id=\"t-print\"><a href=\"%s\" rel=\"nofollow\">%s</a></li>\n", hsc(_vector_wl(cleanID(getID()), array("rev" => (int)$rev, "vecdo" => "print"))), hsc(_vector_getLang("vector_exportbxdef_print")));
             }
-            //dw2pdf plugin
-            //see <https://www.dokuwiki.org/plugin:dw2pdf> for info
-            if (file_exists(DOKU_PLUGIN."dw2pdf/action.php") &&
-                !plugin_isdisabled("dw2pdf")){
-                $_vector_boxes["p-coll-print_export"]["xhtml"]  .= "        <li id=\"coll-download-as-rl\"><a href=\"".wl(cleanID(getId()), array("do" => "export_pdf"))."\" rel=\"nofollow\">".hsc($lang["vector_exportbxdef_downloadpdf"])."</a></li>\n";
-            //html2pdf plugin
-            //see <https://www.dokuwiki.org/plugin:html2pdf> for info
-            } else if (file_exists(DOKU_PLUGIN."html2pdf/action.php") &&
-                       !plugin_isdisabled("html2pdf")){
-                $_vector_boxes["p-coll-print_export"]["xhtml"]  .= "        <li id=\"coll-download-as-rl\"><a href=\"".wl(cleanID(getId()), array("do" => "export_pdf"))."\" rel=\"nofollow\">".hsc($lang["vector_exportbxdef_downloadpdf"])."</a></li>\n";
-            }
-            $_vector_boxes["p-coll-print_export"]["xhtml"] .=  "        <li id=\"t-print\"><a href=\"".wl(cleanID(getId()), array("rev" =>(int)$rev, "vecdo" => "print"))."\" rel=\"nofollow\">".hsc($lang["vector_exportbxdef_print"])."</a></li>\n"
-                                                              ."      </ul>";
+            $_vector_boxes["p-coll-print_export"]["xhtml"] .= "      </ul>";
         }else{
             //we have to use a custom exportbox
-            if (empty($conf["useacl"]) ||
-                auth_quickaclcheck(cleanID(tpl_getConf("vector_exportbox_location"))) >= AUTH_READ){ //current user got access?
+            $exportbox_location = _vector_cleanPageId(tpl_getConf("vector_exportbox_location"));
+            if ($exportbox_location !== "" && (empty($conf["useacl"]) ||
+                auth_quickaclcheck($exportbox_location) >= AUTH_READ)){ //current user got access?
                 //get the rendered content of the defined wiki article to use as
                 //custom exportbox
-                $interim = tpl_include_page(tpl_getConf("vector_exportbox_location"), false);
+                $interim = tpl_include_page($exportbox_location, false);
                 if ($interim === "" ||
                     $interim === false){
                     //add creation/edit link if the defined page got no content
-                    $_vector_boxes["p-coll-print_export"]["xhtml"] =  "<li>[&#160;".html_wikilink(tpl_getConf("vector_exportbox_location"), hsc($lang["vector_fillplaceholder"]." (".tpl_getConf("vector_exportbox_location").")"), null)."&#160;]<br /></li>";
+                    $_vector_boxes["p-coll-print_export"]["xhtml"] = "      <ul><li>[&#160;".html_wikilink($exportbox_location, _vector_getLang("vector_fillplaceholder")." (".$exportbox_location.")", "")."&#160;]<br></li></ul>";
                 }else{
                     //add the rendered page content
                     $_vector_boxes["p-coll-print_export"]["xhtml"] =  $interim;
                 }
             }else{
                 //we are not allowed to show the content of the defined wiki
-                //article to use as custom sitenotice.
-                //$_vector_boxes["p-tb"]["xhtml"] = hsc($lang["vector_accessdenied"])." (".tpl_getConf("vector_exportbox_location").")";
+                //article to use as custom exportbox.
             }
         }
     }
@@ -174,84 +152,91 @@ if (empty($conf["useacl"]) || //are there any users?
     //toolbox
     if (tpl_getConf("vector_toolbox")){
         //headline
-        $_vector_boxes["p-tb"]["headline"] = $lang["vector_toolbox"];
+        $_vector_boxes["p-tb"]["headline"] = _vector_getLang("vector_toolbox");
 
         //content
         if (tpl_getConf("vector_toolbox_default")){
             //define default, predefined toolbox
             $_vector_boxes["p-tb"]["xhtml"] = "      <ul>\n";
             if (actionOK("backlink")){ //check if action is disabled
-                $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-whatlinkshere\"><a href=\"".wl(cleanID(getId()), array("do" => "backlink"))."\">".hsc($lang["vector_toolbxdef_whatlinkshere"])."</a></li>\n"; //we might use tpl_actionlink("backlink", "", "", hsc($lang["vector_toolbxdef_whatlinkshere"]), true), but it would be the only toolbox link where this is possible... therefore I don't use it to be consistent
+                $_vector_boxes["p-tb"]["xhtml"] .= sprintf("        <li id='t-whatlinkshere'><a href='%s'>%s</a></li>\n", hsc(_vector_wl(cleanID(getID()), array("do" => "backlink"))), hsc(_vector_getLang("vector_toolbxdef_whatlinkshere")));
             }
             if (actionOK("recent")){ //check if action is disabled
-                $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-recentchanges\"><a href=\"".wl("", array("do" => "recent"))."\" rel=\"nofollow\">".hsc($lang["btn_recent"])."</a></li>\n"; //language comes from DokuWiki core
+                $_vector_boxes["p-tb"]["xhtml"] .= sprintf("        <li id='t-recentchanges'><a href='%s' rel='nofollow'>%s</a></li>\n", hsc(_vector_wl("", array("do" => "recent"))), hsc(_vector_getLang("btn_recent", "Recent Changes"))); //language comes from DokuWiki core
             }
             if (actionOK("media")){ //check if action is disabled
-                if (function_exists("media_managerURL")) {
-                    //use new media manager (available on releases newer than 2011-05-25a "Rincewind" / since 2011-11-10 "Angua" RC1)
-                    $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-upload\"><a href=\"".wl("", array("do" => "media"))."\" rel=\"nofollow\">".hsc($lang["btn_media"])."</a></li>\n"; //language comes from DokuWiki core
-                } else {
-                    $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-upload\"><a href=\"".DOKU_BASE."lib/exe/mediamanager.php?ns=".getNS(getID())."\" rel=\"nofollow\">".hsc($lang["vector_toolbxdef_upload"])."</a></li>\n";
-                }
+                $_vector_boxes["p-tb"]["xhtml"] .= sprintf("        <li id='t-upload'><a href='%s' rel='nofollow'>%s</a></li>\n", hsc(_vector_wl(cleanID(getID()), array("do" => "media", "ns" => getNS(cleanID(getID()))))), hsc(_vector_getLang("btn_media", "Media Manager"))); //language comes from DokuWiki core
             }
             if (actionOK("index")){ //check if action is disabled
-                $_vector_boxes["p-tb"]["xhtml"] .= "        <li id=\"t-special\"><a href=\"".wl("", array("do" => "index"))."\" rel=\"nofollow\">".hsc($lang["vector_toolbxdef_siteindex"])."</a></li>\n";
+                $_vector_boxes["p-tb"]["xhtml"] .= sprintf("        <li id='t-special'><a href='%s' rel='nofollow'>%s</a></li>\n", hsc(_vector_wl("", array("do" => "index"))), hsc(_vector_getLang("vector_toolbxdef_siteindex")));
             }
-            $_vector_boxes["p-tb"]["xhtml"] .=  "        <li id=\"t-permanent\"><a href=\"".wl(cleanID(getId()), array("rev" =>(int)$rev))."\" rel=\"nofollow\">".hsc($lang["vector_toolboxdef_permanent"])."</a></li>\n"
-                                               ."        <li id=\"t-cite\"><a href=\"".wl(cleanID(getId()), array("rev" =>(int)$rev, "vecdo" => "cite"))."\" rel=\"nofollow\">".hsc($lang["vector_toolboxdef_cite"])."</a></li>\n"
-                                               ."      </ul>";
+            if (!empty($INFO["exists"])){
+                $_vector_boxes["p-tb"]["xhtml"] .= sprintf("        <li id='t-permanent'><a href='%s' rel='nofollow'>%s</a></li>\n", hsc(_vector_wl(cleanID(getID()), array("rev" => (int)$rev))), hsc(_vector_getLang("vector_toolboxdef_permanent")))
+                                                   .sprintf("        <li id='t-cite'><a href='%s' rel='nofollow'>%s</a></li>\n", hsc(_vector_wl(cleanID(getID()), array("rev" => (int)$rev, "vecdo" => "cite"))), hsc(_vector_getLang("vector_toolboxdef_cite")));
+            }
+            $_vector_boxes["p-tb"]["xhtml"] .= "      </ul>";
         }else{
             //we have to use a custom toolbox
-            if (empty($conf["useacl"]) ||
-                auth_quickaclcheck(cleanID(tpl_getConf("vector_toolbox_location"))) >= AUTH_READ){ //current user got access?
-                //get the rendered content of the defined wiki article to use as
-                //custom toolbox
-                $interim = tpl_include_page(tpl_getConf("vector_toolbox_location"), false);
+            $toolbox_location = _vector_cleanPageId(tpl_getConf("vector_toolbox_location"));
+            if ($toolbox_location !== "" && (empty($conf["useacl"]) ||
+                auth_quickaclcheck($toolbox_location) >= AUTH_READ)){ //current user got access?
+                //get the rendered content of the defined wiki article to use as custom toolbox
+                $interim = tpl_include_page($toolbox_location, false);
                 if ($interim === "" ||
                     $interim === false){
                     //add creation/edit link if the defined page got no content
-                    $_vector_boxes["p-tb"]["xhtml"] =  "<li>[&#160;".html_wikilink(tpl_getConf("vector_toolbox_location"), hsc($lang["vector_fillplaceholder"]." (".tpl_getConf("vector_toolbox_location").")"), null)."&#160;]<br /></li>";
+                    $_vector_boxes["p-tb"]["xhtml"] = "      <ul><li>[&#160;".html_wikilink($toolbox_location, _vector_getLang("vector_fillplaceholder")." (".$toolbox_location.")", "")."&#160;]<br></li></ul>";
                 }else{
                     //add the rendered page content
-                    $_vector_boxes["p-tb"]["xhtml"] =  $interim;
+                    $_vector_boxes["p-tb"]["xhtml"] = $interim;
                 }
             }else{
-                //we are not allowed to show the content of the defined wiki
-                //article to use as custom sitenotice.
-                //$_vector_boxes["p-tb"]["xhtml"] = hsc($lang["vector_accessdenied"])." (".tpl_getConf("vector_toolbox_location").")";
+                //we are not allowed to show the content of the defined wiki article to use as custom toolbox.
             }
         }
     }
 
-    //QR Code of current page's URL (powered by <http://goqr.me/api/>)
+    //QR Code of current page URL
     if (tpl_getConf("vector_qrcodebox")){
         //headline
-        $_vector_boxes["p-qrcode"]["headline"] = $lang["vector_qrcodebox"];
+        $_vector_boxes["p-qrcode"]["headline"] = _vector_getLang("vector_qrcodebox");
 
         //content
-        $_vector_boxes["p-qrcode"]["xhtml"] = "        <span id=\"t-qrcode\">".((cleanID(getID()) === "start") ? "<a href=\"http://".(($conf["lang"] !== "de") ? "goqr.me" : "goqr.me/de")."/\" target=\"_blank\" rel=\"nofollow\">" : "")."<img src=\"".((!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] === "on") ? "https" : "http")."://api.qrserver.com/v1/create-qr-code/?data=".urlencode(wl(cleanID(getId()), false, true, "&"))."&#38;size=130x130&#38;margin=0&#38;bgcolor=f3f3f3\" alt=\"".hsc($lang["vector_qrcodebox_qrcode"])." ".hsc(tpl_pagetitle(null, true))." (".hsc($lang["vector_qrcodebox_genforcurrentpage"]).")\" title=\"".hsc($lang["vector_qrcodebox_urlofcurrentpage"])."\" />".((cleanID(getID()) === "start") ? "</a>" : "")."</span>";
+        $qrcode_page_url = wl(cleanID(getID()), "", true, "&");
+        $qrcode_page_title = html_entity_decode(_vector_string(tpl_pagetitle(null, true)), ENT_QUOTES, "UTF-8");
+        $qrcode_alt = _vector_getLang("vector_qrcodebox_qrcode")." ".$qrcode_page_title." ("._vector_getLang("vector_qrcodebox_genforcurrentpage").")";
+        $qrcode_img = "<img src='https://api.qrserver.com/v1/create-qr-code/?data=".urlencode($qrcode_page_url)."&#38;size=130x130&#38;margin=0&#38;bgcolor=f3f3f3' alt='".hsc($qrcode_alt)."' title='".hsc(_vector_getLang("vector_qrcodebox_urlofcurrentpage"))."'>";
+        $_vector_boxes["p-qrcode"]["xhtml"] = "        <span id='t-qrcode'>".$qrcode_img."</span>";
+        unset($qrcode_alt, $qrcode_img, $qrcode_page_title, $qrcode_page_url);
     }
-
 }else{
 
     //headline
-    $_vector_boxes["p-login"]["headline"] = $lang["btn_login"];
-    $_vector_boxes["p-login"]["xhtml"] =  "      <ul>\n"
-                                         ."        <li id=\"t-login\"><a href=\"".wl(cleanID(getId()), array("do" => "login"))."\" rel=\"nofollow\">".hsc($lang["btn_login"])."</a></li>\n" //language comes from DokuWiki core
-                                         ."      </ul>";
-
+    $_vector_boxes["p-login"]["headline"] = _vector_getLang("btn_login", "Log In");
+    $_vector_boxes["p-login"]["xhtml"] =  "      <ul>\n";
+    if (actionOK("register")){
+        $_vector_boxes["p-login"]["xhtml"] .= "        <li id='t-register'><a href='".hsc(_vector_wl(cleanID(getID()), array("do" => "register")))."' rel='nofollow'>".hsc(_vector_getLang("btn_register", "Register"))."</a></li>"; //language comes from DokuWiki core
+    }
+    if (actionOK("login")){
+        $_vector_boxes["p-login"]["xhtml"] .= "        <li id='t-login'><a href='".hsc(_vector_wl(cleanID(getID()), array("do" => "login", "sectok" => getSecurityToken())))."' rel='nofollow'>".hsc(_vector_getLang("btn_login", "Log In"))."</a></li>"; //language comes from DokuWiki core
+    }
+    if (actionOK("resendpwd")){
+        $_vector_boxes["p-login"]["xhtml"] .= "        <li id='t-resendpwd'><a href='".hsc(_vector_wl(cleanID(getID()), array("do" => "resendpwd")))."' rel='nofollow'>".hsc(_vector_getLang("btn_resendpwd", "Set new password"))."</a></li>"; //language comes from DokuWiki core
+    }
+    $_vector_boxes["p-login"]["xhtml"] .= "      </ul>";
 }
-
 
 //Languages/translations provided by Andreas Gohr's translation plugin,
 //see <https://www.dokuwiki.org/plugin:translation>
-if (!empty($transplugin) &&
-    is_object($transplugin)){
-    $_vector_boxes["p-lang"]["headline"] = $lang["vector_translations"];
-    $_vector_boxes["p-lang"]["xhtml"]    = $transplugin->_showTranslations();
+if ((empty($conf["useacl"]) ||
+    $loginname !== "" ||
+    !tpl_getConf("vector_closedwiki")) &&
+    !empty($transplugin) &&
+    is_object($transplugin) &&
+    method_exists($transplugin, "showTranslations")){
+    $_vector_boxes["p-lang"]["headline"] = _vector_getLang("vector_translations");
+    $_vector_boxes["p-lang"]["xhtml"]    = $transplugin->showTranslations();
 }
-
-
 
 /******************************************************************************
  ********************************  ATTENTION  *********************************
@@ -260,4 +245,3 @@ if (!empty($transplugin) &&
   If you want to add some own boxes, have a look at the README of this
   template and "/user/boxes.php". You have been warned!
  *****************************************************************************/
-

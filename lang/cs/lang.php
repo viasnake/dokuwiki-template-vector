@@ -5,22 +5,22 @@
  *
  * If your language is not/only partially translated or you found an error/typo,
  * have a look at the following files:
- * - /lib/tpl/vector/lang/<your lang>/lang.php
- * - /lib/tpl/vector/lang/<your lang>/settings.php
- * If they are not existing, copy and translate the English ones (hint: looking
- * at <http://[your lang].wikipedia.org> might be helpful).
+ * - /lib/tpl/modernizedvector/lang/<your lang>/lang.php
+ * - /lib/tpl/modernizedvector/lang/<your lang>/settings.php
+ * If they do not exist, copy and translate the English ones (hint: looking
+ * at the Wikipedia for your language might be helpful).
  *
- * Don't forget to mail your translation to ARSAVA <dokuwiki@dev.arsava.com>.
- * Thanks! :-D
+ * Please submit translation updates through GitHub issues or pull requests.
  *
  *
  * LICENSE: This file is open source software (OSS) and may be copied under
  *          certain conditions. See COPYING file for details or try to contact
  *          the author(s) of this file in doubt.
  *
- * @license GPLv2 (http://www.gnu.org/licenses/gpl2.html)
+ * @license GPLv2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author David Roesel <http://david.roesel.cz/>
- * @link https://www.dokuwiki.org/template:vector
+ * @author viasnake <https://github.com/viasnake/>
+ * @link https://github.com/viasnake/dokuwiki-template-vector
  * @link https://www.dokuwiki.org/config:lang
  * @link https://www.dokuwiki.org/devel:configuration
  */
@@ -38,25 +38,17 @@ $lang["vector_read"] = "Číst";
 $lang["vector_edit"] = "Upravit";
 $lang["vector_create"] = "Vytvořit";
 $lang["vector_userpage"] = "Uživatelská stránka";
-$lang["vector_specialpage"] = "Speciální stránky";
 $lang["vector_mytalk"] = "Můj pokec";
 $lang["vector_exportodt"] = "Export: ODT";
 $lang["vector_exportpdf"] = "Export: PDF";
-$lang["vector_subscribens"] = "Odebírat NS změny"; //original DW lang $lang["btn_subscribens"] is simply too long for common tab configs
-$lang["vector_unsubscribens"] = "Přestat odebírat NS změny";  //original DW lang $lang["btn_unsubscribens"] is simply too long for common tab configs
 $lang["vector_translations"] = "Jazyky";
 
 //headlines for the different bars and boxes
 $lang["vector_navigation"] = "Navigace";
 $lang["vector_toolbox"] = "Nástroje";
 $lang["vector_exportbox"] = "Tisk/export";
-$lang["vector_inotherlanguages"] = "Jazyky";
-$lang["vector_printexport"] = "Vytisknout/exportovat";
-$lang["vector_personnaltools"] = "Osobní nástroje";
 
 //buttons
-$lang["vector_btn_go"] = "Přejít";
-$lang["vector_btn_search"] = "Hledat";
 $lang["vector_btn_search_title"] = "Hledat tento text";
 
 //exportbox ("print/export")
@@ -66,7 +58,6 @@ $lang["vector_exportbxdef_downloadpdf"] = "Stáhnout jako PDF";
 
 //default toolbox
 $lang["vector_toolbxdef_whatlinkshere"] = "Stránky odkazující sem";
-$lang["vector_toolbxdef_upload"] = "Nahrát soubor";
 $lang["vector_toolbxdef_siteindex"] = "Hlavní stránka";
 $lang["vector_toolboxdef_permanent"] = "Trvalý odkaz";
 $lang["vector_toolboxdef_cite"] = "Citovat tuto stránku";
@@ -97,9 +88,17 @@ $lang["vector_cite_thisversion"] = "tato verze";
 
 //other
 $lang["vector_search"] = "Hledat";
-$lang["vector_accessdenied"] = "Nepovolený přístup";
 $lang["vector_fillplaceholder"] = "Vyplňte prosím toto umístění";
 $lang["vector_donate"] = "Přispět";
 $lang["vector_mdtemplatefordw"] = "téma vector pro systém DokuWiki";
 $lang["vector_recentchanges"] = "Poslední změny";
 
+
+// English fallback labels for strings added after the original translation
+$lang["vector_qrcodebox"] = "QR Code";
+$lang["vector_sidebar"] = "Sidebar";
+$lang["vector_qrcodebox_qrcode"] = "QR Code";
+$lang["vector_qrcodebox_genforcurrentpage"] = "generated for current page";
+$lang["vector_qrcodebox_urlofcurrentpage"] = "Current page as QR Code (scan for easy mobile access)";
+$lang["vector_skip_to_content"] = "Skip to content";
+$lang["vector_menu"] = "Menu";

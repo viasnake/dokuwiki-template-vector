@@ -1,0 +1,9 @@
+#Note: Maintainer-facing smoke tests should not be served as template assets.
+#      This only affects web servers honoring Apache .htaccess files.
+<IfModule mod_authz_core.c>
+  Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+  Order allow,deny
+  Deny from all
+</IfModule>

@@ -2,35 +2,35 @@
  ********************************  ATTENTION  *********************************
          DO NOT MODIFY THIS FILE, IT WILL NOT BE PRESERVED ON UPDATES!
  ******************************************************************************
-  If you want to add some own screen CSS, have a look at the README of this
+  If you want to add some own print CSS, have a look at the README of this
   template and "/user/print.css". You have been warned!
  *****************************************************************************/
 
 body {
   font: normal 80%/1.4 sans-serif;
 }
-div#content .dokuwiki h1,
-div#content .dokuwiki h2,
-div#content .dokuwiki h3,
-div#content .dokuwiki h4,
-div#content .dokuwiki h5,
-div#content .dokuwiki h6 {
+#content .dokuwiki h1,
+#content .dokuwiki h2,
+#content .dokuwiki h3,
+#content .dokuwiki h4,
+#content .dokuwiki h5,
+#content .dokuwiki h6 {
   border-bottom: 0 none;
 }
-div#content .dokuwiki h1,
-div#content .dokuwiki h2 {
+#content .dokuwiki h1,
+#content .dokuwiki h2 {
   font-weight: bold;
 }
-div#content .dokuwiki h1 {
-  font-weight: 135%;
+#content .dokuwiki h1 {
+  font-size: 135%;
 }
-div#content .dokuwiki h2 {
-  font-weight: 130%;
+#content .dokuwiki h2 {
+  font-size: 130%;
 }
-div#content .dokuwiki h3,
-div#content .dokuwiki h4,
-div#content .dokuwiki h5,
-div#content .dokuwiki h6 {
+#content .dokuwiki h3,
+#content .dokuwiki h4,
+#content .dokuwiki h5,
+#content .dokuwiki h6 {
   font-weight: normal;
   text-decoration: underline;
 }
@@ -52,36 +52,36 @@ div.dokuwiki a.interwiki {
 }
 
 /* quotes */
-div#content .dokuwiki blockquote {
-  border-left: 2px solid __border__;
+#content .dokuwiki blockquote {
+  border-left: 2px solid #8cacbb;
   padding-left: 3px;
   margin-left: 0.2em;
 }
 
 /* preformatted stuff, source code */
-div#content .dokuwiki code,
-div#content .dokuwiki pre,
-div#content .dokuwiki pre.code,
-div#content .dokuwiki pre.file {
+#content .dokuwiki code,
+#content .dokuwiki pre,
+#content .dokuwiki pre.code,
+#content .dokuwiki pre.file {
   font-size: 100%;
 }
-div#content .dokuwiki pre,
-div#content .dokuwiki pre.code,
-div#content .dokuwiki pre.file {
+#content .dokuwiki pre,
+#content .dokuwiki pre.code,
+#content .dokuwiki pre.file {
   line-height: 1.2em;
-  background-color: __background_other__;
+  background-color: #fff;
 }
-div#content .dokuwiki dl.file,
-div#content .dokuwiki dl.file dd,
-div#content .dokuwiki dl.file dt {
+#content .dokuwiki dl.file,
+#content .dokuwiki dl.file dd,
+#content .dokuwiki dl.file dt {
   margin-left: 0;
 }
-div#content .dokuwiki dl.file dt {
-  background-color: __background_other__;
+#content .dokuwiki dl.file dt {
+  background-color: #fff;
 }
 
 /* misc tweaks */
-div#content,
+#content,
 div#bodyContent {
   margin-left: 0;
   border: 0 none;
@@ -98,18 +98,18 @@ div.tags {
 }
 
 /* pagelist plugin: listing tables */
-div#content .dokuwiki table.ul,
-div#content .dokuwiki table.ul tr,
-div#content .dokuwiki table.ul td {
+#content .dokuwiki table.ul,
+#content .dokuwiki table.ul tr,
+#content .dokuwiki table.ul td {
   border: 0 none;
 }
-div#content .dokuwiki table.ul td.date,
-div#content .dokuwiki table.ul td.user {
+#content .dokuwiki table.ul td.date,
+#content .dokuwiki table.ul td.user {
   display: none;
 }
-div#content .dokuwiki table.ul ul,
-div#content .dokuwiki table.ul ol,
-div#content .dokuwiki table.ul li {
+#content .dokuwiki table.ul ul,
+#content .dokuwiki table.ul ol,
+#content .dokuwiki table.ul li {
   margin-top: 0;
   margin-bottom: 0;
   padding-top: 0;
@@ -117,19 +117,19 @@ div#content .dokuwiki table.ul li {
 }
 
 /* wrap plugin: modify some inline styles */
-div#content .dokuwiki span.wrap_box,
-div#content .dokuwiki span.wrap_danger,
-div#content .dokuwiki span.wrap_warning,
-div#content .dokuwiki span.wrap_caution,
-div#content .dokuwiki span.wrap_notice,
-div#content .dokuwiki span.wrap_safety,
-div#content .dokuwiki span.wrap_info,
-div#content .dokuwiki span.wrap_important,
-div#content .dokuwiki span.wrap_alert,
-div#content .dokuwiki span.wrap_tip,
-div#content .dokuwiki span.wrap_help,
-div#content .dokuwiki span.wrap_todo,
-div#content .dokuwiki span.wrap_download {
+#content .dokuwiki span.wrap_box,
+#content .dokuwiki span.wrap_danger,
+#content .dokuwiki span.wrap_warning,
+#content .dokuwiki span.wrap_caution,
+#content .dokuwiki span.wrap_notice,
+#content .dokuwiki span.wrap_safety,
+#content .dokuwiki span.wrap_info,
+#content .dokuwiki span.wrap_important,
+#content .dokuwiki span.wrap_alert,
+#content .dokuwiki span.wrap_tip,
+#content .dokuwiki span.wrap_help,
+#content .dokuwiki span.wrap_todo,
+#content .dokuwiki span.wrap_download {
   border-top: 0 none;
   border-right: 0 none;
   border-left: 0 none;

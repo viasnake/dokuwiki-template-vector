@@ -13,9 +13,10 @@
  *          certain conditions. See COPYING file for details or try to contact
  *          the author(s) of this file in doubt.
  *
- * @license GPLv2 (http://www.gnu.org/licenses/gpl2.html)
+ * @license GPLv2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author ARSAVA <dokuwiki@dev.arsava.com>
- * @link https://www.dokuwiki.org/template:vector
+ * @author viasnake <https://github.com/viasnake/>
+ * @link https://github.com/viasnake/dokuwiki-template-vector
  * @link https://www.dokuwiki.org/devel:templates
  */
 
@@ -23,76 +24,92 @@
 if (!defined("DOKU_INC")){
     die();
 }
+$ERROR = (isset($ERROR) && is_scalar($ERROR)) ? (string)$ERROR : "";
+$IMG = (isset($IMG) && is_scalar($IMG)) ? (string)$IMG : "";
+$ID = (isset($ID) && is_scalar($ID)) ? cleanID((string)$ID) : cleanID(getID());
+$imageHeadline = tpl_img_getTag("IPTC.Headline", noNS($IMG));
+$imageTitle = tpl_img_getTag("Simple.Title");
+$imageHeadline = is_scalar($imageHeadline) ? (string)$imageHeadline : "";
+$imageTitle = is_scalar($imageTitle) ? (string)$imageTitle : "";
+$mediaUsage = array();
+if ($IMG !== ""){
+    $mediaUsageLoaded = false;
+    if (class_exists("\\dokuwiki\\Search\\MetadataSearch")){
+        try {
+            $metadataSearch = new \dokuwiki\Search\MetadataSearch();
+            if (method_exists($metadataSearch, "mediause")){
+                $mediaUsage = $metadataSearch->mediause($IMG, true);
+                $mediaUsageLoaded = true;
+            }
+        } catch (\Throwable $ignored) {
+            $mediaUsageLoaded = false;
+        }
+    }
+    if (!$mediaUsageLoaded && function_exists("ft_mediause")){
+        $mediaUsage = ft_mediause($IMG, true);
+    }
+}
+if (!is_array($mediaUsage)){
+    $mediaUsage = array();
+}
+
 ?>
 
     <div id="dokuwiki__detail" class="dokuwiki">
-        <?php html_msgarea() ?>
 
-        <?php if($ERROR){ print $ERROR; }else{ ?>
+        <?php if ($ERROR !== "") { echo hsc($ERROR); } else { ?>
 
-            <h1><?php echo hsc(tpl_img_getTag('IPTC.Headline',$IMG))?></h1>
+            <h1><?php echo hsc($imageHeadline)?></h1>
 
             <div class="content">
                 <?php tpl_img(900,700); /* parameters: maximum width, maximum height (and more) */ ?>
 
                 <div class="img_detail">
-                    <h2><?php print nl2br(hsc(tpl_img_getTag('simple.title'))); ?></h2>
+                    <h2><?php echo nl2br(hsc($imageTitle), false); ?></h2>
+
+                    <?php tpl_img_meta(); ?>
 
                     <dl>
                         <?php
-                            $config_files = getConfigFiles('mediameta');
-                            foreach ($config_files as $config_file) {
-                                if(@file_exists($config_file)) {
-                                    include($config_file);
-                                }
-                            }
-
-                            foreach($fields as $key => $tag){
-                                $t = array();
-                                if (!empty($tag[0])) {
-                                    $t = array($tag[0]);
-                                }
-                                if(is_array($tag[3])) {
-                                    $t = array_merge($t,$tag[3]);
-                                }
-                                $value = tpl_img_getTag($t);
-                                if ($value) {
-                                    echo '<dt>'.$lang[$tag[1]].':</dt><dd>';
-                                    if ($tag[2] == 'date') {
-                                        echo dformat($value);
-                                    } else {
-                                        echo hsc($value);
+                            echo '<dt>'.hsc(_vector_getLang("reference", "Reference")).':</dt>';
+                            if ($mediaUsage !== array()){
+                                foreach ($mediaUsage as $t){
+                                    if (!is_scalar($t)){
+                                        continue;
                                     }
-                                    echo '</dd>';
+                                    $target = cleanID((string)$t);
+                                    if ($target === ""){
+                                        continue;
+                                    }
+                                    echo '<dd>'.html_wikilink($target, $target).'</dd>';
                                 }
-                            }
-
-                            $t_array = media_inuse(tpl_img_getTag('IPTC.File.Name',$IMG));
-                            if (isset($t_array[0])) {
-                                echo '<dt>'.$lang['reference'].':</dt>';
-                                foreach ($t_array as $t) {
-                                    echo '<dd>'.html_wikilink($t,$t).'</dd>';
-                                }
+                            }else{
+                                echo '<dd>'.hsc(_vector_getLang("nothingfound", "Nothing found")).'</dd>';
                             }
                         ?>
                     </dl>
-                    <?php //Comment in for Debug// dbg(tpl_img_getTag('Simple.Raw'));?>
+                    <?php
+                        if (function_exists("media_acl_warning")){
+                            media_acl_warning($IMG);
+                        }else{
+                            echo '<p>'.hsc(_vector_getLang("media_acl_warning", "This list might not be complete due to ACL restrictions and hidden pages.")).'</p>';
+                        }
+                    ?>
                 </div>
                 <div class="clearer"></div>
             </div><!-- /.content -->
 
             <p class="back">
                 <?php
-                    $imgNS = getNS($IMG);
-                    $authNS = auth_quickaclcheck("$imgNS:*");
-                    if (($authNS >= AUTH_UPLOAD) && function_exists('media_managerURL')) {
-                        $mmURL = media_managerURL(array('ns' => $imgNS, 'image' => $IMG));
-                        echo '<a href="'.$mmURL.'">'.$lang['img_manager'].'</a><br />';
+                    $imgNS = ($IMG !== "") ? getNS($IMG) : "";
+                    $authNS = ($IMG !== "") ? auth_quickaclcheck("$imgNS:*") : 0;
+                    if ($IMG !== "" && ($authNS >= AUTH_UPLOAD) && actionOK("media")){
+                        $mmURL = _vector_wl($ID, array("do" => "media", "ns" => $imgNS, "image" => $IMG));
+                        echo '<a href="'.hsc($mmURL).'">'.hsc(_vector_getLang("img_manager", "Media Manager")).'</a><br>';
                     }
                 ?>
-                &larr; <?php echo $lang['img_backto']?> <?php tpl_pagelink($ID)?>
+                &larr; <?php echo hsc(_vector_getLang("img_backto", "Back to"))?> <?php tpl_pagelink($ID)?>
             </p>
 
         <?php } ?>
     </div>
-

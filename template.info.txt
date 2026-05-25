@@ -1,7 +1,6 @@
-﻿base     vector
-author   ARSAVA
-email    dokuwiki@dev.arsava.com
-date     2014-02-09
-name     vector template
-desc     vector brings you the year 2010 MediaWiki/Wikipedia look and feel for DokuWiki.
-url      https://www.dokuwiki.org/template:vector
+base     modernizedvector
+author   viasnake
+date     2026-05-25
+name     Modernized Vector Template
+desc     Legacy Vector 2010 MediaWiki/Wikipedia look and feel for current DokuWiki releases.
+url      https://github.com/viasnake/dokuwiki-template-vector

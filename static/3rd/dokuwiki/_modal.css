@@ -78,7 +78,7 @@
 ********************************************************************/
 
 #media__popup {
-    /* for backwards compatibility (not needed since Rincewind) */
+    /* hidden until opened by the media option wizard */
     display: none;
 }
 

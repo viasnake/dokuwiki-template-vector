@@ -12,7 +12,11 @@
         "user.js.dist" to "user.js"
 
      2. Do not forget to activate the template option
-        "vector_loaduserjs" (->"Load 'vector/user/user.js'?") in the
+        "vector_loaduserjs" (->"Load 'modernizedvector/user/user.js'?") in the
         DokuWiki Config Manager! Otherwise, any changes to this file
         won't have any effect!
+
+   If DokuWiki's "defer_js" option is enabled, this file is loaded with
+   "defer" as well and keeps the same execution order as DokuWiki's own
+   JavaScript.
  */

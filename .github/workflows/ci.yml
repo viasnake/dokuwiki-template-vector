@@ -1,0 +1,266 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      dokuwiki-ref-type:
+        description: GitHub archive ref namespace for the exploratory smoke test.
+        required: true
+        type: choice
+        default: heads
+        options:
+          - heads
+          - tags
+      dokuwiki-ref:
+        description: DokuWiki ref name for the exploratory smoke test.
+        required: true
+        type: string
+        default: master
+      php-version:
+        description: PHP version for the exploratory smoke test.
+        required: true
+        type: choice
+        default: "8.4"
+        options:
+          - "8.4"
+          - "8.2"
+          - "7.4"
+
+permissions:
+  contents: read
+
+jobs:
+  php-lint:
+    name: PHP lint (${{ matrix.php-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - "7.4"
+          - "8.2"
+          - "8.4"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: none
+
+      - name: Lint PHP files
+        run: |
+          find . \
+            -path './.git' -prune -o \
+            \( -name '*.php' -o -name '*.php.dist' \) \
+            -print0 |
+          xargs -0 -n 1 php -l
+
+  frontend-static:
+    name: Frontend static checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+
+      - name: Check JavaScript syntax
+        run: |
+          node --check script.js
+          node --check tests/mobile-menu-smoke.js
+
+      - name: Compile LESS
+        run: |
+          npm install --global less
+          lessc \
+            --modify-var='ini_text=#000' \
+            --modify-var='ini_background=#fff' \
+            --modify-var='ini_border=#8cacbb' \
+            --modify-var='ini_existing=#002bb8' \
+            static/mobile.less >/dev/null
+
+  dokuwiki-smoke:
+    name: DokuWiki 2025-05-14b smoke test (PHP ${{ matrix.php-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - "7.4"
+          - "8.2"
+          - "8.4"
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: none
+          extensions: gd, json, mbstring, xml
+
+      - name: Install JS smoke dependencies
+        run: npm install --prefix /tmp/vector-js-smoke jsdom jquery
+
+      - name: Run DokuWiki runtime smoke
+        run: |
+          NODE_PATH=/tmp/vector-js-smoke/node_modules \
+          tests/dokuwiki-runtime-smoke.sh
+
+  dokuwiki-ref-smoke:
+    name: DokuWiki ${{ inputs.dokuwiki-ref }} smoke test (PHP ${{ inputs.php-version }})
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ inputs.php-version }}
+          coverage: none
+          extensions: gd, json, mbstring, xml
+
+      - name: Install JS smoke dependencies
+        run: npm install --prefix /tmp/vector-js-smoke jsdom jquery
+
+      - name: Run DokuWiki exploratory runtime smoke
+        env:
+          DOKUWIKI_REF_TYPE: ${{ inputs.dokuwiki-ref-type }}
+          DOKUWIKI_TAG: ${{ inputs.dokuwiki-ref }}
+          DOKUWIKI_VERSION: ${{ inputs.dokuwiki-ref }}
+          NODE_PATH: /tmp/vector-js-smoke/node_modules
+        run: tests/dokuwiki-runtime-smoke.sh
+
+  repository-policy:
+    name: Repository policy checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Check release tree policy
+        run: python3 tests/release-tree-policy.py
+
+      - name: Check deprecated template APIs stay absent
+        run: |
+          ! grep -RInE 'DOKU_TPLINC|DOKU_TPL([^A-Z_]|$)|tpl_get_img_meta|media_inuse|media_managerURL' \
+            --include='*.php' \
+            --include='*.php.dist' \
+            --exclude-dir='.git' \
+            .
+
+      - name: Check PHP 7.4 compatibility policy
+        run: python3 tests/php74-compatibility.py
+
+      - name: Check style.ini stylesheet files exist
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          in_stylesheets = False
+          missing = []
+          for line in Path("style.ini").read_text(encoding="utf-8").splitlines():
+              stripped = line.strip()
+              if not stripped or stripped.startswith(";"):
+                  continue
+              if stripped == "[stylesheets]":
+                  in_stylesheets = True
+                  continue
+              if stripped.startswith("["):
+                  in_stylesheets = False
+                  continue
+              if not in_stylesheets or "=" not in stripped:
+                  continue
+              stylesheet = stripped.split("=", 1)[0].strip()
+              if not Path(stylesheet).exists():
+                  missing.append(stylesheet)
+
+          if missing:
+              raise SystemExit("Missing style.ini stylesheet files:\n" + "\n".join(missing))
+          PY
+
+      - name: Check DokuWiki master style coverage
+        run: |
+          curl -fsSL \
+            https://raw.githubusercontent.com/dokuwiki/dokuwiki/master/lib/tpl/dokuwiki/style.ini \
+            -o /tmp/dokuwiki-master-style.ini
+          python3 tests/style-import-coverage.py /tmp/dokuwiki-master-style.ini style.ini
+
+      - name: Check core menu duplicate exclusions
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          main = Path("main.php").read_text(encoding="utf-8")
+          marker = '"\\\\dokuwiki\\\\Menu\\\\UserMenu"'
+          position = main.find(marker)
+          if position < 0:
+              raise SystemExit("UserMenu integration not found in main.php")
+
+          snippet = main[position:position + 220]
+          for menu_type in ["profile", "admin", "register", "login", "logout"]:
+              if f'"{menu_type}"' not in snippet:
+                  raise SystemExit(f"UserMenu duplicate exclusion is missing {menu_type!r}")
+          PY
+
+      - name: Check language and config key coverage
+        run: python3 tests/language-coverage.py
+
+      - name: Check Python policy script syntax
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          for filename in [
+              "tests/language-coverage.py",
+              "tests/php74-compatibility.py",
+              "tests/release-metadata.py",
+              "tests/release-tree-policy.py",
+              "tests/rendered-html-smoke.py",
+              "tests/style-import-coverage.py",
+          ]:
+              source = Path(filename).read_text(encoding="utf-8")
+              compile(source, filename, "exec")
+          PY
+
+      - name: Check shell script syntax
+        run: bash -n tests/dokuwiki-runtime-smoke.sh
+
+      - name: Check release metadata
+        run: python3 tests/release-metadata.py
+
+      - name: Check IE workarounds stay absent
+        run: |
+          ! grep -RInE 'X-UA-Compatible|screen_iehacks|csshover|MSIE|behavior:' \
+            --include='*.css' \
+            --include='*.less' \
+            --include='*.php' \
+            --include='*.php.dist' \
+            --include='*.ini' \
+            --include='*.js' \
+            --include='*.txt' \
+            --exclude='README' \
+            --exclude='deleted.files' \
+            --exclude-dir='.git' \
+            .

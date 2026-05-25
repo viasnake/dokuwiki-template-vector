@@ -5,22 +5,22 @@
  *
  * If your language is not/only partially translated or you found an error/typo,
  * have a look at the following files:
- * - /lib/tpl/vector/lang/<your lang>/lang.php
- * - /lib/tpl/vector/lang/<your lang>/settings.php
- * If they are not existing, copy and translate the English ones (hint: looking
- * at <http://[your lang].wikipedia.org> might be helpful).
+ * - /lib/tpl/modernizedvector/lang/<your lang>/lang.php
+ * - /lib/tpl/modernizedvector/lang/<your lang>/settings.php
+ * If they do not exist, copy and translate the English ones (hint: looking
+ * at the Wikipedia for your language might be helpful).
  *
- * Don't forget to mail your translation to ARSAVA <dokuwiki@dev.arsava.com>.
- * Thanks! :-D
+ * Please submit translation updates through GitHub issues or pull requests.
  *
  *
  * LICENSE: This file is open source software (OSS) and may be copied under
  *          certain conditions. See COPYING file for details or try to contact
  *          the author(s) of this file in doubt.
  *
- * @license GPLv2 (http://www.gnu.org/licenses/gpl2.html)
+ * @license GPLv2 (https://www.gnu.org/licenses/gpl-2.0.html)
  * @author ARSAVA <dokuwiki@dev.arsava.com>
- * @link https://www.dokuwiki.org/template:vector
+ * @author viasnake <https://github.com/viasnake/>
+ * @link https://github.com/viasnake/dokuwiki-template-vector
  * @link https://www.dokuwiki.org/config:lang
  * @link https://www.dokuwiki.org/devel:configuration
  */
@@ -38,12 +38,9 @@ $lang["vector_read"] = "Lesen";
 $lang["vector_edit"] = "Bearbeiten";
 $lang["vector_create"] = "Erstellen";
 $lang["vector_userpage"] = "Benutzerseite";
-$lang["vector_specialpage"] = "Spezialseiten";
 $lang["vector_mytalk"] = "Meine Diskussion";
 $lang["vector_exportodt"] = "Export: ODT";
 $lang["vector_exportpdf"] = "Export: PDF";
-$lang["vector_subscribens"] = "NR-Änderungen abbonieren"; //original DW lang $lang["btn_subscribens"] is simply too long for common tab configs
-$lang["vector_unsubscribens"] = "NR-Änderungen abbestellen";  //original DW lang $lang["btn_unsubscribens"] is simply too long for common tab configs
 $lang["vector_translations"] = "In anderen Sprachen";
 
 //headlines for the different bars and boxes
@@ -51,13 +48,8 @@ $lang["vector_navigation"] = "Navigation";
 $lang["vector_toolbox"] = "Werkzeuge";
 $lang["vector_exportbox"] = "Drucken/exportieren";
 $lang["vector_qrcodebox"] = "QR-Code";
-$lang["vector_inotherlanguages"] = "In anderen Sprachen";
-$lang["vector_printexport"] = "Drucken/exportieren";
-$lang["vector_personnaltools"] = "Eigene Werkzeuge";
 
 //buttons
-$lang["vector_btn_go"] = "Los";
-$lang["vector_btn_search"] = "Suche";
 $lang["vector_btn_search_title"] = "Suche nach Seiten, die diesen Text enthalten";
 
 //exportbox ("print/export")
@@ -67,7 +59,6 @@ $lang["vector_exportbxdef_downloadpdf"] = "Als PDF herunterladen";
 
 //default toolbox
 $lang["vector_toolbxdef_whatlinkshere"] = "Links auf diese Seite";
-$lang["vector_toolbxdef_upload"] = "Hochladen";
 $lang["vector_toolbxdef_siteindex"] = "Seitenindex";
 $lang["vector_toolboxdef_permanent"] = "Permanenter link";
 $lang["vector_toolboxdef_cite"] = "Seite zitieren";
@@ -103,9 +94,13 @@ $lang["vector_cite_thisversion"] = "Diese Version";
 
 //other
 $lang["vector_search"] = "Suche";
-$lang["vector_accessdenied"] = "Zugriff verweigert";
 $lang["vector_fillplaceholder"] = "Diesen Platzhalter bitte füllen oder deaktivieren";
 $lang["vector_donate"] = "Spenden";
 $lang["vector_mdtemplatefordw"] = "vector-Template für DokuWiki";
 $lang["vector_recentchanges"] = "Neuste Änderungen";
 
+
+// English fallback labels for strings added after the original translation
+$lang["vector_sidebar"] = "Sidebar";
+$lang["vector_skip_to_content"] = "Skip to content";
+$lang["vector_menu"] = "Menu";
