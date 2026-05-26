@@ -16,7 +16,7 @@
  */
 
 //check if we are running within the DokuWiki environment
-if (!defined("DOKU_INC")){
+if (!defined("DOKU_INC")) {
     die();
 }
 
@@ -30,8 +30,7 @@ if (!defined("DOKU_INC")){
 
 if (isset($INPUT) &&
     is_object($INPUT) &&
-    method_exists($INPUT, "set")){
+    method_exists($INPUT, "set")) {
     $INPUT->set("vecdo", "detail");
 }
 include tpl_incdir()."main.php";
-

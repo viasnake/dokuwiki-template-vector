@@ -11,7 +11,8 @@
  * simply create a "/user/tracker.php" file. The template recognizes and loads
  * the provided tracker data automatically. You may want to rename this file
  * from "tracker.php.dist" to "tracker.php" to get a good starting point.
- * Paste only trusted administrator-provided HTML/PHP code after the closing "?>"
+ * Add only trusted administrator-provided PHP output code below. For raw HTML,
+ * use echo or a heredoc so this PHP-only file can omit the closing tag.
  *
  * The contents are emitted as raw template output, so do not paste untrusted
  * user-provided data here.
@@ -35,8 +36,8 @@
 
 
 //check if we are running within the DokuWiki environment
-if (!defined("DOKU_INC")){
+if (!defined("DOKU_INC")) {
     die();
 }
 
-//place the needed HTML source codes BELOW this line ?>
+//place the needed tracker output code below this line

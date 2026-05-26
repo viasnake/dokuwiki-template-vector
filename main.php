@@ -20,11 +20,11 @@
 
 
 //check if we are running within the DokuWiki environment
-if (!defined("DOKU_INC")){
+if (!defined("DOKU_INC")) {
     die();
 }
 
-if (!function_exists("_vector_getLang")){
+if (!function_exists("_vector_getLang")) {
     /**
      * Get a template language string using DokuWiki cascade-aware loading.
      *
@@ -35,13 +35,13 @@ if (!function_exists("_vector_getLang")){
     function _vector_getLang($id, $default = null)
     {
         global $lang;
-        if (!is_scalar($id)){
+        if (!is_scalar($id)) {
             return is_scalar($default) ? (string)$default : "";
         }
         $id = (string)$id;
-        if (function_exists("tpl_getLang")){
+        if (function_exists("tpl_getLang")) {
             $value = tpl_getLang($id);
-            if (is_scalar($value) && (string)$value !== ""){
+            if (is_scalar($value) && (string)$value !== "") {
                 return (string)$value;
             }
         }
@@ -49,7 +49,7 @@ if (!function_exists("_vector_getLang")){
     }
 }
 
-if (!function_exists("_vector_isSafeHref")){
+if (!function_exists("_vector_isSafeHref")) {
     /**
      * Check whether an href can be emitted by template-managed links.
      *
@@ -58,22 +58,22 @@ if (!function_exists("_vector_isSafeHref")){
      */
     function _vector_isSafeHref($href)
     {
-        if (!is_scalar($href)){
+        if (!is_scalar($href)) {
             return false;
         }
         $href = trim((string)$href);
-        if ($href === "" || preg_match('/[\x00-\x20]/', $href) || strpos($href, "//") === 0){
+        if ($href === "" || preg_match('/[\x00-\x20]/', $href) || strpos($href, "//") === 0) {
             return false;
         }
         $scheme = parse_url($href, PHP_URL_SCHEME);
-        if ($scheme === null || $scheme === false || $scheme === ""){
+        if ($scheme === null || $scheme === false || $scheme === "") {
             return true;
         }
         return in_array(strtolower($scheme), array("http", "https", "ftp", "mailto"), true);
     }
 }
 
-if (!function_exists("_vector_isSafeSrc")){
+if (!function_exists("_vector_isSafeSrc")) {
     /**
      * Check whether a src URL can be emitted by template-managed images.
      *
@@ -82,21 +82,21 @@ if (!function_exists("_vector_isSafeSrc")){
      */
     function _vector_isSafeSrc($src)
     {
-        if (!is_scalar($src)){
+        if (!is_scalar($src)) {
             return false;
         }
         $src = trim((string)$src);
-        if ($src === "" || preg_match('/[\x00-\x20]/', $src) || strpos($src, "//") === 0){
+        if ($src === "" || preg_match('/[\x00-\x20]/', $src) || strpos($src, "//") === 0) {
             return false;
         }
         $scheme = parse_url($src, PHP_URL_SCHEME);
-        if ($scheme === null || $scheme === false || $scheme === ""){
+        if ($scheme === null || $scheme === false || $scheme === "") {
             return true;
         }
         return in_array(strtolower($scheme), array("http", "https", "ftp"), true);
     }
 }
-if (!function_exists("_vector_isValidHtmlId")){
+if (!function_exists("_vector_isValidHtmlId")) {
     /**
      * Check whether a template-managed HTML id is valid and CSS-friendly.
      *
@@ -105,14 +105,14 @@ if (!function_exists("_vector_isValidHtmlId")){
      */
     function _vector_isValidHtmlId($id)
     {
-        if (!is_scalar($id)){
+        if (!is_scalar($id)) {
             return false;
         }
         return preg_match("/^[A-Za-z][A-Za-z0-9_-]*$/", (string)$id) === 1;
     }
 }
 
-if (!function_exists("_vector_normalizeClassList")){
+if (!function_exists("_vector_normalizeClassList")) {
     /**
      * Normalize an optional class list for template-managed elements.
      *
@@ -121,18 +121,18 @@ if (!function_exists("_vector_normalizeClassList")){
      */
     function _vector_normalizeClassList($class)
     {
-        if (!is_scalar($class)){
+        if (!is_scalar($class)) {
             return false;
         }
         $class = trim((string)$class);
-        if ($class === "" || preg_match("/^[A-Za-z0-9_-]+(?:[[:space:]]+[A-Za-z0-9_-]+)*$/", $class) !== 1){
+        if ($class === "" || preg_match("/^[A-Za-z0-9_-]+(?:[[:space:]]+[A-Za-z0-9_-]+)*$/", $class) !== 1) {
             return false;
         }
         return preg_replace("/[[:space:]]+/", " ", $class);
     }
 }
 
-if (!function_exists("_vector_normalizeAccessKey")){
+if (!function_exists("_vector_normalizeAccessKey")) {
     /**
      * Normalize an optional accesskey for template-managed links.
      *
@@ -141,18 +141,18 @@ if (!function_exists("_vector_normalizeAccessKey")){
      */
     function _vector_normalizeAccessKey($accesskey)
     {
-        if (!is_scalar($accesskey)){
+        if (!is_scalar($accesskey)) {
             return false;
         }
         $accesskey = trim((string)$accesskey);
-        if (preg_match("/^[A-Za-z0-9]$/", $accesskey) !== 1){
+        if (preg_match("/^[A-Za-z0-9]$/", $accesskey) !== 1) {
             return false;
         }
         return $accesskey;
     }
 }
 
-if (!function_exists("_vector_string")){
+if (!function_exists("_vector_string")) {
     /**
      * Return a scalar value as string, otherwise a default.
      *
@@ -162,14 +162,14 @@ if (!function_exists("_vector_string")){
      */
     function _vector_string($value, $default = "")
     {
-        if (!is_scalar($value)){
+        if (!is_scalar($value)) {
             return $default;
         }
         return (string)$value;
     }
 }
 
-if (!function_exists("_vector_wl")){
+if (!function_exists("_vector_wl")) {
     /**
      * Build a DokuWiki URL with raw separators so attributes are escaped once.
      *
@@ -185,7 +185,7 @@ if (!function_exists("_vector_wl")){
 }
 
 
-if (!function_exists("_vector_cleanPageId")){
+if (!function_exists("_vector_cleanPageId")) {
     /**
      * Normalize an optional DokuWiki page id from template configuration.
      *
@@ -194,14 +194,14 @@ if (!function_exists("_vector_cleanPageId")){
      */
     function _vector_cleanPageId($id)
     {
-        if (!is_scalar($id)){
+        if (!is_scalar($id)) {
             return "";
         }
         return cleanID((string)$id);
     }
 }
 
-if (!function_exists("_vector_cleanTranslatedPageId")){
+if (!function_exists("_vector_cleanTranslatedPageId")) {
     /**
      * Normalize a translated page id built from a base page id and suffix.
      *
@@ -212,18 +212,18 @@ if (!function_exists("_vector_cleanTranslatedPageId")){
     function _vector_cleanTranslatedPageId($id, $suffix)
     {
         $id = _vector_cleanPageId($id);
-        if ($id === "" || !is_scalar($suffix)){
+        if ($id === "" || !is_scalar($suffix)) {
             return $id;
         }
         $suffix = cleanID((string)$suffix);
-        if ($suffix === ""){
+        if ($suffix === "") {
             return $id;
         }
         return _vector_cleanPageId($id."_".$suffix);
     }
 }
 
-if (!function_exists("_vector_cleanNamespace")){
+if (!function_exists("_vector_cleanNamespace")) {
     /**
      * Normalize an optional DokuWiki namespace from template configuration.
      *
@@ -232,14 +232,14 @@ if (!function_exists("_vector_cleanNamespace")){
      */
     function _vector_cleanNamespace($namespace)
     {
-        if (!is_scalar($namespace)){
+        if (!is_scalar($namespace)) {
             return "";
         }
         return cleanID(trim((string)$namespace, ":"));
     }
 }
 
-if (!function_exists("_vector_getTranslationPart")){
+if (!function_exists("_vector_getTranslationPart")) {
     /**
      * Return the current translation language part when the plugin state is usable.
      *
@@ -250,30 +250,30 @@ if (!function_exists("_vector_getTranslationPart")){
     {
         if (!is_object($transplugin) ||
             !method_exists($transplugin, "getLangPart") ||
-            !method_exists($transplugin, "getConf")){
+            !method_exists($transplugin, "getConf")) {
             return "";
         }
 
         $langcur = $transplugin->getLangPart(cleanID(getID()));
         $translations = $transplugin->getConf("translations");
-        if (!is_scalar($langcur) || !is_scalar($translations)){
+        if (!is_scalar($langcur) || !is_scalar($translations)) {
             return "";
         }
 
         $langcur = strtolower(trim((string)$langcur));
-        if ($langcur === ""){
+        if ($langcur === "") {
             return "";
         }
 
         $langs = preg_split("/[\\s,]+/", strtolower(trim((string)$translations)), -1, PREG_SPLIT_NO_EMPTY);
-        if (!is_array($langs) || !in_array($langcur, $langs, true)){
+        if (!is_array($langs) || !in_array($langcur, $langs, true)) {
             return "";
         }
 
         return $langcur;
     }
 }
-if (!function_exists("_vector_getTranslationPlugin")){
+if (!function_exists("_vector_getTranslationPlugin")) {
     /**
      * Load the translation plugin helper when it is available.
      *
@@ -283,7 +283,7 @@ if (!function_exists("_vector_getTranslationPlugin")){
     {
         if (!function_exists("plugin_isdisabled") ||
             !function_exists("plugin_load") ||
-            plugin_isdisabled("translation")){
+            plugin_isdisabled("translation")) {
             return false;
         }
 
@@ -293,7 +293,7 @@ if (!function_exists("_vector_getTranslationPlugin")){
 }
 
 
-if (!function_exists("_vector_includeFile")){
+if (!function_exists("_vector_includeFile")) {
     /**
      * Include an optional template hook file through DokuWiki.
      *
@@ -306,7 +306,7 @@ if (!function_exists("_vector_includeFile")){
     }
 }
 
-if (!function_exists("_vector_getMenuItems")){
+if (!function_exists("_vector_getMenuItems")) {
     /**
      * Return DokuWiki menu items when the current core provides the menu API.
      *
@@ -315,12 +315,12 @@ if (!function_exists("_vector_getMenuItems")){
      */
     function _vector_getMenuItems($menuClass)
     {
-        if (!is_string($menuClass) || !class_exists($menuClass)){
+        if (!is_string($menuClass) || !class_exists($menuClass)) {
             return array();
         }
         try {
             $menu = new $menuClass();
-            if (!is_object($menu) || !method_exists($menu, "getItems")){
+            if (!is_object($menu) || !method_exists($menu, "getItems")) {
                 return array();
             }
             $items = $menu->getItems();
@@ -332,7 +332,7 @@ if (!function_exists("_vector_getMenuItems")){
     }
 }
 
-if (!function_exists("_vector_menuItemId")){
+if (!function_exists("_vector_menuItemId")) {
     /**
      * Build a stable Vector-compatible HTML id from a DokuWiki menu item type.
      *
@@ -342,12 +342,12 @@ if (!function_exists("_vector_menuItemId")){
      */
     function _vector_menuItemId($prefix, $type)
     {
-        if (!is_scalar($prefix) || !is_scalar($type)){
+        if (!is_scalar($prefix) || !is_scalar($type)) {
             return "";
         }
         $id = strtolower(preg_replace("/[^A-Za-z0-9_-]+/", "-", trim((string)$type)));
         $id = trim($id, "-_");
-        if ($id === ""){
+        if ($id === "") {
             return "";
         }
         $id = (string)$prefix.$id;
@@ -355,7 +355,7 @@ if (!function_exists("_vector_menuItemId")){
     }
 }
 
-if (!function_exists("_vector_menuItemData")){
+if (!function_exists("_vector_menuItemData")) {
     /**
      * Convert a DokuWiki menu item into sanitized scalar data.
      *
@@ -368,7 +368,7 @@ if (!function_exists("_vector_menuItemData")){
         if (!is_object($item) ||
             !method_exists($item, "getType") ||
             !method_exists($item, "getLabel") ||
-            !method_exists($item, "getLink")){
+            !method_exists($item, "getLink")) {
             return false;
         }
 
@@ -379,12 +379,12 @@ if (!function_exists("_vector_menuItemData")){
             !is_scalar($label) ||
             !is_scalar($href) ||
             trim((string)$label) === "" ||
-            !_vector_isSafeHref($href)){
+            !_vector_isSafeHref($href)) {
             return false;
         }
 
         $type = strtolower(trim((string)$type));
-        if (in_array($type, array_map("strtolower", $excludeTypes), true)){
+        if (in_array($type, array_map("strtolower", $excludeTypes), true)) {
             return false;
         }
 
@@ -394,15 +394,15 @@ if (!function_exists("_vector_menuItemData")){
             "href" => trim((string)$href),
             "nofollow" => method_exists($item, "isNofollow") && $item->isNofollow()
         );
-        if (method_exists($item, "getAccesskey")){
+        if (method_exists($item, "getAccesskey")) {
             $accesskey = _vector_normalizeAccessKey($item->getAccesskey());
-            if ($accesskey !== false){
+            if ($accesskey !== false) {
                 $data["accesskey"] = $accesskey;
             }
         }
-        if (method_exists($item, "getTitle")){
+        if (method_exists($item, "getTitle")) {
             $title = $item->getTitle();
-            if (is_scalar($title) && trim((string)$title) !== ""){
+            if (is_scalar($title) && trim((string)$title) !== "") {
                 $data["title"] = trim((string)$title);
             }
         }
@@ -411,7 +411,7 @@ if (!function_exists("_vector_menuItemData")){
     }
 }
 
-if (!function_exists("_vector_appendMenuItemsAsTabs")){
+if (!function_exists("_vector_appendMenuItemsAsTabs")) {
     /**
      * Append DokuWiki menu items to a Vector tab collection.
      *
@@ -423,16 +423,16 @@ if (!function_exists("_vector_appendMenuItemsAsTabs")){
      */
     function _vector_appendMenuItemsAsTabs(&$tabs, $menuClass, $excludeTypes, $idPrefix)
     {
-        if (!is_array($tabs)){
+        if (!is_array($tabs)) {
             $tabs = array();
         }
-        foreach (_vector_getMenuItems($menuClass) as $item){
+        foreach (_vector_getMenuItems($menuClass) as $item) {
             $data = _vector_menuItemData($item, $excludeTypes);
-            if ($data === false){
+            if ($data === false) {
                 continue;
             }
             $id = _vector_menuItemId($idPrefix, $data["type"]);
-            if ($id === "" || isset($tabs[$id])){
+            if ($id === "" || isset($tabs[$id])) {
                 continue;
             }
 
@@ -441,14 +441,14 @@ if (!function_exists("_vector_appendMenuItemsAsTabs")){
                 "href" => $data["href"],
                 "nofollow" => $data["nofollow"]
             );
-            if (isset($data["accesskey"])){
+            if (isset($data["accesskey"])) {
                 $tabs[$id]["accesskey"] = $data["accesskey"];
             }
         }
     }
 }
 
-if (!function_exists("_vector_menuItemsToListItems")){
+if (!function_exists("_vector_menuItemsToListItems")) {
     /**
      * Render DokuWiki menu items as Vector sidebar/personal tool list items.
      *
@@ -460,23 +460,23 @@ if (!function_exists("_vector_menuItemsToListItems")){
     function _vector_menuItemsToListItems($menuClass, $excludeTypes, $idPrefix)
     {
         $html = "";
-        foreach (_vector_getMenuItems($menuClass) as $item){
+        foreach (_vector_getMenuItems($menuClass) as $item) {
             $data = _vector_menuItemData($item, $excludeTypes);
-            if ($data === false){
+            if ($data === false) {
                 continue;
             }
             $id = _vector_menuItemId($idPrefix, $data["type"]);
-            if ($id === ""){
+            if ($id === "") {
                 continue;
             }
 
             $html .= "      <li id=\"".hsc($id)."\"><a href=\"".hsc($data["href"])."\"";
-            if (!empty($data["nofollow"])){
+            if (!empty($data["nofollow"])) {
                 $html .= " rel=\"nofollow\"";
             }
-            if (isset($data["accesskey"])){
+            if (isset($data["accesskey"])) {
                 $html .= " accesskey=\"".hsc($data["accesskey"])."\" title=\"[ALT+".hsc(strtoupper($data["accesskey"]))."]\"";
-            } elseif (isset($data["title"]) && $data["title"] !== $data["text"]){
+            } elseif (isset($data["title"]) && $data["title"] !== $data["text"]) {
                 $html .= " title=\"".hsc($data["title"])."\"";
             }
             $html .= ">".hsc($data["text"])."</a></li>\n";
@@ -486,7 +486,7 @@ if (!function_exists("_vector_menuItemsToListItems")){
     }
 }
 
-if (!function_exists("_vector_appendMenuItemsToBox")){
+if (!function_exists("_vector_appendMenuItemsToBox")) {
     /**
      * Append DokuWiki menu items to an existing Vector sidebar box.
      *
@@ -500,21 +500,21 @@ if (!function_exists("_vector_appendMenuItemsToBox")){
     function _vector_appendMenuItemsToBox(&$boxes, $boxId, $menuClass, $excludeTypes, $idPrefix)
     {
         $items = _vector_menuItemsToListItems($menuClass, $excludeTypes, $idPrefix);
-        if ($items === ""){
+        if ($items === "") {
             return;
         }
-        if (!isset($boxes[$boxId]) || !is_array($boxes[$boxId])){
+        if (!isset($boxes[$boxId]) || !is_array($boxes[$boxId])) {
             $boxes[$boxId] = array("xhtml" => "      <ul>\n".$items."      </ul>");
             return;
         }
-        if (!isset($boxes[$boxId]["xhtml"]) || !is_scalar($boxes[$boxId]["xhtml"])){
+        if (!isset($boxes[$boxId]["xhtml"]) || !is_scalar($boxes[$boxId]["xhtml"])) {
             $boxes[$boxId]["xhtml"] = "      <ul>\n".$items."      </ul>";
             return;
         }
 
         $xhtml = (string)$boxes[$boxId]["xhtml"];
         $matches = array();
-        if (preg_match("/\s*<\/ul>\s*$/i", $xhtml, $matches, PREG_OFFSET_CAPTURE)){
+        if (preg_match("/\s*<\/ul>\s*$/i", $xhtml, $matches, PREG_OFFSET_CAPTURE)) {
             $boxes[$boxId]["xhtml"] = substr($xhtml, 0, $matches[0][1])."\n".$items."      </ul>";
         } else {
             $boxes[$boxId]["xhtml"] .= "\n      <ul>\n".$items."      </ul>";
@@ -540,18 +540,18 @@ $vector_action = "article";
 $vector_actions = array("article", "print", "detail", "cite");
 if (isset($INPUT) &&
     is_object($INPUT) &&
-    method_exists($INPUT, "valid")){
+    method_exists($INPUT, "valid")) {
     $vector_action = $INPUT->valid("vecdo", $vector_actions, "article");
 }
-if (!in_array($vector_action, $vector_actions, true)){
+if (!in_array($vector_action, $vector_actions, true)) {
     //ignore unknown values
     $vector_action = "article";
 }
 unset($vector_actions);
-if ($vector_action === "detail" && (!isset($IMG) || !is_scalar($IMG) || (string)$IMG === "")){
+if ($vector_action === "detail" && (!isset($IMG) || !is_scalar($IMG) || (string)$IMG === "")) {
     $vector_action = "article";
 }
-if ($vector_action === "cite" && empty($INFO["exists"])){
+if ($vector_action === "cite" && empty($INFO["exists"])) {
     $vector_action = "article";
 }
 
@@ -570,7 +570,7 @@ if ($vector_action === "cite" && empty($INFO["exists"])){
 $vector_context = "article";
 $vector_discuss_ns = _vector_cleanNamespace(tpl_getConf("vector_discuss_ns"));
 $vector_userpage_ns = _vector_cleanNamespace(tpl_getConf("vector_userpage_ns"));
-if (tpl_getConf("vector_discuss") && $vector_discuss_ns !== "" && preg_match("/^".preg_quote($vector_discuss_ns, "/")."(?::|$)/i", cleanID(getID()))){
+if (tpl_getConf("vector_discuss") && $vector_discuss_ns !== "" && preg_match("/^".preg_quote($vector_discuss_ns, "/")."(?::|$)/i", cleanID(getID()))) {
     $vector_context = "discuss";
 }
 
@@ -581,10 +581,10 @@ if (tpl_getConf("vector_discuss") && $vector_discuss_ns !== "" && preg_match("/^
  * @author ARSAVA <dokuwiki@dev.arsava.com>
  */
 $loginname = "";
-if (!empty($conf["useacl"])){
+if (!empty($conf["useacl"])) {
     if (isset($INPUT) &&
         is_object($INPUT) &&
-        isset($INPUT->server)){
+        isset($INPUT->server)) {
         $loginname = $INPUT->server->str("REMOTE_USER");
     }
 }
@@ -592,32 +592,32 @@ if (!empty($conf["useacl"])){
 
 //get current language and keep template strings available for legacy user config snippets
 $vector_lang = preg_replace("/[^A-Za-z0-9_-]/", "", _vector_string($conf["lang"] ?? "en", "en"));
-if ($vector_lang === ""){
+if ($vector_lang === "") {
     $vector_lang = "en";
 }
 include tpl_incdir()."lang/en/lang.php";
 //mirror tpl_getLang() language cascade for direct $lang consumers
 if (!empty($config_cascade["lang"]["template"]) &&
-    is_array($config_cascade["lang"]["template"])){
-    foreach ($config_cascade["lang"]["template"] as $vector_lang_dir){
+    is_array($config_cascade["lang"]["template"])) {
+    foreach ($config_cascade["lang"]["template"] as $vector_lang_dir) {
         $vector_lang_file = $vector_lang_dir.$conf["template"]."/en/lang.php";
-        if (file_exists($vector_lang_file)){
+        if (file_exists($vector_lang_file)) {
             include $vector_lang_file;
         }
     }
 }
 //overwrite English language values with available translations for direct $lang access
-if ($vector_lang !== "en" && file_exists(tpl_incdir()."lang/".$vector_lang."/lang.php")){
+if ($vector_lang !== "en" && file_exists(tpl_incdir()."lang/".$vector_lang."/lang.php")) {
     //get language file (partially translated language files are no problem
     //cause non translated stuff is still existing as English array value)
     include tpl_incdir()."lang/".$vector_lang."/lang.php";
 }
 if ($vector_lang !== "en" &&
     !empty($config_cascade["lang"]["template"]) &&
-    is_array($config_cascade["lang"]["template"])){
-    foreach ($config_cascade["lang"]["template"] as $vector_lang_dir){
+    is_array($config_cascade["lang"]["template"])) {
+    foreach ($config_cascade["lang"]["template"] as $vector_lang_dir) {
         $vector_lang_file = $vector_lang_dir.$conf["template"]."/".$vector_lang."/lang.php";
-        if (file_exists($vector_lang_file)){
+        if (file_exists($vector_lang_file)) {
             include $vector_lang_file;
         }
     }
@@ -632,7 +632,7 @@ $vector_is_startpage = (cleanID(getID()) === cleanID(_vector_string($conf["start
 
 //detect revision
 $rev = (int)($INFO["rev"] ?? 0); //$INFO comes from the DokuWiki core
-if ($rev < 1){
+if ($rev < 1) {
     $rev = (int)($INFO["lastmod"] ?? 0);
 }
 
@@ -647,15 +647,15 @@ $transplugin = _vector_getTranslationPlugin();
 include tpl_incdir()."conf/tabs.php";  //default
 if (empty($conf["useacl"]) ||
     $loginname !== "" ||
-    !tpl_getConf("vector_closedwiki")){
-    if ($vector_action === "detail"){
+    !tpl_getConf("vector_closedwiki")) {
+    if ($vector_action === "detail") {
         _vector_appendMenuItemsAsTabs(
             $_vector_tabs_right,
             "\\dokuwiki\\Menu\\DetailMenu",
             array("mediamanager", "img_backto", "top"),
             "ca-dw-detail-"
         );
-    }else{
+    } else {
         _vector_appendMenuItemsAsTabs(
             $_vector_tabs_right,
             "\\dokuwiki\\Menu\\PageMenu",
@@ -664,7 +664,7 @@ if (empty($conf["useacl"]) ||
         );
     }
 }
-if (file_exists(tpl_incdir()."user/tabs.php")){
+if (file_exists(tpl_incdir()."user/tabs.php")) {
     include tpl_incdir()."user/tabs.php"; //add user defined
 }
 
@@ -673,7 +673,7 @@ if (file_exists(tpl_incdir()."user/tabs.php")){
 include tpl_incdir()."conf/boxes.php"; //default
 if (tpl_getConf("vector_toolbox") &&
     tpl_getConf("vector_toolbox_default") &&
-    isset($_vector_boxes["p-tb"])){
+    isset($_vector_boxes["p-tb"])) {
     _vector_appendMenuItemsToBox(
         $_vector_boxes,
         "p-tb",
@@ -682,14 +682,14 @@ if (tpl_getConf("vector_toolbox") &&
         "t-dw-"
     );
 }
-if (file_exists(tpl_incdir()."user/boxes.php")){
+if (file_exists(tpl_incdir()."user/boxes.php")) {
     include tpl_incdir()."user/boxes.php"; //add user defined
 }
 
 
 //get button config
 include tpl_incdir()."conf/buttons.php"; //default
-if (file_exists(tpl_incdir()."user/buttons.php")){
+if (file_exists(tpl_incdir()."user/buttons.php")) {
     include tpl_incdir()."user/buttons.php"; //add user defined
 }
 
@@ -744,14 +744,14 @@ function _vector_renderTabs($arr)
 {
     //is there something useful?
     if (empty($arr) ||
-        !is_array($arr)){
+        !is_array($arr)) {
         return false; //nope, break operation
     }
 
     //array to store the created tabs into
     $elements = array();
 
-    foreach ($arr as $li_id => $element){
+    foreach ($arr as $li_id => $element) {
         //basic check
         if (empty($element) ||
             !is_array($element) ||
@@ -759,18 +759,18 @@ function _vector_renderTabs($arr)
             !is_scalar($element["text"]) ||
             trim((string)$element["text"]) === "" ||
             (empty($element["href"]) &&
-             empty($element["wiki"]))){
+             empty($element["wiki"]))) {
             continue; //ignore invalid stuff and go on
         }
-        if (!_vector_isValidHtmlId($li_id)){
+        if (!_vector_isValidHtmlId($li_id)) {
             continue;
         }
         $label = trim((string)$element["text"]);
         $li_class = "";
         $is_current = false;
-        if (isset($element["class"])){
+        if (isset($element["class"])) {
             $li_class_value = _vector_normalizeClassList($element["class"]);
-            if ($li_class_value !== false){
+            if ($li_class_value !== false) {
                 $li_class = " class=\"".hsc($li_class_value)."\"";
                 $is_current = in_array("selected", explode(" ", $li_class_value), true);
             }
@@ -778,43 +778,43 @@ function _vector_renderTabs($arr)
         $accesskey = isset($element["accesskey"]) ? _vector_normalizeAccessKey($element["accesskey"]) : false;
         $interim = "";
         //do we have an external link?
-        if (!empty($element["href"])){
-            if (!_vector_isSafeHref($element["href"])){
+        if (!empty($element["href"])) {
+            if (!_vector_isSafeHref($element["href"])) {
                 continue;
             }
             $href = trim((string)$element["href"]);
             //add URL
             $interim = "<a href=\"".hsc($href)."\"";
-            if ($is_current){
+            if ($is_current) {
                 $interim .= " aria-current=\"page\"";
             }
             //add rel="nofollow" attribute to the link?
-            if (!empty($element["nofollow"])){
+            if (!empty($element["nofollow"])) {
                 $interim .= " rel=\"nofollow\"";
             }
             //mark external link?
-            if (preg_match("/^(?:https?|ftp):\/\//i", $href)){
+            if (preg_match("/^(?:https?|ftp):\/\//i", $href)) {
                 $interim .= " class=\"urlextern\"";
             }
             //add access key?
-            if ($accesskey !== false){
+            if ($accesskey !== false) {
                 $interim .= " accesskey='".hsc($accesskey)."' title='[ALT+".hsc(strtoupper($accesskey))."]'";
             }
             $interim .= "><span>".hsc($label)."</span></a>";
-        //internal wiki link
-        }elseif (!empty($element["wiki"])){
-            if (!is_scalar($element["wiki"])){
+            //internal wiki link
+        } elseif (!empty($element["wiki"])) {
+            if (!is_scalar($element["wiki"])) {
                 continue;
             }
             $wiki = cleanID((string)$element["wiki"]);
-            if ($wiki === ""){
+            if ($wiki === "") {
                 continue;
             }
             $interim = "<a href='".hsc(_vector_wl($wiki))."'";
-            if ($is_current){
+            if ($is_current) {
                 $interim .= " aria-current=\"page\"";
             }
-            if ($accesskey !== false){
+            if ($accesskey !== false) {
                 $interim .= " accesskey='".hsc($accesskey)."' title='[ALT+".hsc(strtoupper($accesskey))."]'";
             }
             $interim .= "><span>".hsc($label)."</span></a>";
@@ -824,8 +824,8 @@ function _vector_renderTabs($arr)
     }
 
     //show everything created
-    if (!empty($elements)){
-        foreach ($elements as $element){
+    if (!empty($elements)) {
+        foreach ($elements as $element) {
             echo $element;
         }
     }
@@ -859,7 +859,7 @@ function _vector_renderBoxes($arr)
 {
     //is there something useful?
     if (empty($arr) ||
-        !is_array($arr)){
+        !is_array($arr)) {
         return false; //nope, break operation
     }
 
@@ -867,19 +867,19 @@ function _vector_renderBoxes($arr)
     $boxes = array();
 
     //handle the box data
-    foreach ($arr as $div_id => $contents){
+    foreach ($arr as $div_id => $contents) {
         //basic check
         if (empty($contents) ||
             !is_array($contents) ||
             !isset($contents["xhtml"]) ||
-            !is_scalar($contents["xhtml"])){
+            !is_scalar($contents["xhtml"])) {
             continue; //ignore invalid stuff and go on
         }
-        if (!_vector_isValidHtmlId($div_id)){
+        if (!_vector_isValidHtmlId($div_id)) {
             continue;
         }
         $xhtml = trim((string)$contents["xhtml"]);
-        if ($xhtml === "" || preg_match("/^<ul>\s*<\/ul>$/i", $xhtml)){
+        if ($xhtml === "" || preg_match("/^<ul>\s*<\/ul>$/i", $xhtml)) {
             continue;
         }
         $box_id = hsc((string)$div_id);
@@ -888,7 +888,7 @@ function _vector_renderBoxes($arr)
             && $contents["headline"] !== ""
             && is_scalar($contents["headline"]);
         $interim  = "  <div id=\"".$box_id."\" class=\"portal\"".($has_headline ? " aria-labelledby=\"".$headline_id."\"" : "").">\n";
-        if ($has_headline){
+        if ($has_headline) {
             $interim .= "    <h5 id=\"".$headline_id."\">".hsc($contents["headline"])."</h5>\n";
         }
         $interim .= "    <div class=\"body\">\n"
@@ -901,9 +901,9 @@ function _vector_renderBoxes($arr)
         $boxes[] = $interim;
     }
     //show everything created
-    if (!empty($boxes)){
+    if (!empty($boxes)) {
         echo  "\n";
-        foreach ($boxes as $box){
+        foreach ($boxes as $box) {
             echo $box;
         }
         echo  "\n";
@@ -958,7 +958,7 @@ function _vector_renderBoxes($arr)
 function _vector_renderButtons($arr)
 {
     if (empty($arr) ||
-        !is_array($arr)){
+        !is_array($arr)) {
         return false;
     }
 
@@ -966,18 +966,18 @@ function _vector_renderButtons($arr)
     $elements = array();
 
     //handle the button data
-    foreach ($arr as $li_id => $element){
+    foreach ($arr as $li_id => $element) {
         //basic check
         if (empty($element) ||
             !is_array($element) ||
             !isset($element["img"]) ||
-            !isset($element["href"])){
+            !isset($element["href"])) {
             continue; //ignore invalid stuff and go on
         }
-        if (!_vector_isSafeHref($element["href"])){
+        if (!_vector_isSafeHref($element["href"])) {
             continue;
         }
-        if (!_vector_isSafeSrc($element["img"])){
+        if (!_vector_isSafeSrc($element["img"])) {
             continue;
         }
 
@@ -986,11 +986,11 @@ function _vector_renderButtons($arr)
         //add URL
         $interim = "<a href=\"".hsc($href)."\"";
         $rel = "noopener noreferrer";
-        if (!empty($element["nofollow"])){
+        if (!empty($element["nofollow"])) {
             $rel .= " nofollow";
         }
         if (!empty($element["title"]) &&
-            is_scalar($element["title"])){
+            is_scalar($element["title"])) {
             $interim .= " title=\"".hsc($element["title"])."\"";
         }
         $interim .= " target=\"_blank\" rel=\"".hsc($rel)."\"><img src=\"".hsc($img)."\"";
@@ -1000,12 +1000,12 @@ function _vector_renderButtons($arr)
             is_numeric($element["width"]) &&
             is_numeric($element["height"]) &&
             (int)$element["width"] > 0 &&
-            (int)$element["height"] > 0){
+            (int)$element["height"] > 0) {
             $interim .= " width=\"".(int)$element["width"]."\" height=\"".(int)$element["height"]."\"";
         }
         //add title and alt attribute to the image?
         if (!empty($element["title"]) &&
-            is_scalar($element["title"])){
+            is_scalar($element["title"])) {
             $interim .= " title=\"".hsc($element["title"])."\" alt=\"".hsc($element["title"])."\"";
         } else {
             $interim .= " alt=\"\""; //alt is a mandatory attribute for images
@@ -1017,9 +1017,9 @@ function _vector_renderButtons($arr)
     }
 
     //show everything created
-    if (!empty($elements)){
+    if (!empty($elements)) {
         echo  "\n";
-        foreach ($elements as $element){
+        foreach ($elements as $element) {
             echo $element;
         }
     }
@@ -1030,7 +1030,8 @@ function _vector_renderButtons($arr)
 <html lang="<?php echo hsc($vector_lang); ?>" dir="<?php echo hsc($vector_direction); ?>" class="no-js">
 <head>
 <meta charset="utf-8">
-<title><?php tpl_pagetitle(); echo " - ".hsc(strip_tags(_vector_string($conf["title"] ?? ""))); ?></title>
+<title><?php tpl_pagetitle();
+echo " - ".hsc(strip_tags(_vector_string($conf["title"] ?? ""))); ?></title>
 <?php
 //show meta-tags
 tpl_metaheaders();
@@ -1040,109 +1041,109 @@ _vector_includeFile("meta.html");
 //include default or user-defined icons
 $vector_favicon = "";
 $vector_favicon_type = "";
-foreach (array("user/favicon.svg" => "image/svg+xml", "user/favicon.png" => "image/png", "user/favicon.ico" => "image/x-icon") as $vector_favicon_file => $vector_icon_type){
-    if (file_exists(tpl_incdir().$vector_favicon_file)){
+foreach (array("user/favicon.svg" => "image/svg+xml", "user/favicon.png" => "image/png", "user/favicon.ico" => "image/x-icon") as $vector_favicon_file => $vector_icon_type) {
+    if (file_exists(tpl_incdir().$vector_favicon_file)) {
         $vector_favicon = tpl_basedir().$vector_favicon_file;
         $vector_favicon_type = $vector_icon_type;
         break;
     }
 }
-if ($vector_favicon === ""){
-    foreach (array(":wiki:favicon.svg" => "image/svg+xml", ":favicon.svg" => "image/svg+xml", ":wiki:favicon.png" => "image/png", ":favicon.png" => "image/png", ":wiki:favicon.ico" => "image/x-icon", ":favicon.ico" => "image/x-icon") as $vector_favicon_file => $vector_icon_type){
+if ($vector_favicon === "") {
+    foreach (array(":wiki:favicon.svg" => "image/svg+xml", ":favicon.svg" => "image/svg+xml", ":wiki:favicon.png" => "image/png", ":favicon.png" => "image/png", ":wiki:favicon.ico" => "image/x-icon", ":favicon.ico" => "image/x-icon") as $vector_favicon_file => $vector_icon_type) {
         $vector_icon_info = null;
         $vector_favicon_candidate = tpl_getMediaFile(array($vector_favicon_file), false, $vector_icon_info, false);
-        if ($vector_favicon_candidate !== false){
+        if ($vector_favicon_candidate !== false) {
             $vector_favicon = $vector_favicon_candidate;
             $vector_favicon_type = $vector_icon_type;
             break;
         }
     }
 }
-if ($vector_favicon === ""){
+if ($vector_favicon === "") {
     $vector_favicon = tpl_basedir()."static/3rd/dokuwiki/favicon.ico";
     $vector_favicon_type = "image/x-icon";
 }
 echo "\n<link rel=\"icon\" href=\"".hsc($vector_favicon)."\" type=\"".hsc($vector_favicon_type)."\">\n";
 
 $vector_apple_touch_icon = "";
-if (file_exists(tpl_incdir()."user/apple-touch-icon.png")){
+if (file_exists(tpl_incdir()."user/apple-touch-icon.png")) {
     $vector_apple_touch_icon = tpl_basedir()."user/apple-touch-icon.png";
-}else{
+} else {
     $vector_icon_info = null;
     $vector_apple_touch_icon = tpl_getMediaFile(array(":wiki:apple-touch-icon.png", ":apple-touch-icon.png"), false, $vector_icon_info, false);
 }
-if ($vector_apple_touch_icon === "" || $vector_apple_touch_icon === false){
+if ($vector_apple_touch_icon === "" || $vector_apple_touch_icon === false) {
     $vector_apple_touch_icon = tpl_basedir()."static/3rd/dokuwiki/apple-touch-icon.png";
 }
 echo "<link rel=\"apple-touch-icon\" href=\"".hsc($vector_apple_touch_icon)."\">\n";
 unset($vector_apple_touch_icon, $vector_favicon, $vector_favicon_candidate, $vector_favicon_file, $vector_favicon_type, $vector_icon_info, $vector_icon_type);
 
 //load user-defined js?
-if (tpl_getConf("vector_loaduserjs") && file_exists(tpl_incdir()."user/user.js")){
+if (tpl_getConf("vector_loaduserjs") && file_exists(tpl_incdir()."user/user.js")) {
     echo "<script src=\"".hsc(tpl_basedir()."user/user.js")."\"".(!empty($conf["defer_js"]) ? " defer" : "")."></script>\n";
 }
 
 //show printable version?
-if ($vector_action === "print"){
-  //note: this is just a workaround for people searching for a print version.
-  //      don't forget to update style.ini, this is the really important
-  //      thing; the print stylesheet remains the canonical styling path.
-  printf('<link rel="stylesheet" media="all" href="%s">%s', hsc(tpl_basedir()."static/3rd/dokuwiki/print.css"), "\n");
-  printf('<link rel="stylesheet" media="all" href="%s">%s', hsc(tpl_basedir()."static/css/print.css"), "\n");
+if ($vector_action === "print") {
+    //note: this is just a workaround for people searching for a print version.
+    //      don't forget to update style.ini, this is the really important
+    //      thing; the print stylesheet remains the canonical styling path.
+    printf('<link rel="stylesheet" media="all" href="%s">%s', hsc(tpl_basedir()."static/3rd/dokuwiki/print.css"), "\n");
+    printf('<link rel="stylesheet" media="all" href="%s">%s', hsc(tpl_basedir()."static/css/print.css"), "\n");
 }
 
 //load right-to-left overrides when needed
-if ($vector_direction === "rtl"){
+if ($vector_direction === "rtl") {
     printf('<link rel="stylesheet" media="all" href="%s">%s', hsc(tpl_basedir()."static/3rd/vector/main-rtl.css"), "\n");
     printf('<link rel="stylesheet" media="all" href="%s">%s', hsc(tpl_basedir()."static/css/rtl.css"), "\n");
 }
 
 //load language-specific custom CSS?
 $vector_lang_style = tpl_incdir()."lang/".$vector_lang."/style.css";
-if (is_readable($vector_lang_style) && filesize($vector_lang_style) > 0){
+if (is_readable($vector_lang_style) && filesize($vector_lang_style) > 0) {
     printf('<link rel="stylesheet" media="all" href="%s">%s', hsc(tpl_basedir()."lang/".$vector_lang."/style.css"), "\n");
 }
 unset($vector_lang_style);
 
 //load user-defined CSS only when it exists
-if (file_exists(tpl_incdir()."user/screen.css")){
+if (file_exists(tpl_incdir()."user/screen.css")) {
     printf('<link rel="stylesheet" media="screen" href="%s">%s', hsc(tpl_basedir()."user/screen.css"), "\n");
 }
-if (file_exists(tpl_incdir()."user/print.css")){
+if (file_exists(tpl_incdir()."user/print.css")) {
     printf('<link rel="stylesheet" media="%s" href="%s">%s', ($vector_action === "print") ? "all" : "print", hsc(tpl_basedir()."user/print.css"), "\n");
 }
-if ($vector_direction === "rtl" && file_exists(tpl_incdir()."user/rtl.css")){
+if ($vector_direction === "rtl" && file_exists(tpl_incdir()."user/rtl.css")) {
     printf('<link rel="stylesheet" media="all" href="%s">%s', hsc(tpl_basedir()."user/rtl.css"), "\n");
 }
 ?>
 </head>
 <body class="<?php
              //different styles/backgrounds for different page types
-             switch (true){
-                  //special: tech
-                  case ($vector_action === "detail"):
-                  case ($vector_action === "cite"):
-                  case ($vector_act === "media"): //mirrors DokuWiki action
-                  case ($vector_act === "search"): //mirrors DokuWiki action
-                    echo "mediawiki ".$vector_direction_class." ns-1 ns-special ";
-                    break;
-                  //special: wiki
-                  case (preg_match("/^wiki(?::|$)/i", cleanID(getID()))):
-                    echo "mediawiki ".$vector_direction_class." capitalize-all-nouns ns-4 ns-subject ";
-                    break;
-                  //discussion
-                  case ($vector_context === "discuss"):
-                    echo "mediawiki ".$vector_direction_class." capitalize-all-nouns ns-1 ns-talk ";
-                    break;
-                  //"normal" content
-                  case ($vector_act === "edit"): //mirrors DokuWiki action
-                  case ($vector_act === "draft"): //mirrors DokuWiki action
-                  case ($vector_act === "revisions"): //mirrors DokuWiki action
-                  case ($vector_action === "print"):
-                  default:
-                    echo "mediawiki ".$vector_direction_class." capitalize-all-nouns ns-0 ns-subject ";
-                    break;
-              } ?>skin-vector <?php echo hsc(tpl_classes()); ?>" data-vector-menu-label="<?php echo hsc(_vector_getLang("vector_menu")); ?>">
+             switch (true) {
+                 //special: tech
+                 case ($vector_action === "detail"):
+                 case ($vector_action === "cite"):
+                 case ($vector_act === "media"): //mirrors DokuWiki action
+                 case ($vector_act === "search"): //mirrors DokuWiki action
+                     echo "mediawiki ".$vector_direction_class." ns-1 ns-special ";
+                     break;
+                     //special: wiki
+                 case (preg_match("/^wiki(?::|$)/i", cleanID(getID()))):
+                     echo "mediawiki ".$vector_direction_class." capitalize-all-nouns ns-4 ns-subject ";
+                     break;
+                     //discussion
+                 case ($vector_context === "discuss"):
+                     echo "mediawiki ".$vector_direction_class." capitalize-all-nouns ns-1 ns-talk ";
+                     break;
+                     //"normal" content
+                 case ($vector_act === "edit"): //mirrors DokuWiki action
+                 case ($vector_act === "draft"): //mirrors DokuWiki action
+                 case ($vector_act === "revisions"): //mirrors DokuWiki action
+                 case ($vector_action === "print"):
+                 default:
+                     echo "mediawiki ".$vector_direction_class." capitalize-all-nouns ns-0 ns-subject ";
+                     break;
+             } ?>skin-vector <?php echo hsc(tpl_classes()); ?>" data-vector-menu-label="<?php echo hsc(_vector_getLang("vector_menu")); ?>">
 <a class="a11y skiplink" href="#dokuwiki__content"><?php echo hsc(_vector_getLang("vector_skip_to_content")); ?></a>
 <?php _vector_includeFile("topheader.html"); ?>
 <?php _vector_includeFile("header.html"); ?>
@@ -1159,68 +1160,68 @@ if ($vector_direction === "rtl" && file_exists(tpl_incdir()."user/rtl.css")){
   <?php
   //show messages (if there are any)
   html_msgarea();
-  _vector_includeFile("pageheader.html");
-  //show site notice
-  if (tpl_getConf("vector_sitenotice")){
-      //detect wiki page to load as content
-      $transplugin_langcur = "";
-      if (!empty($transplugin) &&
-          tpl_getConf("vector_sitenotice_translate")){
-          $transplugin_langcur = _vector_getTranslationPart($transplugin);
-      }
-      if ($transplugin_langcur === ""){
-          //current page is no translation or something is wrong, load default site notice
-          $sitenotice_location = _vector_cleanPageId(tpl_getConf("vector_sitenotice_location"));
-      } else {
-          //load language specific site notice
-          $sitenotice_location = _vector_cleanTranslatedPageId(tpl_getConf("vector_sitenotice_location"), $transplugin_langcur);
-      }
+_vector_includeFile("pageheader.html");
+//show site notice
+if (tpl_getConf("vector_sitenotice")) {
+    //detect wiki page to load as content
+    $transplugin_langcur = "";
+    if (!empty($transplugin) &&
+        tpl_getConf("vector_sitenotice_translate")) {
+        $transplugin_langcur = _vector_getTranslationPart($transplugin);
+    }
+    if ($transplugin_langcur === "") {
+        //current page is no translation or something is wrong, load default site notice
+        $sitenotice_location = _vector_cleanPageId(tpl_getConf("vector_sitenotice_location"));
+    } else {
+        //load language specific site notice
+        $sitenotice_location = _vector_cleanTranslatedPageId(tpl_getConf("vector_sitenotice_location"), $transplugin_langcur);
+    }
 
-      //we have to show a custom site notice
-      if ($sitenotice_location !== "" && (empty($conf["useacl"]) ||
-          auth_quickaclcheck($sitenotice_location) >= AUTH_READ)){ //current user got access?
-          echo "\n  <div id=\"siteNotice\" class=\"noprint\">\n";
-          //get the rendered content of the defined wiki article to use as
-          //custom site notice.
-          $interim = tpl_include_page($sitenotice_location, false);
-          if ($interim === "" ||
-              $interim === false){
-              //show creation/edit link if the defined page got no content
-              echo "[&#160;";
-              tpl_pagelink($sitenotice_location, _vector_getLang("vector_fillplaceholder")." (".$sitenotice_location.")");
-              echo "&#160;]<br>";
-          }else{
-              //show the rendered page content
-              echo  "    <div class=\"dokuwiki\">\n" //dokuwiki CSS class needed cause we are showing rendered page content
-                   .$interim."\n    "
-                   ."</div>";
-          }
-          echo "\n  </div>\n";
-      }
-  }
-  //show breadcrumps if enabled and position = top
-  if (!empty($conf["breadcrumbs"]) &&
-      $vector_act !== "media" && //mirrors DokuWiki action
-      (empty($conf["useacl"]) || //are there any users?
-       $loginname !== "" || //user is logged in?
-       !tpl_getConf("vector_closedwiki")) &&
-      tpl_getConf("vector_breadcrumbs_position") === "top"){
-      echo "\n  <div class=\"catlinks noprint\"><p>\n    ";
-      tpl_breadcrumbs();
-      echo "\n  </p></div>\n";
-  }
-  //show hierarchical breadcrumps if enabled and position = top
-  if (!empty($conf["youarehere"]) &&
-      $vector_act !== "media" && //mirrors DokuWiki action
-      (empty($conf["useacl"]) || //are there any users?
-       $loginname !== "" || //user is logged in?
-       !tpl_getConf("vector_closedwiki")) &&
-      tpl_getConf("vector_youarehere_position") === "top"){
-      echo "\n  <div class=\"catlinks noprint\"><p>\n    ";
-      tpl_youarehere();
-      echo "\n  </p></div>\n";
-  }
-  ?>
+    //we have to show a custom site notice
+    if ($sitenotice_location !== "" && (empty($conf["useacl"]) ||
+        auth_quickaclcheck($sitenotice_location) >= AUTH_READ)) { //current user got access?
+        echo "\n  <div id=\"siteNotice\" class=\"noprint\">\n";
+        //get the rendered content of the defined wiki article to use as
+        //custom site notice.
+        $interim = tpl_include_page($sitenotice_location, false);
+        if ($interim === "" ||
+            $interim === false) {
+            //show creation/edit link if the defined page got no content
+            echo "[&#160;";
+            tpl_pagelink($sitenotice_location, _vector_getLang("vector_fillplaceholder")." (".$sitenotice_location.")");
+            echo "&#160;]<br>";
+        } else {
+            //show the rendered page content
+            echo  "    <div class=\"dokuwiki\">\n" //dokuwiki CSS class needed cause we are showing rendered page content
+                 .$interim."\n    "
+                 ."</div>";
+        }
+        echo "\n  </div>\n";
+    }
+}
+//show breadcrumps if enabled and position = top
+if (!empty($conf["breadcrumbs"]) &&
+    $vector_act !== "media" && //mirrors DokuWiki action
+    (empty($conf["useacl"]) || //are there any users?
+     $loginname !== "" || //user is logged in?
+     !tpl_getConf("vector_closedwiki")) &&
+    tpl_getConf("vector_breadcrumbs_position") === "top") {
+    echo "\n  <div class=\"catlinks noprint\"><p>\n    ";
+    tpl_breadcrumbs();
+    echo "\n  </p></div>\n";
+}
+//show hierarchical breadcrumps if enabled and position = top
+if (!empty($conf["youarehere"]) &&
+    $vector_act !== "media" && //mirrors DokuWiki action
+    (empty($conf["useacl"]) || //are there any users?
+     $loginname !== "" || //user is logged in?
+     !tpl_getConf("vector_closedwiki")) &&
+    tpl_getConf("vector_youarehere_position") === "top") {
+    echo "\n  <div class=\"catlinks noprint\"><p>\n    ";
+    tpl_youarehere();
+    echo "\n  </p></div>\n";
+}
+?>
 
   <!-- start div id dokuwiki__content -->
   <div id="dokuwiki__content" tabindex="-1">
@@ -1228,28 +1229,28 @@ if ($vector_direction === "rtl" && file_exists(tpl_incdir()."user/rtl.css")){
   <div id="bodyContent" class="dokuwiki">
     <!-- start rendered wiki content -->
     <?php
-    //flush the buffer for faster page rendering, heaviest content follows
-    tpl_flush();
-    //decide which type of pagecontent we have to show
-    switch ($vector_action){
-        //"image details"
-        case "detail":
-            include tpl_incdir()."inc_detail.php";
-            break;
+  //flush the buffer for faster page rendering, heaviest content follows
+  tpl_flush();
+//decide which type of pagecontent we have to show
+switch ($vector_action) {
+    //"image details"
+    case "detail":
+        include tpl_incdir()."inc_detail.php";
+        break;
         //"cite this article"
-        case "cite":
-            if (!empty($INFO["exists"])){
-                include tpl_incdir()."inc_cite.php";
-            }else{
-                tpl_content(tpl_getConf("vector_toc_position") === "article");
-            }
-            break;
-        //show "normal" content
-        default:
+    case "cite":
+        if (!empty($INFO["exists"])) {
+            include tpl_incdir()."inc_cite.php";
+        } else {
             tpl_content(tpl_getConf("vector_toc_position") === "article");
-            break;
-    }
-    ?>
+        }
+        break;
+        //show "normal" content
+    default:
+        tpl_content(tpl_getConf("vector_toc_position") === "article");
+        break;
+}
+?>
     <!-- end rendered wiki content -->
     <div class="clearer"></div>
   <?php _vector_includeFile("pagefooter.html"); ?>
@@ -1261,29 +1262,29 @@ if ($vector_direction === "rtl" && file_exists(tpl_incdir()."user/rtl.css")){
   <?php
   tpl_flush();
 
-  //show breadcrumps if enabled and position = bottom
-  if (!empty($conf["breadcrumbs"]) &&
-      $vector_act !== "media" && //mirrors DokuWiki action
-      (empty($conf["useacl"]) || //are there any users?
-       $loginname !== "" || //user is logged in?
-       !tpl_getConf("vector_closedwiki")) &&
-      tpl_getConf("vector_breadcrumbs_position") === "bottom"){
-      echo "\n  <div class=\"catlinks noprint\"><p>\n    ";
-      tpl_breadcrumbs();
-      echo "\n  </p></div>\n";
-  }
-  //show hierarchical breadcrumps if enabled and position = bottom
-  if (!empty($conf["youarehere"]) &&
-      $vector_act !== "media" && //mirrors DokuWiki action
-      (empty($conf["useacl"]) || //are there any users?
-       $loginname !== "" || //user is logged in?
-       !tpl_getConf("vector_closedwiki")) &&
-      tpl_getConf("vector_youarehere_position") === "bottom"){
-      echo "\n  <div class=\"catlinks noprint\"><p>\n    ";
-      tpl_youarehere();
-      echo "\n  </p></div>\n";
-  }
-  ?>
+//show breadcrumps if enabled and position = bottom
+if (!empty($conf["breadcrumbs"]) &&
+    $vector_act !== "media" && //mirrors DokuWiki action
+    (empty($conf["useacl"]) || //are there any users?
+     $loginname !== "" || //user is logged in?
+     !tpl_getConf("vector_closedwiki")) &&
+    tpl_getConf("vector_breadcrumbs_position") === "bottom") {
+    echo "\n  <div class=\"catlinks noprint\"><p>\n    ";
+    tpl_breadcrumbs();
+    echo "\n  </p></div>\n";
+}
+//show hierarchical breadcrumps if enabled and position = bottom
+if (!empty($conf["youarehere"]) &&
+    $vector_act !== "media" && //mirrors DokuWiki action
+    (empty($conf["useacl"]) || //are there any users?
+     $loginname !== "" || //user is logged in?
+     !tpl_getConf("vector_closedwiki")) &&
+    tpl_getConf("vector_youarehere_position") === "bottom") {
+    echo "\n  <div class=\"catlinks noprint\"><p>\n    ";
+    tpl_youarehere();
+    echo "\n  </p></div>\n";
+}
+?>
 
 </main>
 <!-- end main id=content -->
@@ -1292,67 +1293,67 @@ if ($vector_direction === "rtl" && file_exists(tpl_incdir()."user/rtl.css")){
 <!-- start div id=head -->
 <div id="head" class="noprint">
   <?php
-  //show personal tools
-  if (!empty($conf["useacl"])){ //...makes only sense if there are users
-      echo  "\n"
-           ."  <div id=\"p-personal\">\n"
-           ."    <ul>\n";
-      if ($loginname === ""){
-          if (actionOK("register")){
-              echo  "      <li id='pt-register'><a href='".hsc(_vector_wl(cleanID(getID()), array("do" => "register")))."' rel='nofollow'>".hsc(_vector_getLang("btn_register", "Register"))."</a></li>"; //language comes from DokuWiki core
-          }
-          if (actionOK("login")){
-              echo  "      <li id='pt-login'><a href='".hsc(_vector_wl(cleanID(getID()), array("do" => "login", "sectok" => getSecurityToken())))."' rel='nofollow'>".hsc(_vector_getLang("btn_login", "Log In"))."</a></li>"; //language comes from DokuWiki core
-          }
-          if (actionOK("resendpwd")){
-              echo  "      <li id='pt-resendpwd'><a href='".hsc(_vector_wl(cleanID(getID()), array("do" => "resendpwd")))."' rel='nofollow'>".hsc(_vector_getLang("btn_resendpwd", "Set new password"))."</a></li>"; //language comes from DokuWiki core
-          }
-      }else{
-          //username and userpage
-          echo "      <li id='pt-userpage'>".(tpl_getConf("vector_userpage") && $vector_userpage_ns !== ""
-                                                ? html_wikilink(cleanID($vector_userpage_ns.":".$loginname), $loginname)
-                                                : hsc($loginname))."</li>";
-          //personal discussion
-          if (tpl_getConf("vector_discuss") &&
-              tpl_getConf("vector_userpage") && $vector_userpage_ns !== "" && $vector_discuss_ns !== ""){
-              echo "      <li id='pt-mytalk'>".html_wikilink(cleanID($vector_discuss_ns.":".$vector_userpage_ns.":".$loginname), _vector_getLang("vector_mytalk"))."</li>";
-          }
-          //admin
-          if (actionOK("admin") &&
-              (!empty($INFO["isadmin"]) ||
-               !empty($INFO["ismanager"]))){
-              echo  "      <li id='pt-admin'><a href='".hsc(_vector_wl(cleanID(getID()), array("do" => "admin")))."' rel='nofollow'>".hsc(_vector_getLang("btn_admin", "Admin"))."</a></li>"; //language comes from DokuWiki core
-          }
-          if (actionOK("profile")){ //check if action is disabled
-              echo  "      <li id=\"pt-preferences\"><a href=\"".hsc(_vector_wl(cleanID(getID()), array("do" => "profile")))."\" rel=\"nofollow\">".hsc(_vector_getLang("btn_profile", "Update Profile"))."</a></li>\n"; //language comes from DokuWiki core
-          }
-          //logout
-          if (actionOK("logout")){
-              echo  "      <li id=\"pt-logout\"><a href=\"".hsc(_vector_wl(cleanID(getID()), array("do" => "logout", "sectok" => getSecurityToken())))."\" rel=\"nofollow\">".hsc(_vector_getLang("btn_logout", "Log Out"))."</a></li>\n"; //language comes from DokuWiki core
-          }
-      }
-      if ($loginname !== "" || !tpl_getConf("vector_closedwiki")){
-          echo _vector_menuItemsToListItems(
-              "\\dokuwiki\\Menu\\UserMenu",
-              array("profile", "admin", "register", "login", "logout"),
-              "pt-dw-"
-          );
-      }
-      echo  "    </ul>\n"
-           ."  </div>\n";
-  }
-  ?>
+//show personal tools
+if (!empty($conf["useacl"])) { //...makes only sense if there are users
+    echo  "\n"
+         ."  <div id=\"p-personal\">\n"
+         ."    <ul>\n";
+    if ($loginname === "") {
+        if (actionOK("register")) {
+            echo  "      <li id='pt-register'><a href='".hsc(_vector_wl(cleanID(getID()), array("do" => "register")))."' rel='nofollow'>".hsc(_vector_getLang("btn_register", "Register"))."</a></li>"; //language comes from DokuWiki core
+        }
+        if (actionOK("login")) {
+            echo  "      <li id='pt-login'><a href='".hsc(_vector_wl(cleanID(getID()), array("do" => "login", "sectok" => getSecurityToken())))."' rel='nofollow'>".hsc(_vector_getLang("btn_login", "Log In"))."</a></li>"; //language comes from DokuWiki core
+        }
+        if (actionOK("resendpwd")) {
+            echo  "      <li id='pt-resendpwd'><a href='".hsc(_vector_wl(cleanID(getID()), array("do" => "resendpwd")))."' rel='nofollow'>".hsc(_vector_getLang("btn_resendpwd", "Set new password"))."</a></li>"; //language comes from DokuWiki core
+        }
+    } else {
+        //username and userpage
+        echo "      <li id='pt-userpage'>".(tpl_getConf("vector_userpage") && $vector_userpage_ns !== ""
+                                              ? html_wikilink(cleanID($vector_userpage_ns.":".$loginname), $loginname)
+                                              : hsc($loginname))."</li>";
+        //personal discussion
+        if (tpl_getConf("vector_discuss") &&
+            tpl_getConf("vector_userpage") && $vector_userpage_ns !== "" && $vector_discuss_ns !== "") {
+            echo "      <li id='pt-mytalk'>".html_wikilink(cleanID($vector_discuss_ns.":".$vector_userpage_ns.":".$loginname), _vector_getLang("vector_mytalk"))."</li>";
+        }
+        //admin
+        if (actionOK("admin") &&
+            (!empty($INFO["isadmin"]) ||
+             !empty($INFO["ismanager"]))) {
+            echo  "      <li id='pt-admin'><a href='".hsc(_vector_wl(cleanID(getID()), array("do" => "admin")))."' rel='nofollow'>".hsc(_vector_getLang("btn_admin", "Admin"))."</a></li>"; //language comes from DokuWiki core
+        }
+        if (actionOK("profile")) { //check if action is disabled
+            echo  "      <li id=\"pt-preferences\"><a href=\"".hsc(_vector_wl(cleanID(getID()), array("do" => "profile")))."\" rel=\"nofollow\">".hsc(_vector_getLang("btn_profile", "Update Profile"))."</a></li>\n"; //language comes from DokuWiki core
+        }
+        //logout
+        if (actionOK("logout")) {
+            echo  "      <li id=\"pt-logout\"><a href=\"".hsc(_vector_wl(cleanID(getID()), array("do" => "logout", "sectok" => getSecurityToken())))."\" rel=\"nofollow\">".hsc(_vector_getLang("btn_logout", "Log Out"))."</a></li>\n"; //language comes from DokuWiki core
+        }
+    }
+    if ($loginname !== "" || !tpl_getConf("vector_closedwiki")) {
+        echo _vector_menuItemsToListItems(
+            "\\dokuwiki\\Menu\\UserMenu",
+            array("profile", "admin", "register", "login", "logout"),
+            "pt-dw-"
+        );
+    }
+    echo  "    </ul>\n"
+         ."  </div>\n";
+}
+?>
 
   <!-- start div id=left-navigation -->
   <div id="left-navigation">
     <div id="p-namespaces" class="vectorTabs">
       <ul><?php
-          //show tabs: left. see modernizedvector/user/tabs.php to configure them
-          if (!empty($_vector_tabs_left) &&
-              is_array($_vector_tabs_left)){
-              _vector_renderTabs($_vector_tabs_left);
-          }
-          ?>
+        //show tabs: left. see modernizedvector/user/tabs.php to configure them
+        if (!empty($_vector_tabs_left) &&
+            is_array($_vector_tabs_left)) {
+            _vector_renderTabs($_vector_tabs_left);
+        }
+?>
 
       </ul>
     </div>
@@ -1363,16 +1364,16 @@ if ($vector_direction === "rtl" && file_exists(tpl_incdir()."user/rtl.css")){
   <div id="right-navigation">
     <div id="p-views" class="vectorTabs">
       <ul><?php
-          //show tabs: right. see modernizedvector/user/tabs.php to configure them
-          if (!empty($_vector_tabs_right) &&
-              is_array($_vector_tabs_right)){
-              _vector_renderTabs($_vector_tabs_right);
-          }
-          ?>
+//show tabs: right. see modernizedvector/user/tabs.php to configure them
+if (!empty($_vector_tabs_right) &&
+    is_array($_vector_tabs_right)) {
+    _vector_renderTabs($_vector_tabs_right);
+}
+?>
 
       </ul>
     </div>
-<?php if (actionOK("search")){ ?>
+<?php if (actionOK("search")) { ?>
     <div id="p-search">
       <h5>
         <label for="qsearch__in"><?php echo hsc(_vector_getLang("vector_search")); ?></label>
@@ -1403,29 +1404,29 @@ if ($vector_direction === "rtl" && file_exists(tpl_incdir()."user/rtl.css")){
       <?php
       //include default, media, or user-defined logo
       $vector_logo = tpl_basedir()."static/3rd/dokuwiki/logo.png";
-      if (file_exists(tpl_incdir()."user/logo.svg")){
-          $vector_logo = tpl_basedir()."user/logo.svg";
-      }elseif (file_exists(tpl_incdir()."user/logo.png")){
-          $vector_logo = tpl_basedir()."user/logo.png";
-      }elseif (file_exists(tpl_incdir()."user/logo.gif")){
-          $vector_logo = tpl_basedir()."user/logo.gif";
-      }elseif (file_exists(tpl_incdir()."user/logo.jpg")){
-          $vector_logo = tpl_basedir()."user/logo.jpg";
-      }
-      if ($vector_logo === tpl_basedir()."static/3rd/dokuwiki/logo.png"){
-          $vector_logo_info = null;
-          $vector_logo_candidate = tpl_getMediaFile(array(":wiki:logo.svg", ":logo.svg", ":wiki:logo.png", ":logo.png", ":wiki:logo.gif", ":logo.gif", ":wiki:logo.jpg", ":logo.jpg"), false, $vector_logo_info, false);
-          if ($vector_logo_candidate !== false){
-              $vector_logo = $vector_logo_candidate;
-          }
-      }
-      $vector_home_label = strip_tags(_vector_string($conf["title"] ?? ""));
-      if ($vector_home_label === ""){
-          $vector_home_label = "Home";
-      }
-      echo '<a href="'.hsc(_vector_wl()).'" style="background-image:url(&quot;'.hsc($vector_logo).'&quot;);" accesskey="h" title="[ALT+H]" aria-label="'.hsc($vector_home_label).'"></a>'."\n";
-      unset($vector_home_label, $vector_logo, $vector_logo_candidate, $vector_logo_info);
-      ?>
+if (file_exists(tpl_incdir()."user/logo.svg")) {
+    $vector_logo = tpl_basedir()."user/logo.svg";
+} elseif (file_exists(tpl_incdir()."user/logo.png")) {
+    $vector_logo = tpl_basedir()."user/logo.png";
+} elseif (file_exists(tpl_incdir()."user/logo.gif")) {
+    $vector_logo = tpl_basedir()."user/logo.gif";
+} elseif (file_exists(tpl_incdir()."user/logo.jpg")) {
+    $vector_logo = tpl_basedir()."user/logo.jpg";
+}
+if ($vector_logo === tpl_basedir()."static/3rd/dokuwiki/logo.png") {
+    $vector_logo_info = null;
+    $vector_logo_candidate = tpl_getMediaFile(array(":wiki:logo.svg", ":logo.svg", ":wiki:logo.png", ":logo.png", ":wiki:logo.gif", ":logo.gif", ":wiki:logo.jpg", ":logo.jpg"), false, $vector_logo_info, false);
+    if ($vector_logo_candidate !== false) {
+        $vector_logo = $vector_logo_candidate;
+    }
+}
+$vector_home_label = strip_tags(_vector_string($conf["title"] ?? ""));
+if ($vector_home_label === "") {
+    $vector_home_label = "Home";
+}
+echo '<a href="'.hsc(_vector_wl()).'" style="background-image:url(&quot;'.hsc($vector_logo).'&quot;);" accesskey="h" title="[ALT+H]" aria-label="'.hsc($vector_home_label).'"></a>'."\n";
+unset($vector_home_label, $vector_logo, $vector_logo_candidate, $vector_logo_info);
+?>
   </div>
   <!-- end logo -->
 
@@ -1433,10 +1434,10 @@ if ($vector_direction === "rtl" && file_exists(tpl_incdir()."user/rtl.css")){
   <?php
   //show boxes, see modernizedvector/user/boxes.php to configure them
   if (!empty($_vector_boxes) &&
-      is_array($_vector_boxes)){
+is_array($_vector_boxes)) {
       _vector_renderBoxes($_vector_boxes);
   }
-  ?>
+?>
   <?php _vector_includeFile("sidebarfooter.html"); ?>
 
 </div>
@@ -1451,60 +1452,60 @@ if ($vector_direction === "rtl" && file_exists(tpl_incdir()."user/rtl.css")){
       <?php tpl_pageinfo()?><br>
     </li>
     <?php
-    //copyright notice
-    if (tpl_getConf("vector_copyright")){
-        //show dokuwiki's default notice?
-        if (tpl_getConf("vector_copyright_default")){
-            echo "<li id=\"footer-info-copyright\">\n      <div class=\"dokuwiki\">";  //dokuwiki CSS class needed cause we have to show DokuWiki content
-            tpl_license(false);
-            echo "</div>\n    </li>\n";
-        //show custom notice.
-        }else{
-            //detect wiki page to load as content
-            $transplugin_langcur = "";
-            if (!empty($transplugin) &&
-                tpl_getConf("vector_copyright_translate")){
-                $transplugin_langcur = _vector_getTranslationPart($transplugin);
-            }
-            if ($transplugin_langcur === ""){
-                //current page is no translation or something is wrong, load default copyright notice
-                $copyright_location = _vector_cleanPageId(tpl_getConf("vector_copyright_location"));
-            } else {
-                //load language specific copyright notice
-                $copyright_location = _vector_cleanTranslatedPageId(tpl_getConf("vector_copyright_location"), $transplugin_langcur);
-            }
+  //copyright notice
+  if (tpl_getConf("vector_copyright")) {
+      //show dokuwiki's default notice?
+      if (tpl_getConf("vector_copyright_default")) {
+          echo "<li id=\"footer-info-copyright\">\n      <div class=\"dokuwiki\">";  //dokuwiki CSS class needed cause we have to show DokuWiki content
+          tpl_license(false);
+          echo "</div>\n    </li>\n";
+          //show custom notice.
+      } else {
+          //detect wiki page to load as content
+          $transplugin_langcur = "";
+          if (!empty($transplugin) &&
+              tpl_getConf("vector_copyright_translate")) {
+              $transplugin_langcur = _vector_getTranslationPart($transplugin);
+          }
+          if ($transplugin_langcur === "") {
+              //current page is no translation or something is wrong, load default copyright notice
+              $copyright_location = _vector_cleanPageId(tpl_getConf("vector_copyright_location"));
+          } else {
+              //load language specific copyright notice
+              $copyright_location = _vector_cleanTranslatedPageId(tpl_getConf("vector_copyright_location"), $transplugin_langcur);
+          }
 
-            if ($copyright_location !== "" && (empty($conf["useacl"]) ||
-                auth_quickaclcheck($copyright_location) >= AUTH_READ)){ //current user got access?
-                echo "<li id=\"footer-info-copyright\">\n        ";
-                //get the rendered content of the defined wiki article to use as custom notice
-                $interim = tpl_include_page($copyright_location, false);
-                if ($interim === "" ||
-                    $interim === false){
-                    //show creation/edit link if the defined page got no content
-                    echo "[&#160;";
-                    tpl_pagelink($copyright_location, _vector_getLang("vector_fillplaceholder")." (".$copyright_location.")");
-                    echo "&#160;]<br>";
-                }else{
-                    //show the rendered page content
-                    echo  "<div class=\"dokuwiki\">\n" //dokuwiki CSS class needed cause we are showing rendered page content
-                         .$interim."\n        "
-                         ."</div>";
-                }
-                echo "\n    </li>\n";
-            }
-        }
-    }
-    ?>
+          if ($copyright_location !== "" && (empty($conf["useacl"]) ||
+              auth_quickaclcheck($copyright_location) >= AUTH_READ)) { //current user got access?
+              echo "<li id=\"footer-info-copyright\">\n        ";
+              //get the rendered content of the defined wiki article to use as custom notice
+              $interim = tpl_include_page($copyright_location, false);
+              if ($interim === "" ||
+                  $interim === false) {
+                  //show creation/edit link if the defined page got no content
+                  echo "[&#160;";
+                  tpl_pagelink($copyright_location, _vector_getLang("vector_fillplaceholder")." (".$copyright_location.")");
+                  echo "&#160;]<br>";
+              } else {
+                  //show the rendered page content
+                  echo  "<div class=\"dokuwiki\">\n" //dokuwiki CSS class needed cause we are showing rendered page content
+                       .$interim."\n        "
+                       ."</div>";
+              }
+              echo "\n    </li>\n";
+          }
+      }
+  }
+?>
   </ul>
   <ul id="footer-places">
     <li><?php
-        //show buttons, see modernizedvector/user/buttons.php to configure them
-        if (!empty($_vector_btns) &&
-            is_array($_vector_btns)){
-            _vector_renderButtons($_vector_btns);
-        }
-        ?>
+    //show buttons, see modernizedvector/user/buttons.php to configure them
+    if (!empty($_vector_btns) &&
+        is_array($_vector_btns)) {
+        _vector_renderButtons($_vector_btns);
+    }
+?>
     </li>
   </ul>
   <div class="clearer"></div>
@@ -1516,7 +1517,7 @@ if ($vector_direction === "rtl" && file_exists(tpl_incdir()."user/rtl.css")){
 <?php
 
 //include web analytics software
-if (file_exists(tpl_incdir()."user/tracker.php")){
+if (file_exists(tpl_incdir()."user/tracker.php")) {
     include tpl_incdir()."user/tracker.php";
 }
 ?>

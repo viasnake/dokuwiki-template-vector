@@ -27,7 +27,7 @@
 
 
 //check if we are running within the DokuWiki environment
-if (!defined("DOKU_INC")){
+if (!defined("DOKU_INC")) {
     die();
 }
 
@@ -87,4 +87,3 @@ $lang["vector_youarehere_position_o_bottom"] = "Bottom";
 $lang["vector_cite_author"]           = "Author name in 'Cite this Article':";
 $lang["vector_loaduserjs"]            = "Load 'modernizedvector/user/user.js'?";
 $lang["vector_closedwiki"]            = "Closed wiki (most links/tabs/boxes are hidden until user is logged in)?";
-

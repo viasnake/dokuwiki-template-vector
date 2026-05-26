@@ -21,7 +21,7 @@
  */
 
 //check if we are running within the DokuWiki environment
-if (!defined("DOKU_INC")){
+if (!defined("DOKU_INC")) {
     die();
 }
 $ERROR = (isset($ERROR) && is_scalar($ERROR)) ? (string)$ERROR : "";
@@ -32,12 +32,12 @@ $imageTitle = tpl_img_getTag("Simple.Title");
 $imageHeadline = is_scalar($imageHeadline) ? (string)$imageHeadline : "";
 $imageTitle = is_scalar($imageTitle) ? (string)$imageTitle : "";
 $mediaUsage = array();
-if ($IMG !== ""){
+if ($IMG !== "") {
     $mediaUsageLoaded = false;
-    if (class_exists("\\dokuwiki\\Search\\MetadataSearch")){
+    if (class_exists("\\dokuwiki\\Search\\MetadataSearch")) {
         try {
             $metadataSearch = new \dokuwiki\Search\MetadataSearch();
-            if (method_exists($metadataSearch, "mediause")){
+            if (method_exists($metadataSearch, "mediause")) {
                 $mediaUsage = $metadataSearch->mediause($IMG, true);
                 $mediaUsageLoaded = true;
             }
@@ -45,11 +45,11 @@ if ($IMG !== ""){
             $mediaUsageLoaded = false;
         }
     }
-    if (!$mediaUsageLoaded && function_exists("ft_mediause")){
+    if (!$mediaUsageLoaded && function_exists("ft_mediause")) {
         $mediaUsage = ft_mediause($IMG, true);
     }
 }
-if (!is_array($mediaUsage)){
+if (!is_array($mediaUsage)) {
     $mediaUsage = array();
 }
 
@@ -57,12 +57,14 @@ if (!is_array($mediaUsage)){
 
     <div id="dokuwiki__detail" class="dokuwiki">
 
-        <?php if ($ERROR !== "") { echo hsc($ERROR); } else { ?>
+        <?php if ($ERROR !== "") {
+            echo hsc($ERROR);
+        } else { ?>
 
             <h1><?php echo hsc($imageHeadline)?></h1>
 
             <div class="content">
-                <?php tpl_img(900,700); /* parameters: maximum width, maximum height (and more) */ ?>
+                <?php tpl_img(900, 700); /* parameters: maximum width, maximum height (and more) */ ?>
 
                 <div class="img_detail">
                     <h2><?php echo nl2br(hsc($imageTitle), false); ?></h2>
@@ -72,42 +74,42 @@ if (!is_array($mediaUsage)){
                     <dl>
                         <?php
                             echo '<dt>'.hsc(_vector_getLang("reference", "Reference")).':</dt>';
-                            if ($mediaUsage !== array()){
-                                foreach ($mediaUsage as $t){
-                                    if (!is_scalar($t)){
-                                        continue;
-                                    }
-                                    $target = cleanID((string)$t);
-                                    if ($target === ""){
-                                        continue;
-                                    }
-                                    echo '<dd>'.html_wikilink($target, $target).'</dd>';
-                                }
-                            }else{
-                                echo '<dd>'.hsc(_vector_getLang("nothingfound", "Nothing found")).'</dd>';
-                            }
-                        ?>
+            if ($mediaUsage !== array()) {
+                foreach ($mediaUsage as $t) {
+                    if (!is_scalar($t)) {
+                        continue;
+                    }
+                    $target = cleanID((string)$t);
+                    if ($target === "") {
+                        continue;
+                    }
+                    echo '<dd>'.html_wikilink($target, $target).'</dd>';
+                }
+            } else {
+                echo '<dd>'.hsc(_vector_getLang("nothingfound", "Nothing found")).'</dd>';
+            }
+            ?>
                     </dl>
                     <?php
-                        if (function_exists("media_acl_warning")){
-                            media_acl_warning($IMG);
-                        }else{
-                            echo '<p>'.hsc(_vector_getLang("media_acl_warning", "This list might not be complete due to ACL restrictions and hidden pages.")).'</p>';
-                        }
-                    ?>
+            if (function_exists("media_acl_warning")) {
+                media_acl_warning($IMG);
+            } else {
+                echo '<p>'.hsc(_vector_getLang("media_acl_warning", "This list might not be complete due to ACL restrictions and hidden pages.")).'</p>';
+            }
+            ?>
                 </div>
                 <div class="clearer"></div>
             </div><!-- /.content -->
 
             <p class="back">
                 <?php
-                    $imgNS = ($IMG !== "") ? getNS($IMG) : "";
-                    $authNS = ($IMG !== "") ? auth_quickaclcheck("$imgNS:*") : 0;
-                    if ($IMG !== "" && ($authNS >= AUTH_UPLOAD) && actionOK("media")){
-                        $mmURL = _vector_wl($ID, array("do" => "media", "ns" => $imgNS, "image" => $IMG));
-                        echo '<a href="'.hsc($mmURL).'">'.hsc(_vector_getLang("img_manager", "Media Manager")).'</a><br>';
-                    }
-                ?>
+            $imgNS = ($IMG !== "") ? getNS($IMG) : "";
+            $authNS = ($IMG !== "") ? auth_quickaclcheck("$imgNS:*") : 0;
+            if ($IMG !== "" && ($authNS >= AUTH_UPLOAD) && actionOK("media")) {
+                $mmURL = _vector_wl($ID, array("do" => "media", "ns" => $imgNS, "image" => $IMG));
+                echo '<a href="'.hsc($mmURL).'">'.hsc(_vector_getLang("img_manager", "Media Manager")).'</a><br>';
+            }
+            ?>
                 &larr; <?php echo hsc(_vector_getLang("img_backto", "Back to"))?> <?php tpl_pagelink($ID)?>
             </p>
 

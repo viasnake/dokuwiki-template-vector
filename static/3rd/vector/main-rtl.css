@@ -257,12 +257,6 @@ div#head h5 {
 	body.rtl div.vectorMenu > div.menu {
 		margin-left: auto;
 	}
-	/* Fixes old Firefox layout behavior */
-	/* @noflip */
-	body.rtl div.vectorMenu > div.menu,
-	x:-moz-any-link {
-		margin-left: 23px;
-	}
 	div.vectorMenu:hover div.menu {
 		display: block;
 	}
@@ -278,17 +272,6 @@ div#head h5 {
 		margin: 0;
 		margin-right: -1px;
 		text-align: right;
-	}
-	/* Fixes old Firefox layout behavior */
-	div.vectorMenu ul,
-	x:-moz-any-link {
-		min-width: 5em;
-	}
-	/* Returns things back to normal in modern versions of FireFox */
-	div.vectorMenu ul,
-	x:-moz-any-link,
-	x:default {
-		min-width: 0;
 	}
 	div.vectorMenu li {
 		padding: 0;
