@@ -292,6 +292,45 @@ if (!function_exists("_vector_getTranslationPlugin")) {
     }
 }
 
+if (!function_exists("_vector_getLogoUrl")) {
+    /**
+     * Return the configured template logo URL.
+     *
+     * @return string
+     */
+    function _vector_getLogoUrl()
+    {
+        $logo = tpl_basedir()."static/3rd/dokuwiki/logo.png";
+        foreach (array("svg", "png", "gif", "jpg") as $extension) {
+            if (file_exists(tpl_incdir()."user/logo.".$extension)) {
+                return tpl_basedir()."user/logo.".$extension;
+            }
+        }
+
+        $logo_info = null;
+        $logo_candidate = tpl_getMediaFile(
+            array(
+                ":wiki:logo.svg",
+                ":logo.svg",
+                ":wiki:logo.png",
+                ":logo.png",
+                ":wiki:logo.gif",
+                ":logo.gif",
+                ":wiki:logo.jpg",
+                ":logo.jpg",
+            ),
+            false,
+            $logo_info,
+            false
+        );
+        if ($logo_candidate !== false) {
+            return $logo_candidate;
+        }
+
+        return $logo;
+    }
+}
+
 
 if (!function_exists("_vector_includeFile")) {
     /**
@@ -697,6 +736,26 @@ if (file_exists(tpl_incdir()."user/boxes.php")) {
     include tpl_incdir()."user/boxes.php"; //add user defined
 }
 
+$_vector_main_menu_boxes = $_vector_boxes;
+$_vector_toc_boxes = array();
+$_vector_page_tool_boxes = array();
+$_vector_appearance_boxes = array();
+if ($vector_skin_version === "2022") {
+    foreach (array("p-toc", "p-tb", "p-coll-print_export", "p-appearance") as $vector_box_id) {
+        if (isset($_vector_main_menu_boxes[$vector_box_id])) {
+            if ($vector_box_id === "p-toc") {
+                $_vector_toc_boxes[$vector_box_id] = $_vector_main_menu_boxes[$vector_box_id];
+            } elseif ($vector_box_id === "p-appearance") {
+                $_vector_appearance_boxes[$vector_box_id] = $_vector_main_menu_boxes[$vector_box_id];
+            } else {
+                $_vector_page_tool_boxes[$vector_box_id] = $_vector_main_menu_boxes[$vector_box_id];
+            }
+            unset($_vector_main_menu_boxes[$vector_box_id]);
+        }
+    }
+}
+unset($vector_box_id);
+
 
 //get button config
 include tpl_incdir()."conf/buttons.php"; //default
@@ -874,6 +933,11 @@ function _vector_renderBoxes($arr)
         return false; //nope, break operation
     }
 
+    $vector_render_skin_version = _vector_string(tpl_getConf("vector_skin_version"), "2011");
+    if (!in_array($vector_render_skin_version, array("2011", "2022"), true)) {
+        $vector_render_skin_version = "2011";
+    }
+
     //array to store the created boxes into
     $boxes = array();
 
@@ -895,14 +959,22 @@ function _vector_renderBoxes($arr)
         }
         $box_id = hsc((string)$div_id);
         $headline_id = $box_id."-label";
+        $box_class = "portal";
+        $headline_class = "";
+        $body_class = "body";
+        if ($vector_render_skin_version === "2022") {
+            $box_class .= " vector-menu mw-portlet mw-portlet-".preg_replace("/^p-/", "", (string)$div_id);
+            $headline_class = " class=\"vector-menu-heading\"";
+            $body_class .= " vector-menu-content";
+        }
         $has_headline = isset($contents["headline"])
             && $contents["headline"] !== ""
             && is_scalar($contents["headline"]);
-        $interim  = "  <div id=\"".$box_id."\" class=\"portal\"".($has_headline ? " aria-labelledby=\"".$headline_id."\"" : "").">\n";
+        $interim  = "  <div id=\"".$box_id."\" class=\"".hsc($box_class)."\"".($has_headline ? " aria-labelledby=\"".$headline_id."\"" : "").">\n";
         if ($has_headline) {
-            $interim .= "    <h5 id=\"".$headline_id."\">".hsc($contents["headline"])."</h5>\n";
+            $interim .= "    <h5 id=\"".$headline_id."\"".$headline_class.">".hsc($contents["headline"])."</h5>\n";
         }
-        $interim .= "    <div class=\"body\">\n"
+        $interim .= "    <div class=\"".hsc($body_class)."\">\n"
                    ."      <div class=\"dokuwiki\">\n" //dokuwiki CSS class needed cause we might have to show rendered page content
                    .$xhtml."\n"
                    ."      </div>\n"
@@ -1154,16 +1226,23 @@ if ($vector_direction === "rtl" && file_exists(tpl_incdir()."user/rtl.css")) {
                  default:
                      echo "mediawiki ".$vector_direction_class." capitalize-all-nouns ns-0 ns-subject ";
                      break;
-             } ?>skin-vector skin-vector-<?php echo hsc($vector_skin_version); ?> <?php echo hsc(tpl_classes()); ?>" data-vector-menu-label="<?php echo hsc(_vector_getLang("vector_menu")); ?>" data-vector-skin-version="<?php echo hsc($vector_skin_version); ?>">
+             } ?>skin--responsive skin-vector skin-vector-<?php echo hsc($vector_skin_version); ?><?php
+             if ($vector_skin_version === "2022") {
+                 echo " skin-vector-search-vue vector-feature-main-menu-pinned-disabled vector-feature-toc-pinned-clientpref-1 vector-feature-page-tools-pinned-disabled vector-feature-limited-width-clientpref-1 vector-feature-limited-width-content-enabled vector-feature-custom-font-size-clientpref-1 vector-feature-appearance-pinned-clientpref-1 skin-theme-clientpref-day vector-sticky-header-enabled vector-toc-available";
+             }
+             ?> <?php echo hsc(tpl_classes()); ?>" data-vector-menu-label="<?php echo hsc(_vector_getLang("vector_menu")); ?>" data-vector-skin-version="<?php echo hsc($vector_skin_version); ?>">
 <a class="a11y skiplink" href="#dokuwiki__content"><?php echo hsc(_vector_getLang("vector_skip_to_content")); ?></a>
 <?php _vector_includeFile("topheader.html"); ?>
 <?php _vector_includeFile("header.html"); ?>
-<div id="page-container">
+<div id="page-container"<?php echo ($vector_skin_version === "2022") ? " class=\"mw-page-container\"" : ""; ?>>
+<?php if ($vector_skin_version === "2022") { ?>
+<div class="mw-page-container-inner">
+<?php } ?>
 <div id="page-base" class="noprint"></div>
 <div id="head-base" class="noprint"></div>
 
 <!-- start main id=content -->
-<main id="content">
+<main id="content"<?php echo ($vector_skin_version === "2022") ? " class=\"mw-body\"" : ""; ?>>
   <a id="top"></a>
   <a id="dokuwiki__top"></a>
 
@@ -1172,6 +1251,83 @@ if ($vector_direction === "rtl" && file_exists(tpl_incdir()."user/rtl.css")) {
   //show messages (if there are any)
   html_msgarea();
 _vector_includeFile("pageheader.html");
+if ($vector_skin_version === "2022") {
+    $vector_page_title = strip_tags(_vector_string(tpl_pagetitle(null, true)));
+    if ($vector_page_title === "") {
+        $vector_page_title = strip_tags(_vector_string($conf["title"] ?? "DokuWiki"));
+    }
+    $vector_site_title = strip_tags(_vector_string($conf["title"] ?? ""));
+    echo "\n"
+        ."  <header class=\"mw-body-header vector-page-titlebar no-font-mode-scale noprint\">\n"
+        ."    <div class=\"vector-page-titlebar-start\">\n"
+        ."      <h1 class=\"firstHeading mw-first-heading\"><span class=\"mw-page-title-main\">".hsc($vector_page_title)."</span></h1>\n";
+    if ($vector_site_title !== "" && $vector_site_title !== $vector_page_title) {
+        echo "      <div class=\"vector-page-titlebar-subtitle\">".hsc($vector_site_title)."</div>\n";
+    }
+    echo "    </div>\n"
+        ."  </header>\n";
+    echo "  <div class=\"vector-page-toolbar vector-feature-custom-font-size-clientpref--excluded noprint\">\n"
+        ."    <div class=\"vector-page-toolbar-container\">\n"
+        ."      <div class=\"vector-page-toolbar-start\">\n"
+        ."        <nav class=\"vector-article-toolbar\" aria-label=\"Namespaces\">\n"
+        ."          <div id=\"vector-page-tabs\" class=\"vectorTabs vector-page-tabs\">\n"
+        ."            <ul>";
+    if (!empty($_vector_tabs_left) &&
+        is_array($_vector_tabs_left)) {
+        _vector_renderTabs($_vector_tabs_left);
+    }
+    echo "\n"
+        ."            </ul>\n"
+        ."          </div>\n"
+        ."        </nav>\n"
+        ."      </div>\n"
+        ."      <div class=\"vector-page-toolbar-end\">\n"
+        ."        <nav class=\"vector-view-toolbar\" aria-label=\"Views\">\n"
+        ."          <div id=\"vector-page-actions\" class=\"vectorTabs vector-page-actions\">\n"
+        ."            <ul>";
+    if (!empty($_vector_tabs_right) &&
+        is_array($_vector_tabs_right)) {
+        _vector_renderTabs($_vector_tabs_right);
+    }
+    echo "\n"
+        ."            </ul>\n"
+        ."          </div>\n"
+        ."        </nav>\n"
+        ."      </div>\n"
+        ."    </div>\n"
+        ."  </div>\n";
+    if (!empty($_vector_page_tool_boxes) || !empty($_vector_appearance_boxes)) {
+        echo "  <div class=\"vector-column-end no-font-mode-scale\">\n"
+            ."    <div class=\"vector-sticky-pinned-container\">\n";
+        if (!empty($_vector_page_tool_boxes)) {
+            echo "      <nav class=\"vector-page-tools-landmark\" aria-label=\"".hsc(_vector_getLang("vector_toolbox"))."\">\n"
+                ."        <div id=\"vector-page-tools-pinned-container\" class=\"vector-pinned-container\">\n"
+                ."          <div id=\"vector-page-tools\" class=\"vector-page-tools vector-pinnable-element\">\n"
+                ."            <div class=\"vector-pinnable-header vector-page-tools-pinnable-header vector-pinnable-header-pinned\" data-feature-name=\"page-tools-pinned\" data-pinnable-element-id=\"vector-page-tools\" data-pinned-container-id=\"vector-page-tools-pinned-container\" data-unpinned-container-id=\"vector-page-tools-unpinned-container\">\n"
+                ."              <div class=\"vector-pinnable-header-label\">".hsc(_vector_getLang("vector_toolbox"))."</div>\n"
+                ."            </div>\n";
+            _vector_renderBoxes($_vector_page_tool_boxes);
+            echo "          </div>\n"
+                ."        </div>\n"
+                ."      </nav>\n";
+        }
+        if (!empty($_vector_appearance_boxes)) {
+            echo "      <nav class=\"vector-appearance-landmark\" aria-label=\"".hsc(_vector_getLang("vector_appearance", "Appearance"))."\">\n"
+                ."        <div id=\"vector-appearance-pinned-container\" class=\"vector-pinned-container\">\n"
+                ."          <div id=\"vector-appearance\" class=\"vector-appearance vector-pinnable-element\">\n"
+                ."            <div class=\"vector-pinnable-header vector-appearance-pinnable-header vector-pinnable-header-pinned\" data-feature-name=\"appearance-pinned\" data-pinnable-element-id=\"vector-appearance\" data-pinned-container-id=\"vector-appearance-pinned-container\" data-unpinned-container-id=\"vector-appearance-unpinned-container\">\n"
+                ."              <div class=\"vector-pinnable-header-label\">".hsc(_vector_getLang("vector_appearance", "Appearance"))."</div>\n"
+                ."            </div>\n";
+            _vector_renderBoxes($_vector_appearance_boxes);
+            echo "          </div>\n"
+                ."        </div>\n"
+                ."      </nav>\n";
+        }
+        echo "    </div>\n"
+            ."  </div>\n";
+    }
+    unset($vector_page_title, $vector_site_title);
+}
 //show site notice
 if (tpl_getConf("vector_sitenotice")) {
     //detect wiki page to load as content
@@ -1237,7 +1393,7 @@ if (!empty($conf["youarehere"]) &&
   <!-- start div id dokuwiki__content -->
   <div id="dokuwiki__content" tabindex="-1">
   <!-- start div id bodyContent -->
-  <div id="bodyContent" class="dokuwiki">
+  <div id="bodyContent" class="dokuwiki<?php echo ($vector_skin_version === "2022") ? " vector-body" : ""; ?>">
     <!-- start rendered wiki content -->
     <?php
   //flush the buffer for faster page rendering, heaviest content follows
@@ -1302,12 +1458,32 @@ if (!empty($conf["youarehere"]) &&
 
 
 <!-- start div id=head -->
-<div id="head" class="noprint">
+<div id="head" class="noprint<?php echo ($vector_skin_version === "2022") ? " vector-header-container" : ""; ?>">
+<?php
+if ($vector_skin_version === "2022") {
+    $vector_logo = _vector_getLogoUrl();
+    $vector_home_label = strip_tags(_vector_string($conf["title"] ?? ""));
+    if ($vector_home_label === "") {
+        $vector_home_label = "Home";
+    }
+    echo "  <div class=\"vector-header mw-header no-font-mode-scale\">\n"
+        ."    <div class=\"vector-header-start\">\n"
+        ."      <button type=\"button\" class=\"vector-main-menu-button vector-icon cdx-button cdx-button--weight-quiet cdx-button--icon-only\" aria-controls=\"vector-main-menu-dropdown\" aria-expanded=\"false\" aria-label=\"".hsc(_vector_getLang("vector_menu"))."\"></button>\n"
+        ."      <a class=\"mw-logo\" href=\"".hsc(_vector_wl())."\" title=\"[ALT+H]\" accesskey=\"h\" aria-label=\"".hsc($vector_home_label)."\">\n"
+        ."        <span class=\"mw-logo-icon\" style=\"background-image:url(&quot;".hsc($vector_logo)."&quot;);\"></span>\n"
+        ."        <span class=\"mw-logo-container\"><span class=\"mw-logo-wordmark\">".hsc($vector_home_label)."</span><span class=\"mw-logo-tagline\">DokuWiki</span></span>\n"
+        ."      </a>\n"
+        ."    </div>\n"
+        ."    <div class=\"vector-header-end\">\n";
+    unset($vector_home_label, $vector_logo);
+}
+?>
   <?php
 //show personal tools
 if (!empty($conf["useacl"])) { //...makes only sense if there are users
+    $vector_personal_class = ($vector_skin_version === "2022") ? " class=\"vector-user-links vector-user-links-wide\"" : "";
     echo  "\n"
-         ."  <div id=\"p-personal\">\n"
+         ."  <div id=\"p-personal\"".$vector_personal_class.">\n"
          ."    <ul>\n";
     if ($loginname === "") {
         if (actionOK("register")) {
@@ -1352,9 +1528,11 @@ if (!empty($conf["useacl"])) { //...makes only sense if there are users
     }
     echo  "    </ul>\n"
          ."  </div>\n";
+    unset($vector_personal_class);
 }
 ?>
 
+<?php if ($vector_skin_version !== "2022") { ?>
   <!-- start div id=left-navigation -->
   <div id="left-navigation">
     <div id="p-namespaces" class="vectorTabs">
@@ -1370,9 +1548,11 @@ if (!empty($conf["useacl"])) { //...makes only sense if there are users
     </div>
   </div>
   <!-- end div id=left-navigation -->
+<?php } ?>
 
   <!-- start div id=right-navigation -->
   <div id="right-navigation">
+<?php if ($vector_skin_version !== "2022") { ?>
     <div id="p-views" class="vectorTabs">
       <ul><?php
 //show tabs: right. see modernizedvector/user/tabs.php to configure them
@@ -1384,8 +1564,9 @@ if (!empty($_vector_tabs_right) &&
 
       </ul>
     </div>
+<?php } ?>
 <?php if (actionOK("search")) { ?>
-    <div id="p-search">
+    <div id="p-search"<?php echo ($vector_skin_version === "2022") ? " role=\"search\" class=\"vector-search-box-vue vector-search-box-collapses vector-search-box-auto-expand-width vector-search-box\"" : ""; ?>>
       <h5>
         <label for="qsearch__in"><?php echo hsc(_vector_getLang("vector_search")); ?></label>
       </h5>
@@ -1393,9 +1574,9 @@ if (!empty($_vector_tabs_right) &&
         <input type="hidden" name="do" value="search">
         <input type="hidden" name="id" value="<?php echo hsc(getID()); ?>">
         <div class="no">
-          <div id="simpleSearch">
-          <input id="qsearch__in" class="edit" name="q" type="text" accesskey="f" title="[F]" placeholder="<?php echo hsc(_vector_getLang("btn_search", "Search")); ?>" autocomplete="on" value="<?php echo hsc(($vector_act === "search") ? $vector_query : ""); ?>">
-          <button id="searchButton" class="button" type="submit" name="button" title="<?php echo hsc(_vector_getLang("vector_btn_search_title")); ?>" aria-label="<?php echo hsc(_vector_getLang("vector_btn_search_title")); ?>">&#160;</button>
+          <div id="simpleSearch"<?php echo ($vector_skin_version === "2022") ? " class=\"cdx-search-input__input-wrapper\"" : ""; ?>>
+          <input id="qsearch__in" class="edit<?php echo ($vector_skin_version === "2022") ? " cdx-text-input__input mw-searchInput" : ""; ?>" name="q" type="text" accesskey="f" title="[F]" placeholder="<?php echo hsc(_vector_getLang("btn_search", "Search")); ?>" autocomplete="on" value="<?php echo hsc(($vector_act === "search") ? $vector_query : ""); ?>">
+          <button id="searchButton" class="button<?php echo ($vector_skin_version === "2022") ? " cdx-button cdx-search-input__end-button" : ""; ?>" type="submit" name="button" title="<?php echo hsc(_vector_getLang("vector_btn_search_title")); ?>" aria-label="<?php echo hsc(_vector_getLang("vector_btn_search_title")); ?>">&#160;</button>
         </div>
         <div id="qsearch__out" class="ajax_qsearch JSpopup"></div>
         </div>
@@ -1405,38 +1586,28 @@ if (!empty($_vector_tabs_right) &&
   </div>
   <!-- end div id=right-navigation -->
 
+<?php
+if ($vector_skin_version === "2022") {
+    echo "    </div>\n"
+        ."  </div>\n";
+}
+?>
 </div>
 <!-- end div id=head -->
 
 <!-- start panel/sidebar -->
-<div id="panel" class="noprint" role="complementary" aria-label="<?php echo hsc(_vector_getLang("vector_sidebar")); ?>">
+<div id="panel" class="noprint<?php echo ($vector_skin_version === "2022") ? " vector-column-start no-font-mode-scale" : ""; ?>" role="complementary" aria-label="<?php echo hsc(_vector_getLang("vector_sidebar")); ?>">
   <!-- start logo -->
   <div id="p-logo">
       <?php
       //include default, media, or user-defined logo
-      $vector_logo = tpl_basedir()."static/3rd/dokuwiki/logo.png";
-if (file_exists(tpl_incdir()."user/logo.svg")) {
-    $vector_logo = tpl_basedir()."user/logo.svg";
-} elseif (file_exists(tpl_incdir()."user/logo.png")) {
-    $vector_logo = tpl_basedir()."user/logo.png";
-} elseif (file_exists(tpl_incdir()."user/logo.gif")) {
-    $vector_logo = tpl_basedir()."user/logo.gif";
-} elseif (file_exists(tpl_incdir()."user/logo.jpg")) {
-    $vector_logo = tpl_basedir()."user/logo.jpg";
-}
-if ($vector_logo === tpl_basedir()."static/3rd/dokuwiki/logo.png") {
-    $vector_logo_info = null;
-    $vector_logo_candidate = tpl_getMediaFile(array(":wiki:logo.svg", ":logo.svg", ":wiki:logo.png", ":logo.png", ":wiki:logo.gif", ":logo.gif", ":wiki:logo.jpg", ":logo.jpg"), false, $vector_logo_info, false);
-    if ($vector_logo_candidate !== false) {
-        $vector_logo = $vector_logo_candidate;
-    }
-}
+      $vector_logo = _vector_getLogoUrl();
 $vector_home_label = strip_tags(_vector_string($conf["title"] ?? ""));
 if ($vector_home_label === "") {
     $vector_home_label = "Home";
 }
 echo '<a href="'.hsc(_vector_wl()).'" style="background-image:url(&quot;'.hsc($vector_logo).'&quot;);" accesskey="h" title="[ALT+H]" aria-label="'.hsc($vector_home_label).'"></a>'."\n";
-unset($vector_home_label, $vector_logo, $vector_logo_candidate, $vector_logo_info);
+unset($vector_home_label, $vector_logo);
 ?>
   </div>
   <!-- end logo -->
@@ -1446,13 +1617,42 @@ unset($vector_home_label, $vector_logo, $vector_logo_candidate, $vector_logo_inf
   //show boxes, see modernizedvector/user/boxes.php to configure them
   if (!empty($_vector_boxes) &&
 is_array($_vector_boxes)) {
-      _vector_renderBoxes($_vector_boxes);
+      if ($vector_skin_version === "2022") {
+          echo "  <nav class=\"vector-main-menu-landmark\" aria-label=\"".hsc(_vector_getLang("vector_sidebar"))."\">\n"
+              ."    <div id=\"vector-main-menu-dropdown\" class=\"vector-dropdown vector-main-menu-dropdown vector-button-flush-left vector-button-flush-right\">\n"
+              ."      <div class=\"vector-dropdown-content\">\n"
+              ."        <div id=\"vector-main-menu-unpinned-container\" class=\"vector-unpinned-container\">\n"
+              ."          <div id=\"vector-main-menu\" class=\"vector-main-menu vector-pinnable-element\">\n"
+              ."            <div class=\"vector-pinnable-header vector-main-menu-pinnable-header vector-pinnable-header-unpinned\" data-feature-name=\"main-menu-pinned\" data-pinnable-element-id=\"vector-main-menu\" data-pinned-container-id=\"vector-main-menu-pinned-container\" data-unpinned-container-id=\"vector-main-menu-unpinned-container\">\n"
+              ."              <div class=\"vector-pinnable-header-label\">".hsc(_vector_getLang("vector_menu"))."</div>\n"
+              ."            </div>\n";
+          _vector_renderBoxes($_vector_main_menu_boxes);
+          echo "          </div>\n"
+              ."        </div>\n"
+              ."      </div>\n"
+              ."    </div>\n"
+              ."  </nav>\n";
+          if (!empty($_vector_toc_boxes)) {
+              echo "  <div class=\"vector-sticky-pinned-container\">\n"
+                  ."    <nav class=\"vector-toc-landmark\" aria-label=\"".hsc(_vector_getLang("toc", "Table of Contents"))."\">\n"
+                  ."      <div id=\"vector-toc-pinned-container\" class=\"vector-pinned-container\">\n";
+              _vector_renderBoxes($_vector_toc_boxes);
+              echo "      </div>\n"
+                  ."    </nav>\n"
+                  ."  </div>\n";
+          }
+      } else {
+          _vector_renderBoxes($_vector_boxes);
+      }
   }
 ?>
   <?php _vector_includeFile("sidebarfooter.html"); ?>
 
 </div>
 <!-- end panel/sidebar -->
+<?php if ($vector_skin_version === "2022") { ?>
+</div>
+<?php } ?>
 </div>
 <!-- end page-container -->
 

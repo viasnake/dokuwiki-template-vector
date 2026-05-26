@@ -10,6 +10,7 @@ jQuery(function () {
     }
 
     const menuLabel = jQuery("body").attr("data-vector-menu-label") || "Menu";
+    const isVector2022 = jQuery("body").attr("data-vector-skin-version") === "2022";
 
     const $mobilemenu = jQuery("<div>")
         .attr("id", "vector__mobile-menu")
@@ -122,6 +123,30 @@ jQuery(function () {
         }
     }
 
+    function setDesktopMainMenuOpen(opened, restoreFocus) {
+        const mainMenuButton = jQuery(".vector-main-menu-button").first();
+
+        jQuery("body").toggleClass("vector-main-menu-open", opened);
+        mainMenuButton.attr("aria-expanded", opened ? "true" : "false");
+
+        if (!opened && restoreFocus) {
+            mainMenuButton.trigger("focus");
+        }
+    }
+
+    if (isVector2022) {
+        jQuery(".vector-main-menu-button").first().on("click", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            setDesktopMainMenuOpen(!jQuery("body").hasClass("vector-main-menu-open"), false);
+        });
+        jQuery("#panel").on("click", function (event) {
+            if (jQuery("body").hasClass("vector-main-menu-open")) {
+                event.stopPropagation();
+            }
+        });
+    }
+
     $hamburger.on("click", function (event) {
         event.stopPropagation();
         setMobileMenuOpen(!$mobilemenu.hasClass("open"), false);
@@ -137,6 +162,10 @@ jQuery(function () {
 
     jQuery(document)
         .on("keydown.vectorMobileMenu", function (event) {
+            if (event.key === "Escape" && jQuery("body").hasClass("vector-main-menu-open")) {
+                setDesktopMainMenuOpen(false, true);
+                return;
+            }
             if (!$mobilemenu.hasClass("open")) {
                 return;
             }
@@ -145,6 +174,9 @@ jQuery(function () {
             }
         })
         .on("click.vectorMobileMenu", function () {
+            if (jQuery("body").hasClass("vector-main-menu-open")) {
+                setDesktopMainMenuOpen(false, false);
+            }
             if ($mobilemenu.hasClass("open")) {
                 setMobileMenuOpen(false, false);
             }

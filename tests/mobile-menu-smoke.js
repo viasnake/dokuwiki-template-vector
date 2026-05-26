@@ -46,6 +46,16 @@ setTimeout(() => {
             menu.find("[data-vector-appearance-setting=\"color\"] [data-vector-appearance-value=\"dark\"]")
                 .trigger("click");
             assert(jQuery("body").hasClass("vector-feature-color-dark"), "appearance color control did not apply");
+
+            const mainMenuButton = jQuery(".vector-main-menu-button");
+            assert(mainMenuButton.length === 1, "Vector 2022 main menu button was not found");
+            assert(mainMenuButton.attr("aria-expanded") === "false", "main menu initial aria-expanded mismatch");
+            mainMenuButton.trigger("click");
+            assert(jQuery("body").hasClass("vector-main-menu-open"), "desktop main menu state was not applied");
+            assert(mainMenuButton.attr("aria-expanded") === "true", "main menu button did not open");
+            window.document.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+            assert(!jQuery("body").hasClass("vector-main-menu-open"), "desktop main menu did not close on document click");
+            assert(mainMenuButton.attr("aria-expanded") === "false", "main menu button did not close");
         }
 
         button.trigger("click");
