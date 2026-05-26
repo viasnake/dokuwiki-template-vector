@@ -264,6 +264,8 @@ assert_no_php_diagnostics "$SMOKE_WORKDIR/vector-detail.html"
 
 curl -fsS "http://127.0.0.1:${SMOKE_PORT}/lib/exe/css.php?t=modernizedvector" -o "$SMOKE_WORKDIR/vector.css"
 grep -q '#content' "$SMOKE_WORKDIR/vector.css"
+grep -q '@media screen and (max-width:750px)' "$SMOKE_WORKDIR/vector.css"
+! grep -q '@media screen and only screen' "$SMOKE_WORKDIR/vector.css"
 assert_no_php_diagnostics "$SMOKE_WORKDIR/vector.css"
 
 assert_rendered_html "$SMOKE_WORKDIR"/vector-{page,edit,search,recent,index,media,print,cite,translation,detail}.html
