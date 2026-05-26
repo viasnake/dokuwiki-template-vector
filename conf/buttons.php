@@ -27,7 +27,7 @@
 
 
 //check if we are running within the DokuWiki environment
-if (!defined("DOKU_INC")){
+if (!defined("DOKU_INC")) {
     die();
 }
 
@@ -38,7 +38,7 @@ if (!defined("DOKU_INC")){
 
 
 //RSS recent changes button
-if (actionOK("rss")){
+if (actionOK("rss")) {
     $_vector_btns["rss"]["img"]      = tpl_basedir()."static/img/button-rss.png";
     $_vector_btns["rss"]["href"]     = DOKU_BASE."feed.php";
     $_vector_btns["rss"]["width"]    = 80;
@@ -61,7 +61,7 @@ $_vector_btns["vecfdw"]["nofollow"] = !$vector_is_startpage;
 $vector_donate_url = trim(_vector_string(tpl_getConf("vector_donate_url")));
 if (tpl_getConf("vector_donate") &&
     filter_var($vector_donate_url, FILTER_VALIDATE_URL) !== false &&
-    parse_url($vector_donate_url, PHP_URL_SCHEME) === "https"){
+    parse_url($vector_donate_url, PHP_URL_SCHEME) === "https") {
     $_vector_btns["donate"]["img"]      = tpl_basedir()."static/img/button-donate.gif";
     $_vector_btns["donate"]["href"]     = $vector_donate_url;
     $_vector_btns["donate"]["width"]    = 80;

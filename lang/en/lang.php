@@ -27,7 +27,7 @@
 
 
 //check if we are running within the DokuWiki environment
-if (!defined("DOKU_INC")){
+if (!defined("DOKU_INC")) {
     die();
 }
 
@@ -101,4 +101,3 @@ $lang["vector_fillplaceholder"] = "Please fill or disable this placeholder";
 $lang["vector_donate"] = "Donate";
 $lang["vector_mdtemplatefordw"] = "Vector template for DokuWiki";
 $lang["vector_recentchanges"] = "Recent changes";
-

@@ -8,36 +8,36 @@ jQuery(function () {
         return;
     }
 
-    var menuLabel = jQuery("body").attr("data-vector-menu-label") || "Menu";
+    const menuLabel = jQuery("body").attr("data-vector-menu-label") || "Menu";
 
-    var $mobilemenu = jQuery("<div>")
+    const $mobilemenu = jQuery("<div>")
         .attr("id", "vector__mobile-menu")
         .attr("role", "navigation")
         .attr("aria-label", menuLabel)
         .attr("aria-hidden", "true")
         .addClass("mobile-menu");
 
-    var $logo = jQuery("#p-logo")
+    const $logo = jQuery("#p-logo")
         .clone()
         .removeAttr("id")
         .find("[accesskey]").removeAttr("accesskey").end()
         .addClass("mobile-logo");
     $logo.find("[title]").each(function () {
-        var $link = jQuery(this);
-        var title = $link.attr("title") || "";
+        const $link = jQuery(this);
+        const title = $link.attr("title") || "";
 
         if (/^\[ALT\+/i.test(title)) {
             $link.removeAttr("title");
         }
     });
 
-    var $search = jQuery("#p-search form")
+    const $search = jQuery("#p-search form")
         .clone()
         .removeAttr("id")
         .removeAttr("name")
         .addClass("mobile-search");
     if ($search.length) {
-        var searchLabel = $search.find("button").attr("title") ||
+        const searchLabel = $search.find("button").attr("title") ||
             $search.find("#qsearch__in").attr("placeholder") ||
             "Search";
 
@@ -63,15 +63,15 @@ jQuery(function () {
         "p-tb",
         "p-personal"
     ]).each(function (i, name) {
-        var filter = "#" + name + " li";
-        var $items = jQuery(filter)
+        const filter = "#" + name + " li";
+        const $items = jQuery(filter)
             .not(".selected")
             .clone()
             .removeAttr("id");
         $items.find("[id]").removeAttr("id");
         $items.find("[accesskey]").each(function () {
-            var $link = jQuery(this);
-            var title = $link.attr("title") || "";
+            const $link = jQuery(this);
+            const title = $link.attr("title") || "";
 
             $link.removeAttr("accesskey");
             if (/^\[ALT\+/i.test(title)) {
@@ -82,13 +82,13 @@ jQuery(function () {
             return;
         }
 
-        var ul = jQuery("<ul>")
+        const ul = jQuery("<ul>")
             .addClass("mobile-" + name)
             .append($items);
         $mobilemenu.append(ul);
     });
 
-    var $hamburger = jQuery("<button>")
+    const $hamburger = jQuery("<button>")
         .attr("type", "button")
         .attr("aria-controls", "vector__mobile-menu")
         .attr("aria-expanded", "false")
@@ -108,12 +108,12 @@ jQuery(function () {
         }
     }
 
-    $hamburger.click(function (event) {
+    $hamburger.on("click", function (event) {
         event.stopPropagation();
         setMobileMenuOpen(!$mobilemenu.hasClass("open"), false);
     });
 
-    $mobilemenu.click(function (event) {
+    $mobilemenu.on("click", function (event) {
         event.stopPropagation();
     });
 
@@ -122,7 +122,7 @@ jQuery(function () {
             if (!$mobilemenu.hasClass("open")) {
                 return;
             }
-            if (event.key === "Escape" || event.key === "Esc" || event.which === 27) {
+            if (event.key === "Escape") {
                 setMobileMenuOpen(false, true);
             }
         })
@@ -132,7 +132,7 @@ jQuery(function () {
             }
         });
 
-    var $skiplink = jQuery("body > .skiplink").first();
+    const $skiplink = jQuery("body > .skiplink").first();
     if ($skiplink.length) {
         $skiplink.after([$logo, $hamburger, $mobilemenu]);
     } else {
