@@ -13,6 +13,7 @@ LANG_MISSING_ALLOWLIST = {
 METADATA_TYPES = {"multichoice", "onoff", "string"}
 MULTICHOICE_SETTINGS = {
     "vector_toc_position": ["article", "sidebar"],
+    "vector_skin_version": ["2011", "2022"],
     "vector_breadcrumbs_position": ["top", "bottom"],
     "vector_youarehere_position": ["top", "bottom"],
 }

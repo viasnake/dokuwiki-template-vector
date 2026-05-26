@@ -77,6 +77,11 @@ $lang["vector_toc_position"] = "Table of contents (TOC) position";
 $lang["vector_toc_position_o_article"] = "Article";
 $lang["vector_toc_position_o_sidebar"] = "Sidebar";
 
+//skin variant
+$lang["vector_skin_version"] = "Vector design version";
+$lang["vector_skin_version_o_2011"] = "Vector 2011";
+$lang["vector_skin_version_o_2022"] = "Vector 2022";
+
 //other stuff
 $lang["vector_breadcrumbs_position"]  = "Position of breadcrumb navigation (if enabled):";
 $lang["vector_breadcrumbs_position_o_top"] = "Top";

@@ -628,6 +628,17 @@ $vector_direction_class = ($vector_direction === "rtl") ? "rtl" : "ltr";
 $vector_act = (isset($ACT) && is_scalar($ACT)) ? (string)$ACT : "show";
 $vector_query = (isset($QUERY) && is_scalar($QUERY)) ? (string)$QUERY : "";
 $vector_is_startpage = (cleanID(getID()) === cleanID(_vector_string($conf["start"] ?? "start", "start")));
+$vector_skin_version = _vector_string(tpl_getConf("vector_skin_version"), "2011");
+if (!in_array($vector_skin_version, array("2011", "2022"), true)) {
+    $vector_skin_version = "2011";
+}
+$vector_toc_position = _vector_string(tpl_getConf("vector_toc_position"), "article");
+if (!in_array($vector_toc_position, array("article", "sidebar"), true)) {
+    $vector_toc_position = "article";
+}
+if ($vector_skin_version === "2022") {
+    $vector_toc_position = "sidebar";
+}
 
 
 //detect revision
@@ -1143,7 +1154,7 @@ if ($vector_direction === "rtl" && file_exists(tpl_incdir()."user/rtl.css")) {
                  default:
                      echo "mediawiki ".$vector_direction_class." capitalize-all-nouns ns-0 ns-subject ";
                      break;
-             } ?>skin-vector <?php echo hsc(tpl_classes()); ?>" data-vector-menu-label="<?php echo hsc(_vector_getLang("vector_menu")); ?>">
+             } ?>skin-vector skin-vector-<?php echo hsc($vector_skin_version); ?> <?php echo hsc(tpl_classes()); ?>" data-vector-menu-label="<?php echo hsc(_vector_getLang("vector_menu")); ?>" data-vector-skin-version="<?php echo hsc($vector_skin_version); ?>">
 <a class="a11y skiplink" href="#dokuwiki__content"><?php echo hsc(_vector_getLang("vector_skip_to_content")); ?></a>
 <?php _vector_includeFile("topheader.html"); ?>
 <?php _vector_includeFile("header.html"); ?>
@@ -1242,12 +1253,12 @@ switch ($vector_action) {
         if (!empty($INFO["exists"])) {
             include tpl_incdir()."inc_cite.php";
         } else {
-            tpl_content(tpl_getConf("vector_toc_position") === "article");
+            tpl_content($vector_toc_position === "article");
         }
         break;
         //show "normal" content
     default:
-        tpl_content(tpl_getConf("vector_toc_position") === "article");
+        tpl_content($vector_toc_position === "article");
         break;
 }
 ?>

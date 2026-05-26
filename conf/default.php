@@ -77,6 +77,9 @@ $conf["vector_donate_url"] = ""; //custom HTTPS donation URL
 //TOC
 $conf["vector_toc_position"] = "article"; //article: show TOC embedded within the article; "sidebar": show TOC near the navigation, left column
 
+//skin variant
+$conf["vector_skin_version"] = "2011"; //2011: use Vector 2011; 2022: use Vector 2022
+
 //other stuff
 $conf["vector_breadcrumbs_position"]  = "bottom"; //position of breadcrumbs navigation ("top" or "bottom")
 $conf["vector_youarehere_position"]   = "top"; //position of "you are here" navigation ("top" or "bottom")

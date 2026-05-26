@@ -101,5 +101,17 @@ $lang["vector_recentchanges"] = "Canvis recents";
 
 // English fallback labels for strings added after the original translation
 $lang["vector_sidebar"] = "Sidebar";
+$lang["vector_appearance"] = "Appearance";
+$lang["vector_appearance_text"] = "Text";
+$lang["vector_appearance_text_small"] = "Small";
+$lang["vector_appearance_text_standard"] = "Standard";
+$lang["vector_appearance_text_large"] = "Large";
+$lang["vector_appearance_width"] = "Width";
+$lang["vector_appearance_width_limited"] = "Limited";
+$lang["vector_appearance_width_wide"] = "Wide";
+$lang["vector_appearance_color"] = "Color";
+$lang["vector_appearance_color_light"] = "Light";
+$lang["vector_appearance_color_dark"] = "Dark";
+$lang["vector_appearance_color_auto"] = "Automatic";
 $lang["vector_skip_to_content"] = "Skip to content";
 $lang["vector_menu"] = "Menu";

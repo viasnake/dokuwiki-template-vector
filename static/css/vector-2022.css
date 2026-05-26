@@ -1,0 +1,433 @@
+/******************************************************************************
+ ************************ Vector 2022 layout variant **************************
+ ******************************************************************************/
+
+body.skin-vector-2022 {
+  --vector-2022-border: #a2a9b1;
+  --vector-2022-muted-border: #eaecf0;
+  --vector-2022-muted-bg: #f8f9fa;
+  --vector-2022-text: #202122;
+  --vector-2022-link: #36c;
+  background: #fff none;
+  color: var(--vector-2022-text);
+}
+
+body.skin-vector-2022 a,
+body.skin-vector-2022 div.dokuwiki a:link,
+body.skin-vector-2022 div.dokuwiki a:visited {
+  color: var(--vector-2022-link);
+}
+
+body.skin-vector-2022 #page-base,
+body.skin-vector-2022 #head-base {
+  display: none;
+}
+
+body.skin-vector-2022 #content,
+body.skin-vector-2022 div#footer {
+  background: #fff none;
+  color: var(--vector-2022-text);
+}
+
+body.skin-vector-2022 #bodyContent {
+  font-size: 0.875em;
+}
+
+body.skin-vector-2022.vector-feature-text-small #bodyContent {
+  font-size: 0.8125em;
+}
+
+body.skin-vector-2022.vector-feature-text-large #bodyContent {
+  font-size: 0.975em;
+}
+
+body.skin-vector-2022 #content .dokuwiki h1,
+body.skin-vector-2022 #content .dokuwiki h2 {
+  border-bottom-color: var(--vector-2022-muted-border);
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+body.skin-vector-2022 #content .dokuwiki h1 {
+  font-size: 1.8em;
+}
+
+body.skin-vector-2022 div.dokuwiki #dw__toc {
+  border: 1px solid var(--vector-2022-muted-border);
+  background: #fff;
+}
+
+body.skin-vector-2022 div.dokuwiki #dw__toc h3 {
+  border: 0 !important;
+  border-bottom: 1px solid var(--vector-2022-muted-border) !important;
+  background: var(--vector-2022-muted-bg) !important;
+}
+
+body.skin-vector-2022.vector-feature-color-dark,
+body.skin-vector-2022.vector-feature-color-dark #content,
+body.skin-vector-2022.vector-feature-color-dark div#footer,
+body.skin-vector-2022.vector-feature-color-dark div#head,
+body.skin-vector-2022.vector-feature-color-dark div#panel,
+body.skin-vector-2022.vector-feature-color-dark #p-logo,
+body.skin-vector-2022.vector-feature-color-dark #p-tb,
+body.skin-vector-2022.vector-feature-color-dark #p-coll-print_export,
+body.skin-vector-2022.vector-feature-color-dark #p-appearance {
+  background-color: #101418;
+  color: #eaecf0;
+}
+
+body.skin-vector-2022.vector-feature-color-dark div#simpleSearch,
+body.skin-vector-2022.vector-feature-color-dark input,
+body.skin-vector-2022.vector-feature-color-dark textarea,
+body.skin-vector-2022.vector-feature-color-dark button,
+body.skin-vector-2022.vector-feature-color-dark select {
+  background-color: #202122;
+  color: #eaecf0;
+}
+
+body.skin-vector-2022.vector-feature-color-dark a,
+body.skin-vector-2022.vector-feature-color-dark div.dokuwiki a:link,
+body.skin-vector-2022.vector-feature-color-dark div.dokuwiki a:visited {
+  color: #6ea6ff;
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  body.skin-vector-2022.vector-feature-color-auto,
+  body.skin-vector-2022.vector-feature-color-auto #content,
+  body.skin-vector-2022.vector-feature-color-auto div#footer,
+  body.skin-vector-2022.vector-feature-color-auto div#head,
+  body.skin-vector-2022.vector-feature-color-auto div#panel,
+  body.skin-vector-2022.vector-feature-color-auto #p-logo,
+  body.skin-vector-2022.vector-feature-color-auto #p-tb,
+  body.skin-vector-2022.vector-feature-color-auto #p-coll-print_export,
+  body.skin-vector-2022.vector-feature-color-auto #p-appearance {
+    background-color: #101418;
+    color: #eaecf0;
+  }
+
+  body.skin-vector-2022.vector-feature-color-auto a,
+  body.skin-vector-2022.vector-feature-color-auto div.dokuwiki a:link,
+  body.skin-vector-2022.vector-feature-color-auto div.dokuwiki a:visited {
+    color: #6ea6ff;
+  }
+}
+
+@media screen and (min-width: 751px) {
+  body.skin-vector-2022 {
+    padding-top: 3.5rem;
+  }
+
+  body.skin-vector-2022 div#head {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 20;
+    height: 3.5rem;
+    width: auto;
+    border-bottom: 1px solid var(--vector-2022-border);
+    background: #fff;
+  }
+
+  body.skin-vector-2022 div#head h5 {
+    display: none;
+  }
+
+  body.skin-vector-2022 #p-personal {
+    top: 0;
+    right: 1rem;
+    margin-left: 0;
+    height: 3.5rem;
+    max-width: 20rem;
+    overflow: hidden;
+  }
+
+  body.skin-vector-2022 #p-personal ul {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.75rem;
+    align-items: center;
+    height: 100%;
+  }
+
+  body.skin-vector-2022 #p-personal li {
+    float: none;
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  body.skin-vector-2022 #left-navigation {
+    position: absolute;
+    top: 0;
+    left: 13.75rem;
+    height: 3.5rem;
+  }
+
+  body.skin-vector-2022 #right-navigation {
+    position: absolute;
+    top: 0;
+    right: 22rem;
+    left: 22rem;
+    display: flex;
+    float: none;
+    align-items: center;
+    gap: 1rem;
+    height: 3.5rem;
+    margin-top: 0;
+  }
+
+  body.skin-vector-2022 #p-search {
+    order: -1;
+    flex: 1 1 24rem;
+    max-width: 32rem;
+    margin: 0;
+  }
+
+  body.skin-vector-2022 #p-search form,
+  body.skin-vector-2022 #p-search input {
+    margin-top: 0;
+  }
+
+  body.skin-vector-2022 div#simpleSearch {
+    display: flex;
+    align-items: center;
+    margin-top: 0;
+    border-color: var(--vector-2022-border);
+    background: #fff none;
+  }
+
+  body.skin-vector-2022 div#simpleSearch input#qsearch__in {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 10rem;
+    padding: 0.45rem 0.6rem;
+    font-size: 0.875rem;
+  }
+
+  body.skin-vector-2022 div#simpleSearch button#searchButton {
+    width: 2.25rem;
+    height: 2rem;
+  }
+
+  body.skin-vector-2022 div.vectorTabs {
+    background: none;
+    padding-left: 0;
+  }
+
+  body.skin-vector-2022 div.vectorTabs ul {
+    display: flex;
+    align-items: stretch;
+    height: 3.5rem;
+  }
+
+  body.skin-vector-2022 div.vectorTabs ul li {
+    float: none;
+    height: auto;
+    background: none;
+  }
+
+  body.skin-vector-2022 div.vectorTabs li a {
+    height: 3.5rem;
+    padding-right: 0.6rem;
+    padding-left: 0.6rem;
+    border-bottom: 2px solid transparent;
+    background: none;
+  }
+
+  body.skin-vector-2022 div.vectorTabs a span {
+    padding-top: 1.2rem;
+  }
+
+  body.skin-vector-2022 div.vectorTabs li.selected a {
+    border-bottom-color: var(--vector-2022-text);
+  }
+
+  body.skin-vector-2022 div#panel {
+    position: fixed;
+    top: 3.5rem;
+    bottom: 0;
+    left: 0;
+    width: 12.5rem;
+    overflow: auto;
+    padding: 1rem 1rem 2rem;
+    border-right: 1px solid var(--vector-2022-muted-border);
+    background: #fff;
+  }
+
+  body.skin-vector-2022 #p-logo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 21;
+    width: 12.5rem;
+    height: 3.5rem;
+    border-bottom: 1px solid var(--vector-2022-border);
+    background: #fff;
+  }
+
+  body.skin-vector-2022 #p-logo a {
+    width: 12.5rem;
+    height: 3.5rem;
+    background-position: center center;
+    background-size: auto 2.6rem;
+  }
+
+  body.skin-vector-2022 div#panel div.portal {
+    padding-bottom: 1.25rem;
+  }
+
+  body.skin-vector-2022 div#panel div.portal h5 {
+    padding: 0 0 0.35rem;
+    border-bottom: 1px solid var(--vector-2022-muted-border);
+    color: #54595d;
+    font-size: 0.875em;
+    font-weight: bold;
+  }
+
+  body.skin-vector-2022 div#panel div.portal div.body {
+    margin-left: 0;
+    padding-top: 0.5rem;
+    background: none;
+  }
+
+  body.skin-vector-2022 div#panel #p-toc {
+    position: sticky;
+    top: 0;
+    padding-bottom: 1.5rem;
+  }
+
+  body.skin-vector-2022 div#panel #p-toc div.body ul {
+    border-left: 1px solid var(--vector-2022-muted-border);
+    padding-left: 0.75rem;
+  }
+
+  body.skin-vector-2022 div#panel #p-toc div.body ul li {
+    padding-bottom: 0.35rem;
+    font-size: 0.8125em;
+  }
+
+  body.skin-vector-2022 #content {
+    max-width: 64rem;
+    min-height: 70vh;
+    margin: 0 14.5rem 0 14.5rem;
+    padding: 2rem 3rem 3rem;
+    border-right: 1px solid var(--vector-2022-muted-border);
+  }
+
+  body.skin-vector-2022 div#footer {
+    margin: 0 14.5rem 0 14.5rem;
+    max-width: 64rem;
+    padding: 1rem 3rem 2rem;
+    border-top: 1px solid var(--vector-2022-muted-border);
+    background-image: none;
+  }
+
+  body.skin-vector-2022.vector-feature-width-wide #content,
+  body.skin-vector-2022.vector-feature-width-wide div#footer {
+    max-width: none;
+  }
+}
+
+@media screen and (min-width: 1150px) {
+  body.skin-vector-2022 #p-tb,
+  body.skin-vector-2022 #p-coll-print_export,
+  body.skin-vector-2022 #p-appearance {
+    position: fixed;
+    right: 1rem;
+    z-index: 10;
+    width: 11.5rem;
+    padding: 0 0 1rem;
+    border-bottom: 1px solid var(--vector-2022-muted-border);
+    background: #fff;
+  }
+
+  body.skin-vector-2022 #p-tb {
+    top: 5rem;
+  }
+
+  body.skin-vector-2022 #p-coll-print_export {
+    top: 16rem;
+  }
+
+  body.skin-vector-2022 #p-appearance {
+    top: 24rem;
+  }
+
+  body.skin-vector-2022 #p-tb h5,
+  body.skin-vector-2022 #p-coll-print_export h5,
+  body.skin-vector-2022 #p-appearance h5 {
+    padding-left: 0;
+  }
+
+  body.skin-vector-2022 #p-tb div.body,
+  body.skin-vector-2022 #p-coll-print_export div.body,
+  body.skin-vector-2022 #p-appearance div.body {
+    margin-left: 0;
+    background: none;
+  }
+
+  body.skin-vector-2022 #p-tb div.body ul li,
+  body.skin-vector-2022 #p-coll-print_export div.body ul li {
+    padding-bottom: 0.35rem;
+    font-size: 0.8125em;
+  }
+
+  body.skin-vector-2022 .vector-appearance-group {
+    margin: 0 0 0.75rem;
+  }
+
+  body.skin-vector-2022 .vector-appearance-label {
+    display: block;
+    margin-bottom: 0.25rem;
+    color: #54595d;
+    font-size: 0.75rem;
+  }
+
+  body.skin-vector-2022 .vector-appearance-controls button {
+    display: block;
+    width: 100%;
+    margin: 0 0 0.25rem;
+    padding: 0.25rem 0.35rem;
+    border: 1px solid var(--vector-2022-muted-border);
+    background: var(--vector-2022-muted-bg);
+    color: inherit;
+    text-align: left;
+  }
+
+  body.skin-vector-2022 .vector-appearance-controls button[aria-pressed="true"] {
+    border-color: var(--vector-2022-link);
+    background: #eaf3ff;
+    color: var(--vector-2022-text);
+  }
+}
+
+@media screen and (max-width: 1149px) and (min-width: 751px) {
+  body.skin-vector-2022 #p-tb,
+  body.skin-vector-2022 #p-coll-print_export,
+  body.skin-vector-2022 #p-appearance {
+    display: none;
+  }
+
+  body.skin-vector-2022 #content,
+  body.skin-vector-2022 div#footer {
+    margin-right: 1rem;
+  }
+}
+
+@media screen and (max-width: 950px) and (min-width: 751px) {
+  body.skin-vector-2022 #right-navigation {
+    right: 12rem;
+    left: 13.5rem;
+  }
+
+  body.skin-vector-2022 #left-navigation {
+    display: none;
+  }
+
+  body.skin-vector-2022 #p-personal {
+    max-width: 10rem;
+  }
+
+  body.skin-vector-2022 #p-views {
+    display: none;
+  }
+}

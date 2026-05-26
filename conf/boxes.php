@@ -76,7 +76,7 @@ if (empty($conf["useacl"]) || //are there any users?
     }
 
     //table of contents (TOC) - show outside the article? (this is a dirty hack but often requested)
-    if (tpl_getConf("vector_toc_position") === "sidebar") {
+    if ($vector_toc_position === "sidebar") {
         //check if the current page got a TOC
         $toc = tpl_toc(true);
         if (!empty($toc)) {
@@ -224,6 +224,30 @@ if (empty($conf["useacl"]) || //are there any users?
         $_vector_boxes["p-login"]["xhtml"] .= "        <li id='t-resendpwd'><a href='".hsc(_vector_wl(cleanID(getID()), array("do" => "resendpwd")))."' rel='nofollow'>".hsc(_vector_getLang("btn_resendpwd", "Set new password"))."</a></li>"; //language comes from DokuWiki core
     }
     $_vector_boxes["p-login"]["xhtml"] .= "      </ul>";
+}
+
+if ($vector_skin_version === "2022") {
+    $_vector_boxes["p-appearance"]["headline"] = _vector_getLang("vector_appearance", "Appearance");
+    $_vector_boxes["p-appearance"]["xhtml"] =
+        "      <div class=\"vector-appearance-controls\" data-vector-appearance>\n"
+        ."        <div class=\"vector-appearance-group\" data-vector-appearance-setting=\"text\">\n"
+        ."          <span class=\"vector-appearance-label\">" . hsc(_vector_getLang("vector_appearance_text", "Text")) . "</span>\n"
+        ."          <button type=\"button\" data-vector-appearance-value=\"small\">" . hsc(_vector_getLang("vector_appearance_text_small", "Small")) . "</button>\n"
+        ."          <button type=\"button\" data-vector-appearance-value=\"standard\">" . hsc(_vector_getLang("vector_appearance_text_standard", "Standard")) . "</button>\n"
+        ."          <button type=\"button\" data-vector-appearance-value=\"large\">" . hsc(_vector_getLang("vector_appearance_text_large", "Large")) . "</button>\n"
+        ."        </div>\n"
+        ."        <div class=\"vector-appearance-group\" data-vector-appearance-setting=\"width\">\n"
+        ."          <span class=\"vector-appearance-label\">" . hsc(_vector_getLang("vector_appearance_width", "Width")) . "</span>\n"
+        ."          <button type=\"button\" data-vector-appearance-value=\"limited\">" . hsc(_vector_getLang("vector_appearance_width_limited", "Limited")) . "</button>\n"
+        ."          <button type=\"button\" data-vector-appearance-value=\"wide\">" . hsc(_vector_getLang("vector_appearance_width_wide", "Wide")) . "</button>\n"
+        ."        </div>\n"
+        ."        <div class=\"vector-appearance-group\" data-vector-appearance-setting=\"color\">\n"
+        ."          <span class=\"vector-appearance-label\">" . hsc(_vector_getLang("vector_appearance_color", "Color")) . "</span>\n"
+        ."          <button type=\"button\" data-vector-appearance-value=\"light\">" . hsc(_vector_getLang("vector_appearance_color_light", "Light")) . "</button>\n"
+        ."          <button type=\"button\" data-vector-appearance-value=\"dark\">" . hsc(_vector_getLang("vector_appearance_color_dark", "Dark")) . "</button>\n"
+        ."          <button type=\"button\" data-vector-appearance-value=\"auto\">" . hsc(_vector_getLang("vector_appearance_color_auto", "Automatic")) . "</button>\n"
+        ."        </div>\n"
+        ."      </div>";
 }
 
 //Languages/translations provided by Andreas Gohr's translation plugin,
