@@ -1,9 +1,9 @@
 # Modernized Vector Template
 
-Modernized Vector brings the legacy MediaWiki/Wikipedia Vector 2010 look and
-feel to current DokuWiki releases. It is a mostly optical port of the original
-MediaWiki Vector skin and intentionally tracks Vector 2010, not the newer
-MediaWiki Vector 2022 skin.
+Modernized Vector brings the MediaWiki/Wikipedia Vector look and feel to
+current DokuWiki releases. The default `Vector 2011` design preserves the
+legacy Vector layout, while the optional `Vector 2022` design provides a newer
+Vector layout in the same DokuWiki template.
 
 ## Requirements
 
@@ -42,6 +42,18 @@ detection.
 
 The template includes `.dist` examples in `user/`. Remove the `.dist` suffix to
 turn an example into an active local customization.
+
+### Vector Design Version
+
+The `vector_skin_version` Config Manager option controls the design variant:
+
+- `Vector 2011` keeps the established legacy Vector layout and remains the default.
+- `Vector 2022` enables the newer Vector header, pinned navigation and
+  contents columns, right-side page tools, limited content width, appearance
+  controls, and refreshed search/tabs styling.
+
+Both variants use the same template directory and the same user customization
+files. The mobile menu is shared by both variants.
 
 ### Include Hooks
 

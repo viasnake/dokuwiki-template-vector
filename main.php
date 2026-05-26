@@ -292,6 +292,45 @@ if (!function_exists("_vector_getTranslationPlugin")) {
     }
 }
 
+if (!function_exists("_vector_getLogoUrl")) {
+    /**
+     * Return the configured template logo URL.
+     *
+     * @return string
+     */
+    function _vector_getLogoUrl()
+    {
+        $logo = tpl_basedir()."static/3rd/dokuwiki/logo.png";
+        foreach (array("svg", "png", "gif", "jpg") as $extension) {
+            if (file_exists(tpl_incdir()."user/logo.".$extension)) {
+                return tpl_basedir()."user/logo.".$extension;
+            }
+        }
+
+        $logo_info = null;
+        $logo_candidate = tpl_getMediaFile(
+            array(
+                ":wiki:logo.svg",
+                ":logo.svg",
+                ":wiki:logo.png",
+                ":logo.png",
+                ":wiki:logo.gif",
+                ":logo.gif",
+                ":wiki:logo.jpg",
+                ":logo.jpg",
+            ),
+            false,
+            $logo_info,
+            false
+        );
+        if ($logo_candidate !== false) {
+            return $logo_candidate;
+        }
+
+        return $logo;
+    }
+}
+
 
 if (!function_exists("_vector_includeFile")) {
     /**
@@ -628,6 +667,17 @@ $vector_direction_class = ($vector_direction === "rtl") ? "rtl" : "ltr";
 $vector_act = (isset($ACT) && is_scalar($ACT)) ? (string)$ACT : "show";
 $vector_query = (isset($QUERY) && is_scalar($QUERY)) ? (string)$QUERY : "";
 $vector_is_startpage = (cleanID(getID()) === cleanID(_vector_string($conf["start"] ?? "start", "start")));
+$vector_skin_version = _vector_string(tpl_getConf("vector_skin_version"), "2011");
+if (!in_array($vector_skin_version, array("2011", "2022"), true)) {
+    $vector_skin_version = "2011";
+}
+$vector_toc_position = _vector_string(tpl_getConf("vector_toc_position"), "article");
+if (!in_array($vector_toc_position, array("article", "sidebar"), true)) {
+    $vector_toc_position = "article";
+}
+if ($vector_skin_version === "2022") {
+    $vector_toc_position = "sidebar";
+}
 
 
 //detect revision
@@ -863,6 +913,11 @@ function _vector_renderBoxes($arr)
         return false; //nope, break operation
     }
 
+    $vector_render_skin_version = _vector_string(tpl_getConf("vector_skin_version"), "2011");
+    if (!in_array($vector_render_skin_version, array("2011", "2022"), true)) {
+        $vector_render_skin_version = "2011";
+    }
+
     //array to store the created boxes into
     $boxes = array();
 
@@ -884,14 +939,22 @@ function _vector_renderBoxes($arr)
         }
         $box_id = hsc((string)$div_id);
         $headline_id = $box_id."-label";
+        $box_class = "portal";
+        $headline_class = "";
+        $body_class = "body";
+        if ($vector_render_skin_version === "2022") {
+            $box_class .= " vector-menu mw-portlet mw-portlet-".preg_replace("/^p-/", "", (string)$div_id);
+            $headline_class = " class=\"vector-menu-heading\"";
+            $body_class .= " vector-menu-content";
+        }
         $has_headline = isset($contents["headline"])
             && $contents["headline"] !== ""
             && is_scalar($contents["headline"]);
-        $interim  = "  <div id=\"".$box_id."\" class=\"portal\"".($has_headline ? " aria-labelledby=\"".$headline_id."\"" : "").">\n";
+        $interim  = "  <div id=\"".$box_id."\" class=\"".hsc($box_class)."\"".($has_headline ? " aria-labelledby=\"".$headline_id."\"" : "").">\n";
         if ($has_headline) {
-            $interim .= "    <h5 id=\"".$headline_id."\">".hsc($contents["headline"])."</h5>\n";
+            $interim .= "    <h5 id=\"".$headline_id."\"".$headline_class.">".hsc($contents["headline"])."</h5>\n";
         }
-        $interim .= "    <div class=\"body\">\n"
+        $interim .= "    <div class=\"".hsc($body_class)."\">\n"
                    ."      <div class=\"dokuwiki\">\n" //dokuwiki CSS class needed cause we might have to show rendered page content
                    .$xhtml."\n"
                    ."      </div>\n"
@@ -1143,11 +1206,15 @@ if ($vector_direction === "rtl" && file_exists(tpl_incdir()."user/rtl.css")) {
                  default:
                      echo "mediawiki ".$vector_direction_class." capitalize-all-nouns ns-0 ns-subject ";
                      break;
-             } ?>skin-vector <?php echo hsc(tpl_classes()); ?>" data-vector-menu-label="<?php echo hsc(_vector_getLang("vector_menu")); ?>">
+             } ?>skin--responsive skin-vector skin-vector-<?php echo hsc($vector_skin_version); ?><?php
+             if ($vector_skin_version === "2022") {
+                 echo " skin-vector-search-vue vector-feature-main-menu-pinned-disabled vector-feature-toc-pinned-clientpref-1 vector-feature-page-tools-pinned-disabled vector-feature-limited-width-clientpref-1 vector-feature-appearance-pinned-clientpref-1 skin-theme-clientpref-day vector-sticky-header-enabled vector-toc-available";
+             }
+             ?> <?php echo hsc(tpl_classes()); ?>" data-vector-menu-label="<?php echo hsc(_vector_getLang("vector_menu")); ?>" data-vector-skin-version="<?php echo hsc($vector_skin_version); ?>">
 <a class="a11y skiplink" href="#dokuwiki__content"><?php echo hsc(_vector_getLang("vector_skip_to_content")); ?></a>
 <?php _vector_includeFile("topheader.html"); ?>
 <?php _vector_includeFile("header.html"); ?>
-<div id="page-container">
+<div id="page-container"<?php echo ($vector_skin_version === "2022") ? " class=\"mw-page-container\"" : ""; ?>>
 <div id="page-base" class="noprint"></div>
 <div id="head-base" class="noprint"></div>
 
@@ -1161,6 +1228,23 @@ if ($vector_direction === "rtl" && file_exists(tpl_incdir()."user/rtl.css")) {
   //show messages (if there are any)
   html_msgarea();
 _vector_includeFile("pageheader.html");
+if ($vector_skin_version === "2022") {
+    $vector_page_title = strip_tags(_vector_string(tpl_pagetitle(null, true)));
+    if ($vector_page_title === "") {
+        $vector_page_title = strip_tags(_vector_string($conf["title"] ?? "DokuWiki"));
+    }
+    $vector_site_title = strip_tags(_vector_string($conf["title"] ?? ""));
+    echo "\n"
+        ."  <header class=\"vector-page-titlebar noprint\">\n"
+        ."    <div class=\"vector-page-titlebar-start\">\n"
+        ."      <h1 class=\"firstHeading mw-first-heading\"><span class=\"mw-page-title-main\">".hsc($vector_page_title)."</span></h1>\n";
+    if ($vector_site_title !== "" && $vector_site_title !== $vector_page_title) {
+        echo "      <div class=\"vector-page-titlebar-subtitle\">".hsc($vector_site_title)."</div>\n";
+    }
+    echo "    </div>\n"
+        ."  </header>\n";
+    unset($vector_page_title, $vector_site_title);
+}
 //show site notice
 if (tpl_getConf("vector_sitenotice")) {
     //detect wiki page to load as content
@@ -1242,12 +1326,12 @@ switch ($vector_action) {
         if (!empty($INFO["exists"])) {
             include tpl_incdir()."inc_cite.php";
         } else {
-            tpl_content(tpl_getConf("vector_toc_position") === "article");
+            tpl_content($vector_toc_position === "article");
         }
         break;
         //show "normal" content
     default:
-        tpl_content(tpl_getConf("vector_toc_position") === "article");
+        tpl_content($vector_toc_position === "article");
         break;
 }
 ?>
@@ -1291,12 +1375,32 @@ if (!empty($conf["youarehere"]) &&
 
 
 <!-- start div id=head -->
-<div id="head" class="noprint">
+<div id="head" class="noprint<?php echo ($vector_skin_version === "2022") ? " vector-header-container" : ""; ?>">
+<?php
+if ($vector_skin_version === "2022") {
+    $vector_logo = _vector_getLogoUrl();
+    $vector_home_label = strip_tags(_vector_string($conf["title"] ?? ""));
+    if ($vector_home_label === "") {
+        $vector_home_label = "Home";
+    }
+    echo "  <div class=\"vector-header mw-header no-font-mode-scale\">\n"
+        ."    <div class=\"vector-header-start\">\n"
+        ."      <button type=\"button\" class=\"vector-main-menu-button vector-icon\" aria-controls=\"panel\" aria-expanded=\"false\" aria-label=\"".hsc(_vector_getLang("vector_menu"))."\"></button>\n"
+        ."      <a class=\"mw-logo\" href=\"".hsc(_vector_wl())."\" title=\"[ALT+H]\" accesskey=\"h\" aria-label=\"".hsc($vector_home_label)."\">\n"
+        ."        <span class=\"mw-logo-icon\" style=\"background-image:url(&quot;".hsc($vector_logo)."&quot;);\"></span>\n"
+        ."        <span class=\"mw-logo-container\"><span class=\"mw-logo-wordmark\">".hsc($vector_home_label)."</span><span class=\"mw-logo-tagline\">DokuWiki</span></span>\n"
+        ."      </a>\n"
+        ."    </div>\n"
+        ."    <div class=\"vector-header-end\">\n";
+    unset($vector_home_label, $vector_logo);
+}
+?>
   <?php
 //show personal tools
 if (!empty($conf["useacl"])) { //...makes only sense if there are users
+    $vector_personal_class = ($vector_skin_version === "2022") ? " class=\"vector-user-links vector-user-links-wide\"" : "";
     echo  "\n"
-         ."  <div id=\"p-personal\">\n"
+         ."  <div id=\"p-personal\"".$vector_personal_class.">\n"
          ."    <ul>\n";
     if ($loginname === "") {
         if (actionOK("register")) {
@@ -1341,6 +1445,7 @@ if (!empty($conf["useacl"])) { //...makes only sense if there are users
     }
     echo  "    </ul>\n"
          ."  </div>\n";
+    unset($vector_personal_class);
 }
 ?>
 
@@ -1394,38 +1499,28 @@ if (!empty($_vector_tabs_right) &&
   </div>
   <!-- end div id=right-navigation -->
 
+<?php
+if ($vector_skin_version === "2022") {
+    echo "    </div>\n"
+        ."  </div>\n";
+}
+?>
 </div>
 <!-- end div id=head -->
 
 <!-- start panel/sidebar -->
-<div id="panel" class="noprint" role="complementary" aria-label="<?php echo hsc(_vector_getLang("vector_sidebar")); ?>">
+<div id="panel" class="noprint<?php echo ($vector_skin_version === "2022") ? " vector-main-menu-landmark" : ""; ?>" role="complementary" aria-label="<?php echo hsc(_vector_getLang("vector_sidebar")); ?>">
   <!-- start logo -->
   <div id="p-logo">
       <?php
       //include default, media, or user-defined logo
-      $vector_logo = tpl_basedir()."static/3rd/dokuwiki/logo.png";
-if (file_exists(tpl_incdir()."user/logo.svg")) {
-    $vector_logo = tpl_basedir()."user/logo.svg";
-} elseif (file_exists(tpl_incdir()."user/logo.png")) {
-    $vector_logo = tpl_basedir()."user/logo.png";
-} elseif (file_exists(tpl_incdir()."user/logo.gif")) {
-    $vector_logo = tpl_basedir()."user/logo.gif";
-} elseif (file_exists(tpl_incdir()."user/logo.jpg")) {
-    $vector_logo = tpl_basedir()."user/logo.jpg";
-}
-if ($vector_logo === tpl_basedir()."static/3rd/dokuwiki/logo.png") {
-    $vector_logo_info = null;
-    $vector_logo_candidate = tpl_getMediaFile(array(":wiki:logo.svg", ":logo.svg", ":wiki:logo.png", ":logo.png", ":wiki:logo.gif", ":logo.gif", ":wiki:logo.jpg", ":logo.jpg"), false, $vector_logo_info, false);
-    if ($vector_logo_candidate !== false) {
-        $vector_logo = $vector_logo_candidate;
-    }
-}
+      $vector_logo = _vector_getLogoUrl();
 $vector_home_label = strip_tags(_vector_string($conf["title"] ?? ""));
 if ($vector_home_label === "") {
     $vector_home_label = "Home";
 }
 echo '<a href="'.hsc(_vector_wl()).'" style="background-image:url(&quot;'.hsc($vector_logo).'&quot;);" accesskey="h" title="[ALT+H]" aria-label="'.hsc($vector_home_label).'"></a>'."\n";
-unset($vector_home_label, $vector_logo, $vector_logo_candidate, $vector_logo_info);
+unset($vector_home_label, $vector_logo);
 ?>
   </div>
   <!-- end logo -->

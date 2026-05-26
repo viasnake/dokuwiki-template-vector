@@ -96,6 +96,18 @@ cat > "$dokuwiki_dir/data/pages/start.txt" <<'EOF'
 
 This page exists so Vector-only print and citation views can exercise their
 real page paths in the runtime smoke test.
+
+===== First Section =====
+
+Content for the table of contents.
+
+===== Second Section =====
+
+More content for the table of contents.
+
+===== Third Section =====
+
+Additional content for the table of contents.
 EOF
 mkdir -p "$dokuwiki_dir/data/pages/en" "$dokuwiki_dir/data/pages/wiki"
 cat > "$dokuwiki_dir/data/pages/en/start.txt" <<'EOF'
@@ -164,7 +176,7 @@ cleanup() {
 trap cleanup EXIT
 
 assert_no_php_diagnostics() {
-    if grep -E 'Fatal error|Parse error|PHP (Warning|Deprecated|Notice|Fatal error)|Warning:|Deprecated:|Notice:' "$@"; then
+    if grep -Ei 'fatal error|parse error|PHP (Warning|Deprecated|Notice|Fatal error)|Warning:|Deprecated:|Notice:' "$@"; then
         return 1
     fi
 }
@@ -315,5 +327,40 @@ assert_rendered_html "$SMOKE_WORKDIR/vector-rtl-page.html" "$SMOKE_WORKDIR/vecto
 
 stop_server
 assert_no_php_diagnostics "$SMOKE_WORKDIR/dokuwiki-rtl-server.log"
+
+cat >> "$dokuwiki_dir/conf/local.php" <<'PHP'
+$conf['lang'] = 'en';
+$conf['tpl']['modernizedvector']['vector_skin_version'] = '2022';
+PHP
+
+start_server "$SMOKE_WORKDIR/dokuwiki-2022-server.log"
+
+curl -fsS "http://127.0.0.1:${SMOKE_PORT}/doku.php?id=start" -o "$SMOKE_WORKDIR/vector-2022-page.html"
+grep -q 'skin-vector-2022' "$SMOKE_WORKDIR/vector-2022-page.html"
+grep -q 'data-vector-skin-version="2022"' "$SMOKE_WORKDIR/vector-2022-page.html"
+grep -q 'vector-header-container' "$SMOKE_WORKDIR/vector-2022-page.html"
+grep -q 'class="mw-logo"' "$SMOKE_WORKDIR/vector-2022-page.html"
+grep -q 'vector-page-titlebar' "$SMOKE_WORKDIR/vector-2022-page.html"
+grep -q 'vector-main-menu-landmark' "$SMOKE_WORKDIR/vector-2022-page.html"
+grep -q 'vector-menu mw-portlet mw-portlet-navigation' "$SMOKE_WORKDIR/vector-2022-page.html"
+grep -q 'id="p-toc"' "$SMOKE_WORKDIR/vector-2022-page.html"
+grep -q 'id="p-appearance"' "$SMOKE_WORKDIR/vector-2022-page.html"
+grep -q 'data-vector-appearance' "$SMOKE_WORKDIR/vector-2022-page.html"
+assert_no_php_diagnostics "$SMOKE_WORKDIR/vector-2022-page.html"
+
+curl -fsS "http://127.0.0.1:${SMOKE_PORT}/lib/exe/css.php?t=modernizedvector" -o "$SMOKE_WORKDIR/vector-2022.css"
+grep -q 'skin-vector-2022' "$SMOKE_WORKDIR/vector-2022.css"
+grep -q 'vector-header-container' "$SMOKE_WORKDIR/vector-2022.css"
+grep -q 'vector-page-titlebar' "$SMOKE_WORKDIR/vector-2022.css"
+grep -q 'vector-feature-color-dark' "$SMOKE_WORKDIR/vector-2022.css"
+assert_no_php_diagnostics "$SMOKE_WORKDIR/vector-2022.css"
+
+assert_rendered_html "$SMOKE_WORKDIR/vector-2022-page.html"
+if [ "${VECTOR_SKIP_JS_SMOKE:-0}" != "1" ]; then
+    node tests/mobile-menu-smoke.js "$SMOKE_WORKDIR/vector-2022-page.html" script.js
+fi
+
+stop_server
+assert_no_php_diagnostics "$SMOKE_WORKDIR/dokuwiki-2022-server.log"
 
 printf 'DokuWiki %s runtime smoke passed: %s\n' "$DOKUWIKI_VERSION" "$dokuwiki_dir"
