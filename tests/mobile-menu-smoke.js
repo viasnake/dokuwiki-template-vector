@@ -41,9 +41,17 @@ setTimeout(() => {
         assert(menu.find("[id]").length === 0, "mobile menu contains cloned duplicate ids");
         assert(menu.find("[accesskey]").length === 0, "mobile menu contains cloned accesskeys");
 
+        if (jQuery("body").attr("data-vector-skin-version") === "2022") {
+            assert(menu.find("[data-vector-appearance]").length === 1, "mobile appearance controls were not cloned");
+            menu.find("[data-vector-appearance-setting=\"color\"] [data-vector-appearance-value=\"dark\"]")
+                .trigger("click");
+            assert(jQuery("body").hasClass("vector-feature-color-dark"), "appearance color control did not apply");
+        }
+
         button.trigger("click");
         assert(menu.hasClass("open") && menu.attr("aria-hidden") === "false", "mobile menu did not open");
         assert(button.hasClass("open") && button.attr("aria-expanded") === "true", "hamburger did not open");
+        assert(jQuery("body").hasClass("vector-mobile-menu-open"), "body mobile menu state was not applied");
 
         window.document.dispatchEvent(new window.KeyboardEvent("keydown", {
             key: "Escape",
@@ -51,6 +59,7 @@ setTimeout(() => {
         }));
         assert(!menu.hasClass("open") && menu.attr("aria-hidden") === "true", "mobile menu did not close on Escape");
         assert(!button.hasClass("open") && button.attr("aria-expanded") === "false", "hamburger did not close on Escape");
+        assert(!jQuery("body").hasClass("vector-mobile-menu-open"), "body mobile menu state was not cleared");
     } catch (error) {
         console.error(error.stack || error.message);
         process.exitCode = 1;

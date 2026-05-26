@@ -78,6 +78,9 @@ $meta["vector_donate_url"] = array("string", "_pattern" => "/^(|https:\/\/[^\s<>
 //TOC
 $meta["vector_toc_position"] = array("multichoice", "_choices" => array("article", "sidebar"));
 
+//skin variant
+$meta["vector_skin_version"] = array("multichoice", "_choices" => array("2011", "2022"));
+
 //other stuff
 $meta["vector_breadcrumbs_position"]  = array("multichoice", "_choices" => array("top", "bottom"));
 $meta["vector_youarehere_position"]   = array("multichoice", "_choices" => array("top", "bottom"));

@@ -87,6 +87,11 @@ $lang["vector_closedwiki"]            = "Wiki fechada (a maioria dos links/tabs/
 // English fallback labels for multichoice settings added after the original translation
 $lang["vector_toc_position_o_article"] = "Article";
 $lang["vector_toc_position_o_sidebar"] = "Sidebar";
+
+//skin variant
+$lang["vector_skin_version"] = "Vector design version";
+$lang["vector_skin_version_o_2011"] = "Vector 2011";
+$lang["vector_skin_version_o_2022"] = "Vector 2022";
 $lang["vector_breadcrumbs_position_o_top"] = "Top";
 $lang["vector_breadcrumbs_position_o_bottom"] = "Bottom";
 $lang["vector_youarehere_position_o_top"] = "Top";
