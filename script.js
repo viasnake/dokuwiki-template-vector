@@ -96,6 +96,7 @@ jQuery(function () {
         .addClass("mobile-hamburger");
 
     function setMobileMenuOpen(opened, restoreFocus) {
+        jQuery("body").toggleClass("mobile-menu-open", opened);
         $mobilemenu
             .toggleClass("open", opened)
             .attr("aria-hidden", opened ? "false" : "true");
@@ -115,6 +116,10 @@ jQuery(function () {
 
     $mobilemenu.click(function (event) {
         event.stopPropagation();
+    });
+
+    $mobilemenu.on("click", "a", function () {
+        setMobileMenuOpen(false, false);
     });
 
     jQuery(document)

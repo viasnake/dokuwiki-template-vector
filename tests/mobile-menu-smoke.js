@@ -44,6 +44,14 @@ setTimeout(() => {
         button.trigger("click");
         assert(menu.hasClass("open") && menu.attr("aria-hidden") === "false", "mobile menu did not open");
         assert(button.hasClass("open") && button.attr("aria-expanded") === "true", "hamburger did not open");
+        assert(jQuery("body").hasClass("mobile-menu-open"), "body was not marked while mobile menu was open");
+
+        menu.find("a").first().trigger("click");
+        assert(!menu.hasClass("open") && menu.attr("aria-hidden") === "true", "mobile menu did not close after link click");
+        assert(!button.hasClass("open") && button.attr("aria-expanded") === "false", "hamburger did not close after link click");
+        assert(!jQuery("body").hasClass("mobile-menu-open"), "body remained marked after link click");
+
+        button.trigger("click");
 
         window.document.dispatchEvent(new window.KeyboardEvent("keydown", {
             key: "Escape",
@@ -51,6 +59,7 @@ setTimeout(() => {
         }));
         assert(!menu.hasClass("open") && menu.attr("aria-hidden") === "true", "mobile menu did not close on Escape");
         assert(!button.hasClass("open") && button.attr("aria-expanded") === "false", "hamburger did not close on Escape");
+        assert(!jQuery("body").hasClass("mobile-menu-open"), "body remained marked after Escape");
     } catch (error) {
         console.error(error.stack || error.message);
         process.exitCode = 1;

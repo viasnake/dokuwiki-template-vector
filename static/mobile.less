@@ -5,25 +5,45 @@ div.mobile-logo {
 }
 
 
-@media only screen and (max-width: 750px) {
+@media (max-width: 750px) {
+    html {
+        overflow-x: hidden;
+    }
+
+    body {
+        min-width: 0;
+        overflow-x: hidden;
+        background-image: none;
+    }
+
+    body.mobile-menu-open {
+        overflow: hidden;
+    }
+
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+    }
 
     .mobile-hamburger {
         display: block;
         position: fixed;
-        top: 0;
-        right: 0;
-        z-index: 1000;
+        top: 0.25rem;
+        right: 0.25rem;
+        z-index: 1001;
 
         cursor: pointer;
-        font-size: 2.5rem;
-        line-height: 3rem;
+        font-size: 1.75rem;
+        line-height: 2.5rem;
 
-        width: 3rem;
-        height: 3rem;
+        width: 2.75rem;
+        height: 2.75rem;
         text-align: center;
-        border: 0;
+        border: 1px solid transparent;
+        border-radius: 2px;
         padding: 0;
-        background: transparent;
+        background: @ini_background;
         color: @ini_text;
 
         &::before {
@@ -33,6 +53,7 @@ div.mobile-logo {
 
     .mobile-hamburger.open {
         background-color: @ini_background;
+        border-color: @ini_border;
         &::before {
             content: '\00d7';
         }
@@ -40,10 +61,15 @@ div.mobile-logo {
 
     div.mobile-logo {
         display: block;
+        min-height: 3.25rem;
+        padding: 0.25rem 3.25rem 0.25rem 0.5rem;
+        border-bottom: 1px solid @ini_border;
+        background: @ini_background;
+
         a {
             display: block;
             width: 100%;
-            height: 3rem;
+            height: 2.75rem;
             background-size: contain;
             background-repeat: no-repeat;
             background-position: left;
@@ -57,33 +83,53 @@ div.mobile-logo {
 
         height: 100vh;
         height: 100dvh;
-        width: 22rem;
+        width: 20rem;
         max-width: 90vw;
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
 
         z-index: 500;
         background-color: @ini_background;
-        box-shadow: -5px 0 5px @ini_border;
+        border-left: 1px solid @ini_border;
+        box-shadow: -4px 0 12px fade(@ini_border, 75%);
 
-        padding-top: 3rem;
+        padding: 3.5rem 0 1rem;
 
         a {
+            display: block;
             color: @ini_existing;
+            text-decoration: none;
         }
 
         .mobile-search {
             display: block;
-            margin: 0.25em;
+            margin: 0 0 0.5rem;
+            padding: 0 0.5rem 0.75rem;
+            border-bottom: 1px solid @ini_border;
+
             div {
                 display: flex;
+                align-items: stretch;
 
                 input,
                 button {
                     line-height: inherit;
-                    flex-grow: 0;
+                    min-height: 2.25rem;
+                    flex: 0 0 auto;
                 }
                 input {
-                    flex-grow: 1;
+                    flex: 1 1 auto;
+                    min-width: 0;
+                    width: auto;
+                    padding: 0.35rem;
+                    border: 1px solid @ini_border;
+                    border-right: 0;
+                }
+                button {
+                    padding: 0.35rem 0.65rem;
+                    border: 1px solid @ini_border;
+                    background: @ini_background;
+                    color: @ini_text;
                 }
             }
         }
@@ -92,13 +138,21 @@ div.mobile-logo {
             padding: 0;
             list-style-type: none;
             list-style-image: none !important;
-            margin: 0.25em 0;
+            margin: 0;
 
             border-bottom: 1px solid @ini_border;
 
             li {
                 margin: 0;
-                padding: 0.25em;
+                padding: 0;
+
+                a,
+                span {
+                    display: block;
+                    padding: 0.65rem 0.75rem;
+                    line-height: 1.25;
+                    overflow-wrap: anywhere;
+                }
             }
         }
     }
@@ -113,13 +167,20 @@ div.mobile-logo {
 
     html[dir="rtl"] .mobile-hamburger {
         right: auto;
-        left: 0;
+        left: 0.25rem;
     }
 
     html[dir="rtl"] div.mobile-menu {
         right: auto;
         left: 0;
-        box-shadow: 5px 0 5px @ini_border;
+        border-left: 0;
+        border-right: 1px solid @ini_border;
+        box-shadow: 4px 0 12px fade(@ini_border, 75%);
+    }
+
+    html[dir="rtl"] div.mobile-logo {
+        padding-right: 0.5rem;
+        padding-left: 3.25rem;
     }
 
     html.js #page-base,
@@ -132,6 +193,221 @@ div.mobile-logo {
     html.js #content,
     html.js div#footer {
         margin-left: 0;
+    }
+
+    html.js #content {
+        background-image: none;
+    }
+
+    html.js div#footer {
+        background-image: none;
+    }
+
+    #page-base,
+    #head-base {
+        margin-left: 0;
+    }
+
+    #content {
+        min-width: 0;
+        margin-left: 0;
+        padding: 0.75rem;
+        overflow-wrap: break-word;
+        background-image: none;
+    }
+
+    #content .dokuwiki h1 {
+        font-size: 150%;
+    }
+
+    #content .dokuwiki h2 {
+        font-size: 135%;
+    }
+
+    #content .dokuwiki h3 {
+        font-size: 120%;
+    }
+
+    #bodyContent,
+    div#bodyContent {
+        width: auto;
+        max-width: 100%;
+        font-size: 0.95em;
+    }
+
+    #content .dokuwiki img,
+    #content .dokuwiki video,
+    #content .dokuwiki canvas,
+    #content .dokuwiki svg,
+    #siteNotice img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    #content .dokuwiki table {
+        display: block;
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    #content .dokuwiki pre,
+    #content .dokuwiki code,
+    #content .dokuwiki samp,
+    #content .dokuwiki kbd {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+    }
+
+    #content .dokuwiki pre,
+    #content .dokuwiki pre.code,
+    #content .dokuwiki pre.file {
+        overflow-x: auto;
+    }
+
+    div.dokuwiki #dw__toc {
+        float: none;
+        width: auto;
+        max-width: 100%;
+        margin: 0 0 1rem;
+        clear: both;
+    }
+
+    div.dokuwiki #dw__toc h3 ~ div {
+        padding-left: 0.5rem;
+    }
+
+    div.dokuwiki ul,
+    div.dokuwiki ol {
+        margin-left: 1.5rem;
+    }
+
+    div.dokuwiki textarea.edit,
+    div.dokuwiki input.edit,
+    div.dokuwiki select.edit,
+    div.dokuwiki input.button,
+    div.dokuwiki button.button {
+        max-width: 100%;
+    }
+
+    div.dokuwiki textarea.edit {
+        min-width: 0;
+    }
+
+    div.dokuwiki div.toolbar,
+    div.dokuwiki div.editBar {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    div.dokuwiki div.editBar div.editButtons,
+    div.dokuwiki div.editBar div.summary,
+    div.dokuwiki div#draft__status,
+    div.dokuwiki div#size__ctl {
+        float: none;
+        width: auto;
+    }
+
+    .catlinks {
+        overflow-wrap: anywhere;
+    }
+
+    div#footer {
+        margin-left: 0;
+        padding: 0.75rem;
+        background-image: none;
+    }
+
+    body.ltr div#footer #footer-places,
+    div#footer #footer-places li {
+        float: none;
+    }
+
+    div#footer ul li {
+        line-height: 1.4;
+    }
+
+    html.popup #media__manager {
+        height: auto;
+        min-height: 0;
+        overflow: visible;
+    }
+
+    html.popup #mediamgr__aside,
+    html.popup #mediamgr__content {
+        position: static;
+        width: auto;
+        height: auto;
+        overflow: visible;
+    }
+
+    html.popup #mediamgr__aside {
+        border-right: 0;
+        border-bottom: 1px solid @ini_border;
+    }
+
+    html[dir="rtl"].popup #mediamgr__aside {
+        border-left: 0;
+        border-bottom: 1px solid @ini_border;
+    }
+
+    #media__content img,
+    #mediamanager__page img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    #mediamanager__page {
+        min-width: 0;
+    }
+
+    #mediamanager__page .panel,
+    #mediamanager__page .namespaces,
+    #mediamanager__page .filelist,
+    #mediamanager__page .file {
+        float: none;
+        width: auto;
+        min-width: 0;
+    }
+
+    #mediamanager__page .panelHeader,
+    #mediamanager__page .panelContent,
+    #mediamanager__page .file .panelHeader,
+    #mediamanager__page .file .panelContent {
+        margin-right: 0;
+        overflow: visible;
+    }
+
+    #mediamanager__page .ui-resizable-e {
+        display: none;
+    }
+
+    #mediamanager__page .panelHeader h3,
+    #mediamanager__page .panelHeader form.options {
+        float: none;
+    }
+
+    #mediamanager__page .panelHeader ul li {
+        float: none;
+        padding: 0.25rem 0;
+    }
+
+    #mediamanager__page .filelist ul,
+    html[dir="rtl"] #mediamanager__page .filelist ul {
+        margin-right: 0;
+    }
+
+    #mediamanager__page .filelist .thumbs li {
+        width: calc(50% - 0.75rem);
+        min-width: 8rem;
+        max-width: 10rem;
+    }
+
+    #mediamanager__page form.meta input,
+    #mediamanager__page form.meta textarea.edit {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
     }
 
 }
